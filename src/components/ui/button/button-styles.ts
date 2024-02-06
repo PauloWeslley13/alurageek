@@ -5,14 +5,15 @@ import { STYLES } from '@/styles'
 
 export const Button = styled(BaseButton)(
   ({ theme }) => `
-  font-family: ${STYLES.FONTS.fontFamily.OPEN_SANS};
+  font-family: ${STYLES.FONTS.fontFamily.RALEWAY};
   font-weight: ${STYLES.FONTS.fontWeight.bold};
-  font-size: ${STYLES.FONTS.fontSizes.md};
+  font-size: ${STYLES.FONTS.fontSizes.sm};
   color: ${theme.palette.primary.main};
 
   transition: all 150ms ease;
   border-radius: 5px;
   border: 1px solid ${theme.palette.primary.main};
+  box-shadow: 0 1px 2px 0 rgb(0 0 0 / 0.05);
 
   &:hover {
     background-color: ${alpha(theme.palette.primary.contrastText, 0.2)};

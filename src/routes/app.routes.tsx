@@ -1,9 +1,12 @@
 import { RouteObject } from 'react-router-dom'
+import { CreateProduct, Home } from '@/pages'
 import { App } from '../App'
-import { Home } from '@/pages/home'
 
 export const AppRoutes: RouteObject = {
   path: '/',
   element: <App />,
-  children: [{ path: '/', element: <Home /> }],
+  children: [
+    { path: '/', element: <Home /> },
+    { path: '/create-product', element: <CreateProduct /> },
+  ],
 }

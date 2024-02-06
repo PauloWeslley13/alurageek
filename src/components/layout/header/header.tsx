@@ -1,6 +1,5 @@
 import { useTheme } from '@mui/material'
-import ArrowForwardIcon from '@mui/icons-material/ArrowForward'
-import { Btn, Button } from '@/components/ui'
+import { Button } from '@/components/ui'
 import BannerHeader from '@/assets/Hero.svg'
 import * as S from './header-styles'
 
@@ -21,15 +20,6 @@ export const Header = () => {
             width: theme.spacing(40),
             height: theme.spacing(12),
           }}
-        />
-        <Btn
-          label="Ver Consolas"
-          sx={{
-            border: 'none',
-            width: theme.spacing(40),
-            height: theme.spacing(12),
-          }}
-          endIcon={<ArrowForwardIcon />}
         />
       </div>
     </S.Heading>

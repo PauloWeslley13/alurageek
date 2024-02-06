@@ -21,7 +21,7 @@ export const Heading = styled('header')<HeadingProps>(
       display: 'flex',
       flexDirection: 'column',
       gap: theme.spacing(4),
-      marginInline: theme.spacing(65.5),
+      marginLeft: theme.spacing(61.5),
       color: theme.palette.common.white,
 
       '& h3': {

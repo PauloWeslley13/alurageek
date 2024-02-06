@@ -25,7 +25,22 @@ export const Palette = ({ theme }: PaletteProps): PaletteOptions => ({
   background: {
     paper:
       theme === 'light' ? STYLES.COLORS.bunker[300] : STYLES.COLORS.zinc[300],
-    default:
-      theme === 'light' ? STYLES.COLORS.bunker[100] : STYLES.COLORS.zinc[100],
+    default: theme === 'light' ? deepPurple[50] : purple[50],
+  },
+  grey: {
+    50: STYLES.COLORS.zinc[50],
+    100: STYLES.COLORS.zinc[100],
+    200: STYLES.COLORS.zinc[200],
+    300: STYLES.COLORS.zinc[300],
+    400: STYLES.COLORS.zinc[400],
+    500: STYLES.COLORS.zinc[500],
+    600: STYLES.COLORS.zinc[600],
+    700: STYLES.COLORS.zinc[700],
+    800: STYLES.COLORS.zinc[800],
+    900: STYLES.COLORS.zinc[900],
+    A100: STYLES.COLORS.woodsmoke[100],
+    A200: STYLES.COLORS.woodsmoke[200],
+    A400: STYLES.COLORS.woodsmoke[400],
+    A700: STYLES.COLORS.zinc[950],
   },
 })

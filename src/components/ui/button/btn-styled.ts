@@ -16,8 +16,8 @@ export const BtnStyled = styled(MuiButton)<MuiButtonProps>(
 
   &:hover {
     background-color: ${alpha(theme.palette.primary.contrastText, 0.2)};
-    border-color: ${theme.palette.primary.contrastText};
-    color: ${theme.palette.primary.contrastText};
+    border-color: ${theme.palette.primary.dark};
+    color: ${theme.palette.primary.main};
   }
 
   &:active {

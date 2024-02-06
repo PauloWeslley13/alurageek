@@ -16,5 +16,11 @@ export const NavBarWrap = styled('nav')(({ theme }) => ({
       alignItems: 'center',
       gap: theme.spacing(3.2),
     },
+
+    '& > div:nth-of-type(2)': {
+      display: 'flex',
+      alignItems: 'center',
+      gap: theme.spacing(2.2),
+    },
   },
 }))
