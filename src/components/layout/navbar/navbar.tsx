@@ -16,7 +16,10 @@ export const NavBar = ({ ...rest }: NavBarProps) => {
     <S.NavBarWrap {...rest}>
       <div>
         <div>
-          <SVGLogoIcon onClick={() => navigate('/')} />
+          <SVGLogoIcon
+            onClick={() => navigate('/')}
+            style={{ cursor: 'pointer' }}
+          />
 
           <Input placeholder="¿Qué deseas buscar?" />
         </div>
@@ -24,6 +27,7 @@ export const NavBar = ({ ...rest }: NavBarProps) => {
         <div>
           <Button
             label="Login"
+            onClick={() => navigate('/auth')}
             sx={{
               height: theme.spacing(9),
               width: theme.spacing(20),

@@ -1,16 +1,25 @@
-import { Outlet } from 'react-router-dom'
-import { Footer, NavBar } from './components/layout'
+import { ToastContainer } from 'react-toastify'
+import { Routes } from './routes/routes'
+import 'react-toastify/dist/ReactToastify.css'
 
-export const App = () => {
+const App = () => {
   return (
-    <div>
-      <NavBar />
-
-      <main>
-        <Outlet />
-      </main>
-
-      <Footer />
-    </div>
+    <>
+      <Routes />
+      <ToastContainer
+        position="top-center"
+        autoClose={5000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="colored"
+      />
+    </>
   )
 }
+
+export default App

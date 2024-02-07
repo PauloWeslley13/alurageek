@@ -1,19 +1,19 @@
 import { Theme } from '@mui/material'
 import Typography from '@mui/material/Typography'
-import { products } from '@/store/data/products.json'
+import { ProductsProps } from '@/components/types/products-props'
 import { Btn } from '../index'
 import * as S from './card-product-styles'
 
 type CardProductProps = {
-  card: (typeof products)[0]
+  card: ProductsProps
 }
 
 export const CardProduct = ({ card }: CardProductProps) => {
-  const { title, price, image } = card
+  const { name, price, url } = card
 
   return (
     <S.CardProduct>
-      <img src={image} alt="Imagem do produto" />
+      <img src={url} alt="Imagem do produto" />
 
       <div>
         <Typography
@@ -21,7 +21,7 @@ export const CardProduct = ({ card }: CardProductProps) => {
           variant="h4"
           sx={{ color: (theme: Theme) => theme.palette.grey.A700 }}
         >
-          {title}
+          {name}
         </Typography>
         <Typography
           component="span"

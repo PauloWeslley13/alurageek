@@ -9,17 +9,18 @@ import {
 } from '@mui/material'
 import { Typography } from './typography'
 import { Palette } from './palette'
-import { GlobalStyle, STYLES } from '@/styles'
+import { STYLES } from '@/styles'
+import { GlobalStyle } from './global-styles'
 import { useAppSelector } from '@/store/hook/useRedux'
 
 type ThemeCustomizationProps = { children: ReactNode }
 
 export const ThemeCustomization = ({ children }: ThemeCustomizationProps) => {
   const theme = useAppSelector((state) => state.theme.theme)
+  const themePalette = Palette({ theme })
   const themeTypography = Typography({
     fontFamily: STYLES.FONTS.fontFamily.RALEWAY,
   })
-  const themePalette = Palette({ theme })
 
   const themeOptions: ThemeOptions = useMemo(
     () => ({

@@ -2,16 +2,20 @@ import React from 'react'
 import ReactDOM from 'react-dom/client'
 import { BrowserRouter as Router } from 'react-router-dom'
 import { Provider } from 'react-redux'
-import { Routes } from './routes/routes'
 import { ThemeCustomization } from './theme'
+import { setTheme } from './store/reducers/themes'
 import store from './store'
+import App from './App'
+
+const initialTheme = localStorage.getItem('theme') || 'light'
+store.dispatch(setTheme(initialTheme))
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
     <Provider store={store}>
       <ThemeCustomization>
         <Router basename="/">
-          <Routes />
+          <App />
         </Router>
       </ThemeCustomization>
     </Provider>

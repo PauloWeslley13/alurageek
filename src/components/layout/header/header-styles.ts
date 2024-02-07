@@ -1,5 +1,5 @@
+import { styled } from '@mui/material'
 import { STYLES } from '@/styles'
-import { styled } from '@mui/system'
 
 type HeadingProps = { imageUrl: string }
 
