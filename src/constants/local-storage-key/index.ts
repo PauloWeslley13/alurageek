@@ -1,1 +1,1 @@
-export const dataUserLocalStorageKey = 'uccUserData'
+export const dataUserLocalStorageKey = '@userData'

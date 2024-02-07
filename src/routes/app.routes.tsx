@@ -1,6 +1,13 @@
 import { RouteObject } from 'react-router-dom'
-import { CreateProduct, Home, Authentication } from '@/pages'
-import { Main } from '@/templates/Main'
+import {
+  Home,
+  Authentication,
+  Products,
+  ProductInfo,
+  ProductListItems,
+  ProductDetail,
+} from '@/pages'
+import { Main } from '@/templates/main'
 
 export const AppRoutes: RouteObject = {
   path: '/',
@@ -8,6 +15,14 @@ export const AppRoutes: RouteObject = {
   children: [
     { path: 'home', element: <Home /> },
     { path: 'auth', element: <Authentication /> },
-    { path: 'create-product', element: <CreateProduct /> },
+    {
+      path: 'product',
+      element: <Products />,
+      children: [
+        { path: 'info', element: <ProductInfo /> },
+        { path: 'list', element: <ProductListItems /> },
+        { path: 'detail/:id', element: <ProductDetail /> },
+      ],
+    },
   ],
 }

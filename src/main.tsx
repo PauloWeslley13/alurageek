@@ -3,12 +3,8 @@ import ReactDOM from 'react-dom/client'
 import { BrowserRouter as Router } from 'react-router-dom'
 import { Provider } from 'react-redux'
 import { ThemeCustomization } from './theme'
-import { setTheme } from './store/reducers/themes'
 import store from './store'
 import App from './App'
-
-const initialTheme = localStorage.getItem('theme') || 'light'
-store.dispatch(setTheme(initialTheme))
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>

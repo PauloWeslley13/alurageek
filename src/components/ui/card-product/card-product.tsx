@@ -1,7 +1,9 @@
-import { Theme } from '@mui/material'
-import Typography from '@mui/material/Typography'
+import { useNavigate } from 'react-router-dom'
+import { Theme, Typography } from '@mui/material'
+import BorderColorIcon from '@mui/icons-material/BorderColor'
 import { ProductsProps } from '@/components/types/products-props'
 import { Btn } from '../index'
+import { DialogDeleteProduct } from './dialog-delete-product'
 import * as S from './card-product-styles'
 
 type CardProductProps = {
@@ -9,13 +11,22 @@ type CardProductProps = {
 }
 
 export const CardProduct = ({ card }: CardProductProps) => {
-  const { name, price, url } = card
+  const { id, name, price, url } = card
+  const navigate = useNavigate()
 
   return (
     <S.CardProduct>
-      <img src={url} alt="Imagem do produto" />
+      <S.CardProductImage imageUrl={url}>
+        <div>
+          <DialogDeleteProduct product={card} />
 
-      <div>
+          <S.CardButton>
+            <BorderColorIcon />
+          </S.CardButton>
+        </div>
+      </S.CardProductImage>
+
+      <div className="MuiCardProductInfo">
         <Typography
           component="h2"
           variant="h4"
@@ -31,7 +42,11 @@ export const CardProduct = ({ card }: CardProductProps) => {
           {price}
         </Typography>
 
-        <Btn label="Ver producto" sx={{ border: 'none' }} />
+        <Btn
+          label="Ver producto"
+          sx={{ border: 'none' }}
+          onClick={() => navigate(`/product/detail/${id}`)}
+        />
       </div>
     </S.CardProduct>
   )

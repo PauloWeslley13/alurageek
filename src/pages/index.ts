@@ -1,3 +1,6 @@
 export * from './home'
-export * from './create-product'
+export * from './products'
 export * from './authentication'
+export * from './products/modules/product-info/product-info'
+export * from './products/modules/product-detail/product-detail'
+export * from './products/modules/product-list-items/product-list-items'

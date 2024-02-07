@@ -1,5 +1,5 @@
-import { Alert, useTheme } from '@mui/material'
-import { Button, InputField } from '@/components/ui'
+import { useTheme } from '@mui/material'
+import { Alert, Button, InputField } from '@/components/ui'
 import { useSignUp } from './useSignUp'
 
 export const SignUp = () => {
@@ -34,7 +34,7 @@ export const SignUp = () => {
       />
 
       <Button
-        label="Entrar"
+        label="Cadastrar"
         type="submit"
         onClick={alert}
         sx={{
@@ -44,16 +44,17 @@ export const SignUp = () => {
           height: theme.spacing(12),
           marginTop: theme.spacing(2),
           textTransform: 'uppercase',
+          letterSpacing: 1.2,
         }}
       />
 
-      {errors.email?.message &&
-        errors.password?.message &&
-        errors.username?.message && (
-          <Alert variant="filled" severity="error">
-            Campos preenchido incorretamente
-          </Alert>
-        )}
+      <Alert
+        errors={{
+          email: errors.email?.message,
+          password: errors.password?.message,
+          username: errors.username?.message,
+        }}
+      />
     </form>
   )
 }

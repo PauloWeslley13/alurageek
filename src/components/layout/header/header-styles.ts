@@ -1,5 +1,5 @@
 import { styled } from '@mui/material'
-import { STYLES } from '@/styles'
+import { FONTS } from '@/styles'
 
 type HeadingProps = { imageUrl: string }
 
@@ -26,7 +26,7 @@ export const Heading = styled('header')<HeadingProps>(
 
       '& h3': {
         ...theme.typography.h1,
-        fontSize: STYLES.FONTS.fontSizes['6xl'],
+        fontSize: FONTS.fontSizes['6xl'],
       },
 
       '& span': {

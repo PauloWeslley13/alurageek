@@ -2,15 +2,19 @@ import { ComponentProps } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useTheme } from '@mui/material'
 import { SVGLogoIcon } from '@/components/icons'
-import { Button, Input, MenuTheme } from '@/components/ui'
+import { Avatar, Button, Input, MenuTheme } from '@/components/ui'
 
 import * as S from './navbar-styles'
+import { useAppSelector } from '@/store/hook/useRedux'
 
 type NavBarProps = ComponentProps<typeof S.NavBarWrap>
 
 export const NavBar = ({ ...rest }: NavBarProps) => {
   const navigate = useNavigate()
   const theme = useTheme()
+  const user = useAppSelector((state) => state.user)
+
+  console.log(user)
 
   return (
     <S.NavBarWrap {...rest}>
@@ -34,17 +38,10 @@ export const NavBar = ({ ...rest }: NavBarProps) => {
               textTransform: 'uppercase',
             }}
           />
-          <Button
-            label="Productos"
-            onClick={() => navigate('/create-product')}
-            sx={{
-              height: theme.spacing(9),
-              width: theme.spacing(28),
-              textTransform: 'uppercase',
-            }}
-          />
 
           <MenuTheme />
+
+          {user && <Avatar user={user.username} />}
         </div>
       </div>
     </S.NavBarWrap>

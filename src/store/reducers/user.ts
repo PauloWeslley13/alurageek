@@ -1,4 +1,4 @@
-import { PayloadAction, createSlice } from '@reduxjs/toolkit'
+import { PayloadAction, createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 import { UsersProps } from '@/components/types/users-props'
 import {
   createUserWithEmailAndPassword,
@@ -12,6 +12,9 @@ import { doc, setDoc } from 'firebase/firestore'
 import { toasts } from '@/components/ui'
 import { SignInProps } from '@/pages/authentication/modules/sign-in/useSignIn'
 import { setLocalStorage } from '../functions/set-local-storage'
+import usersService from '@/services/get-users'
+
+const fetchUser = createAsyncThunk('user/get', usersService.get)
 
 const usersSlice = createSlice({
   name: 'users',
@@ -75,7 +78,13 @@ const usersSlice = createSlice({
       signIn()
     },
   },
+  extraReducers: (builder) => {
+    builder.addCase(fetchUser.fulfilled, (_, { payload }) => {
+      return payload
+    })
+  },
 })
 
+export { fetchUser }
 export const { createUser, handleSignIn } = usersSlice.actions
 export default usersSlice.reducer

@@ -1,14 +1,14 @@
 import { styled } from '@mui/system'
 import { MenuButton as BaseMenuButton } from '@mui/base/MenuButton'
 import { MenuItem as BaseMenuItem, menuItemClasses } from '@mui/base/MenuItem'
-import { deepPurple, indigo } from '@mui/material/colors'
-import { STYLES } from '@/styles'
+import { deepPurple, indigo, purple } from '@mui/material/colors'
+import { FONTS } from '@/styles'
 
 export const MenuList = styled('ul')(
   ({ theme }) => `
-  font-family: ${STYLES.FONTS.fontFamily.OPEN_SANS};
-  font-weight: ${STYLES.FONTS.fontWeight.semibold};
-  font-size: ${STYLES.FONTS.fontSizes.sm};
+  font-family: ${FONTS.fontFamily.OPEN_SANS};
+  font-weight: ${FONTS.fontWeight.semibold};
+  font-size: ${FONTS.fontSizes.sm};
   box-sizing: border-box;
   padding: 6px;
   margin: 12px 0;
@@ -16,7 +16,7 @@ export const MenuList = styled('ul')(
   border-radius: 12px;
   overflow: auto;
   outline: 0px;
-  background: ${theme.palette.mode === 'dark' ? indigo[100] : indigo[50]};
+  background: ${theme.palette.mode === 'dark' ? purple[50] : indigo[50]};
   border: 1px solid ${theme.palette.mode === 'dark' ? indigo[400] : indigo[200]};
   color: ${theme.palette.mode === 'dark' ? indigo[700] : indigo[900]};
   box-shadow: 0px 4px 30px ${theme.palette.mode === 'dark' ? indigo[400] : indigo[200]};
@@ -49,9 +49,9 @@ export const MenuItem = styled(BaseMenuItem)(
 
 export const MenuButton = styled(BaseMenuButton)(
   ({ theme }) => `
-  font-family: ${STYLES.FONTS.fontFamily.RALEWAY};
-  font-weight: ${STYLES.FONTS.fontWeight.bold};
-  font-size: ${STYLES.FONTS.fontSizes.sm};
+  font-family: ${FONTS.fontFamily.RALEWAY};
+  font-weight: ${FONTS.fontWeight.bold};
+  font-size: ${FONTS.fontSizes.sm};
   display: flex;
   align-items: center;
   justify-content: center;

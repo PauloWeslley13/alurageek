@@ -1,8 +1,8 @@
 import { useState } from 'react'
 import { Link, Typography, useTheme } from '@mui/material'
-import FONTS from '@/styles/fonts'
-import * as S from './authentication-styles'
 import { SignIn, SignUp } from './modules'
+import { FONTS } from '@/styles'
+import * as S from './authentication-styles'
 
 type SignInOrSignUpProps = 'signIn' | 'signUp'
 
@@ -24,7 +24,10 @@ export const Authentication = () => {
       <Typography
         component="h2"
         variant="h4"
-        sx={{ fontSize: FONTS.fontSizes['3xl'] }}
+        sx={{
+          color: theme.palette.primary.dark,
+          fontSize: FONTS.fontSizes['3xl'],
+        }}
       >
         {signInOrSignUp === 'signIn' ? 'Iniciar Sesión' : 'Cadastra-se'}
       </Typography>

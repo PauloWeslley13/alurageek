@@ -1,18 +1,18 @@
 import { styled } from '@mui/system'
-import { STYLES } from '@/styles'
+import { COLORS, FONTS } from '@/styles'
 
 export const InputElement = styled('input')(
   ({ theme }) => `
   width: 320px;
-  font-family: ${STYLES.FONTS.fontFamily.OPEN_SANS};
-  font-size: ${STYLES.FONTS.fontSizes.md};
-  font-weight: ${STYLES.FONTS.fontWeight.semibold};
+  font-family: ${FONTS.fontFamily.OPEN_SANS};
+  font-size: ${FONTS.fontSizes.md};
+  font-weight: ${FONTS.fontWeight.semibold};
   padding: 8px 12px;
   border-radius: 1.2rem;
   color: ${theme.palette.primary.main};
-  background: ${STYLES.COLORS.bunker[50]};
-  border: 1px solid ${STYLES.COLORS.bunker[300]};
-  box-shadow: 0px 2px 2px ${STYLES.COLORS.bunker[200]};
+  background: ${COLORS.bunker[50]};
+  border: 1px solid ${COLORS.bunker[300]};
+  box-shadow: 0px 2px 2px ${COLORS.bunker[200]};
 
   transition: all .3s ease-in-out;
 
@@ -26,8 +26,8 @@ export const InputElement = styled('input')(
   }
 
   &::placeholder {
-    font-weight: ${STYLES.FONTS.fontWeight.semibold};
-    color: ${theme.palette.primary.contrastText};
+    font-weight: ${FONTS.fontWeight.semibold};
+    color: ${theme.palette.primary.light};
   }
 
   // firefox

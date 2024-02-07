@@ -26,7 +26,10 @@ const productsSlice = createSlice({
       const created = async () => {
         const exists = state.findIndex((prod) => prod.name === payload.name)
 
-        if (exists !== -1) return
+        if (exists !== -1) {
+          toasts.success({ title: 'Produto já cadastrado' })
+          return
+        }
 
         await addDoc(productsRef, { ...payload })
           .then(() => {
@@ -56,10 +59,12 @@ const productsSlice = createSlice({
 
       updated()
     },
-    deleteProduct: (_, { payload }: PayloadAction<ProductsProps>) => {
-      const deleteRef = doc(db, 'products', payload.id)
+    deleteProduct: (state, { payload }: PayloadAction<ProductsProps>) => {
+      const index = state.findIndex((item) => item.id === payload.id)
+      state.splice(index, 1)
 
       const remove = async () => {
+        const deleteRef = doc(db, 'products', payload.id)
         await deleteDoc(deleteRef)
           .then(() => {
             toasts.success({ title: `Produto ${payload.name} deletado` })
@@ -81,5 +86,6 @@ const productsSlice = createSlice({
 })
 
 export { fetchProducts }
-export const { createProduct } = productsSlice.actions
+export const { createProduct, updateProduct, deleteProduct } =
+  productsSlice.actions
 export default productsSlice.reducer

@@ -1,4 +1,4 @@
-export default {
+export const FONTS = {
   fontWeight: {
     hairline: 100,
     thin: 200,
@@ -30,5 +30,32 @@ export default {
     '7xl': '4.5rem',
     '8xl': '6rem',
     '9xl': '8rem',
+  },
+
+  lineHeights: {
+    normal: 'normal',
+    none: 1,
+    shorter: 1.25,
+    short: 1.375,
+    base: 1.5,
+    tall: 1.625,
+    taller: '2',
+    '3': '.75rem',
+    '4': '1rem',
+    '5': '1.25rem',
+    '6': '1.5rem',
+    '7': '1.75rem',
+    '8': '2rem',
+    '9': '2.25rem',
+    '10': '2.5rem',
+  },
+
+  letterSpacings: {
+    tighter: '-0.05em',
+    tight: '-0.025em',
+    normal: '0',
+    wide: '0.025em',
+    wider: '0.05em',
+    widest: '0.1em',
   },
 }

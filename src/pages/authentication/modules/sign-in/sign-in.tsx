@@ -36,6 +36,7 @@ export const SignIn = () => {
           height: theme.spacing(12),
           marginTop: theme.spacing(2),
           textTransform: 'uppercase',
+          letterSpacing: 1.2,
         }}
       />
     </form>
