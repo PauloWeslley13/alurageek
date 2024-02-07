@@ -1,9 +1,9 @@
 import { useNavigate } from 'react-router-dom'
 import { Theme, Typography } from '@mui/material'
-import BorderColorIcon from '@mui/icons-material/BorderColor'
 import { ProductsProps } from '@/components/types/products-props'
-import { Btn } from '../index'
 import { DialogDeleteProduct } from './dialog-delete-product'
+import { DialogEditProduct } from '@/pages/products/modules'
+import { Btn } from '../index'
 import * as S from './card-product-styles'
 
 type CardProductProps = {
@@ -20,9 +20,7 @@ export const CardProduct = ({ card }: CardProductProps) => {
         <div>
           <DialogDeleteProduct product={card} />
 
-          <S.CardButton>
-            <BorderColorIcon />
-          </S.CardButton>
+          <DialogEditProduct product={card} />
         </div>
       </S.CardProductImage>
 
