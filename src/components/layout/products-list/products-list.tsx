@@ -1,9 +1,10 @@
 import { ReactNode, useEffect } from 'react'
 import { Stack, Typography, useTheme } from '@mui/material'
 import { CardProduct } from '@/components/ui'
-import { useAppDispatch, useAppSelector } from '@/store/hook/useRedux'
-import { fetchProducts } from '@/store/reducers/products/products'
+import { useAppDispatch } from '@/store/hook/useRedux'
 import * as S from './products-list-styles'
+import { loadProduct } from '@/store/actions'
+import { useProducts } from '@/hooks/useProducts'
 
 type ProductsListProps = {
   title: string
@@ -11,12 +12,12 @@ type ProductsListProps = {
 }
 
 export const ProductsList = ({ title, children }: ProductsListProps) => {
-  const products = useAppSelector((state) => state.products)
+  const { productsFilter } = useProducts()
   const dispatch = useAppDispatch()
   const theme = useTheme()
 
   useEffect(() => {
-    dispatch(fetchProducts())
+    dispatch(loadProduct())
   }, [dispatch])
 
   return (
@@ -33,9 +34,9 @@ export const ProductsList = ({ title, children }: ProductsListProps) => {
         {children}
       </div>
 
-      {products.length !== 0 ? (
+      {productsFilter.length !== 0 ? (
         <S.Products>
-          {products.map((item, index) => (
+          {productsFilter.map((item, index) => (
             <CardProduct key={index} card={item} />
           ))}
         </S.Products>

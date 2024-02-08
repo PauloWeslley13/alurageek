@@ -3,24 +3,23 @@ import { ToastContainer } from 'react-toastify'
 import { Routes } from './routes/routes'
 import { ScrollTop } from './components/scroll-top'
 import { useAppDispatch } from './store/hook/useRedux'
-import { fetchUser, setTheme } from './store/reducers'
+import { setTheme } from './store/reducers'
+import { loadUser } from './store/actions'
 import 'react-toastify/dist/ReactToastify.css'
 
 const App = () => {
   const dispatch = useAppDispatch()
-  const userLogged = localStorage.getItem('@userData')
   const getThemeLocalStorage = localStorage.getItem('@appTheme')
 
   useEffect(() => {
-    if (userLogged && getThemeLocalStorage) {
-      const userUid = JSON.parse(userLogged)
+    if (getThemeLocalStorage) {
       const getTheme = JSON.parse(getThemeLocalStorage)
       const initialTheme = getTheme || 'light'
 
-      dispatch(fetchUser(userUid))
+      dispatch(loadUser())
       dispatch(setTheme(initialTheme))
     }
-  }, [dispatch, userLogged, getThemeLocalStorage])
+  }, [dispatch, getThemeLocalStorage])
 
   return (
     <>

@@ -2,7 +2,7 @@ import { z } from 'zod'
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useAppDispatch } from '@/store/hook/useRedux'
-import { createUser } from '@/store/reducers'
+import { handleSignUp } from '@/store/reducers'
 import { toasts } from '@/components/ui'
 
 export const schemaSignUp = z.object({
@@ -30,7 +30,7 @@ export const useSignUp = () => {
 
   const signUp = (data: SignUpProps) => {
     console.log(data)
-    dispatch(createUser(data))
+    dispatch(handleSignUp(data))
 
     reset()
   }

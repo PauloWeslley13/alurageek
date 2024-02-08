@@ -3,8 +3,10 @@ import { Theme, Typography } from '@mui/material'
 import { ProductsProps } from '@/components/types/products-props'
 import { DialogDeleteProduct } from './dialog-delete-product'
 import { DialogEditProduct } from '@/pages/products/modules'
+import { useAppSelector } from '@/store/hook/useRedux'
 import { Btn } from '../index'
 import * as S from './card-product-styles'
+import { priceMask } from '@/utils/price-mask'
 
 type CardProductProps = {
   card: ProductsProps
@@ -12,16 +14,19 @@ type CardProductProps = {
 
 export const CardProduct = ({ card }: CardProductProps) => {
   const { id, name, price, url } = card
+  const { isLogged } = useAppSelector((state) => state.user)
   const navigate = useNavigate()
 
   return (
     <S.CardProduct>
       <S.CardProductImage imageUrl={url}>
-        <div>
-          <DialogDeleteProduct product={card} />
+        {isLogged && (
+          <div>
+            <DialogDeleteProduct product={card} />
 
-          <DialogEditProduct product={card} />
-        </div>
+            <DialogEditProduct product={card} />
+          </div>
+        )}
       </S.CardProductImage>
 
       <div className="MuiCardProductInfo">
@@ -37,7 +42,7 @@ export const CardProduct = ({ card }: CardProductProps) => {
           variant="subtitle1"
           sx={{ color: (theme: Theme) => theme.palette.grey.A700 }}
         >
-          {price}
+          {priceMask({ value: price })}
         </Typography>
 
         <div>

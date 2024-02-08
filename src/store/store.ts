@@ -1,12 +1,15 @@
 import { configureStore } from '@reduxjs/toolkit'
-import { productsReducer, themesReducer, userReducer } from './reducers'
+import { rootReducer } from './reducers'
+import { listenerUser } from './middleware/user-listener'
+import { listenerProduct } from './middleware/product-listener'
 
 const store = configureStore({
-  reducer: {
-    theme: themesReducer,
-    products: productsReducer,
-    user: userReducer,
-  },
+  reducer: rootReducer,
+  middleware: (getDefaultMiddleware) =>
+    getDefaultMiddleware().prepend(
+      listenerUser.middleware,
+      listenerProduct.middleware,
+    ),
 })
 
 export { store }

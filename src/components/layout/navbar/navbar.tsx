@@ -2,18 +2,15 @@ import { ComponentProps } from 'react'
 import { useLocation, useNavigate } from 'react-router-dom'
 import { useTheme } from '@mui/material'
 import { useAppSelector } from '@/store/hook/useRedux'
-import { SVGLogoIcon } from '@/components/icons'
-import { Avatar, Button, Input, MenuTheme } from '@/components/ui'
-
+import { Button, SVGLogoIcon } from '@/components/ui'
+import { MenuProfile, MenuTheme, SearchField } from './modules'
 import * as S from './navbar-styles'
-import { useSideBar } from '@/components/ui/sidebar/useSideBar'
 
 type NavBarProps = ComponentProps<typeof S.NavBarWrap>
 
 export const NavBar = ({ ...rest }: NavBarProps) => {
-  const { user, isLogged } = useAppSelector((state) => state.user)
+  const { isLogged } = useAppSelector((state) => state.user)
   const { pathname } = useLocation()
-  const { handleDrawerOpen } = useSideBar()
   const navigate = useNavigate()
   const theme = useTheme()
 
@@ -26,11 +23,11 @@ export const NavBar = ({ ...rest }: NavBarProps) => {
             style={{ cursor: 'pointer' }}
           />
 
-          <Input placeholder="¿Qué deseas buscar?" />
+          <SearchField />
         </div>
 
         <div>
-          {pathname === '/auth' ? null : (
+          {pathname === '/auth' || isLogged ? null : (
             <Button
               label="Login"
               onClick={() => navigate('/auth')}
@@ -43,14 +40,7 @@ export const NavBar = ({ ...rest }: NavBarProps) => {
 
           <MenuTheme />
 
-          {isLogged && (
-            <Avatar
-              aria-label="open drawer"
-              user={user.username}
-              sx={{ cursor: 'pointer' }}
-              onClick={handleDrawerOpen}
-            />
-          )}
+          {isLogged && <MenuProfile />}
         </div>
       </div>
     </S.NavBarWrap>

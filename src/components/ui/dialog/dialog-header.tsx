@@ -4,7 +4,7 @@ import * as S from './dialog-styles'
 import { FONTS } from '@/styles'
 
 type DialogHeaderProps = ComponentProps<typeof S.DialogHead> & {
-  title: string
+  title?: string
   children?: ReactNode
 }
 

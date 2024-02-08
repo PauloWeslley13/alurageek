@@ -25,10 +25,7 @@ export const useSignIn = () => {
   })
   const dispatch = useAppDispatch()
 
-  console.log(errors)
-
   const signIn = (data: SignInProps) => {
-    console.log(data)
     dispatch(handleSignIn(data))
 
     reset()

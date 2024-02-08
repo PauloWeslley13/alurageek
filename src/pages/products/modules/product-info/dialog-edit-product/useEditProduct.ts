@@ -4,13 +4,13 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import {
   ProductsProps,
   SchemaProductProps,
-  schemaProduct,
 } from '@/components/types/products-props'
 import { EditProductProps } from './edit-product-props'
 import { isVerifyIsEqualProduct } from './functions/is-verify-is-equal-product'
 import { useAppDispatch } from '@/store/hook/useRedux'
 import { updateProduct } from '@/store/reducers'
 import { toasts } from '@/components/ui'
+import { schemaProduct } from '../schema-product'
 
 export const useEditProduct = ({ product }: EditProductProps) => {
   const [open, setOpen] = useState<boolean>(false)
@@ -35,13 +35,8 @@ export const useEditProduct = ({ product }: EditProductProps) => {
     setValue('url', product.url)
   }, [product, setValue])
 
-  const handleOpenDialog = () => {
-    setOpen(true)
-  }
-
-  const handleCloseDialog = () => {
-    setOpen(false)
-  }
+  const handleOpenDialog = () => setOpen(true)
+  const handleCloseDialog = () => setOpen(false)
 
   const updatedProduct = (data: SchemaProductProps) => {
     const isProductEqual = isVerifyIsEqualProduct({ data, product })
@@ -57,13 +52,11 @@ export const useEditProduct = ({ product }: EditProductProps) => {
 
     if (isProductEqual) {
       dispatch(updateProduct(dataProducts))
-      handleCloseDialog()
       reset()
+      handleCloseDialog()
     } else {
       toasts.error({ title: 'Não foi possível atualizar' })
     }
-
-    console.log(data)
   }
 
   return {

@@ -43,10 +43,12 @@ const productsSlice = createSlice({
 
       created()
     },
-    updateProduct: (_, { payload }: PayloadAction<ProductsProps>) => {
-      const updatedDocRef = doc(db, 'products', payload.id)
+    updateProduct: (state, { payload }: PayloadAction<ProductsProps>) => {
+      const index = state.findIndex((item) => item.id === payload.id)
+      state[index] = payload
 
       const updated = async () => {
+        const updatedDocRef = doc(db, 'products', payload.id)
         await updateDoc(updatedDocRef, { ...payload })
           .then(() => {
             toasts.success({ title: 'Produto Atualizado' })
@@ -77,15 +79,13 @@ const productsSlice = createSlice({
 
       remove()
     },
-  },
-  extraReducers: (builder) => {
-    builder.addCase(fetchProducts.fulfilled, (_, { payload }) => {
+    getProducts: (_, { payload }: PayloadAction<ProductsProps[]>) => {
       return payload
-    })
+    },
   },
 })
 
 export { fetchProducts }
-export const { createProduct, updateProduct, deleteProduct } =
+export const { createProduct, updateProduct, deleteProduct, getProducts } =
   productsSlice.actions
 export const productsReducer = productsSlice.reducer

@@ -1,6 +1,5 @@
 import { Typography, useTheme } from '@mui/material'
-import { Button, InputField } from '@/components/ui'
-import { SVGLogoIcon } from '@/components/icons'
+import { Button, InputField, SVGLogoIcon } from '@/components/ui'
 import * as S from './footer-styles'
 
 export const FooterBar = () => {

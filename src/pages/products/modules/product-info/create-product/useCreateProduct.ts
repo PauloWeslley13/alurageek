@@ -1,11 +1,9 @@
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
-import {
-  SchemaProductProps,
-  schemaProduct,
-} from '@/components/types/products-props'
+import { SchemaProductProps } from '@/components/types/products-props'
 import { useAppDispatch } from '@/store/hook/useRedux'
 import { createProduct } from '@/store/reducers'
+import { schemaProduct } from '../schema-product'
 
 export const useCreateProduct = () => {
   const dispatch = useAppDispatch()

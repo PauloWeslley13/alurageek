@@ -12,10 +12,9 @@ import { auth } from '@/config/firebase'
 import { doc, setDoc } from 'firebase/firestore'
 import { toasts } from '@/components/ui'
 import { SignInProps } from '@/pages/authentication/modules/sign-in/useSignIn'
-import { setLocalStorage } from '../../functions/set-local-storage'
+import { setLocalStorage } from './functions/set-local-storage'
 import { dataUserLocalStorageKey } from '@/constants/local-storage-key'
 import usersService from '@/services/get-users'
-import console from 'console'
 
 type UserType = {
   user: UsersProps
@@ -24,15 +23,16 @@ type UserType = {
 
 const fetchUser = createAsyncThunk('user/get', usersService.get)
 
+const initialState: UserType = {
+  user: {} as UsersProps,
+  isLogged: false,
+}
+
 const usersSlice = createSlice({
   name: 'user',
-  initialState: {
-    user: {} as UsersProps,
-    isLogged: false,
-  } as UserType,
+  initialState,
   reducers: {
-    createUser: (_, { payload }: PayloadAction<SignUpProps>) => {
-      console.log(payload)
+    handleSignUp: (_, { payload }: PayloadAction<SignUpProps>) => {
       const { email, password } = payload
 
       const signUp = async () => {
@@ -64,6 +64,7 @@ const usersSlice = createSlice({
     handleSignIn: (state, { payload }: PayloadAction<SignInProps>) => {
       const { email, password } = payload
 
+      state.isLogged = true
       const signIn = async () => {
         try {
           const authResponse = await signInWithEmailAndPassword(
@@ -72,7 +73,6 @@ const usersSlice = createSlice({
             password,
           )
           const uid = authResponse.user.uid
-          state.isLogged = true
           await setLocalStorage(uid)
           toasts.success({ title: 'Usuário logado' })
         } catch (error: unknown) {
@@ -88,8 +88,7 @@ const usersSlice = createSlice({
 
       signIn()
     },
-    logout: (state, { payload }: PayloadAction<UserType>) => {
-      console.log(payload)
+    logout: (state) => {
       state.isLogged = false
       async function handleLogout() {
         await signOut(auth)
@@ -102,17 +101,13 @@ const usersSlice = createSlice({
       }
       handleLogout()
     },
-  },
-  extraReducers: (builder) => {
-    builder.addCase(fetchUser.fulfilled, (_, { payload }) => {
-      return {
-        user: payload,
-        isLogged: true,
-      }
-    })
+    getUserLogged: (_, { payload }: PayloadAction<UserType>) => {
+      return payload
+    },
   },
 })
 
 export { fetchUser }
-export const { createUser, handleSignIn } = usersSlice.actions
+export const { handleSignUp, handleSignIn, logout, getUserLogged } =
+  usersSlice.actions
 export const userReducer = usersSlice.reducer
