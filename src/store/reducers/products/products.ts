@@ -11,8 +11,8 @@ import {
   SchemaProductProps,
 } from '@/components/types/products-props'
 import { db } from '@/config/firebase'
-import productsService from '@/services/get-products'
 import { toasts } from '@/components/ui'
+import productsService from '@/services/get-products'
 
 const fetchProducts = createAsyncThunk('products/get', productsService.get)
 
@@ -88,4 +88,4 @@ const productsSlice = createSlice({
 export { fetchProducts }
 export const { createProduct, updateProduct, deleteProduct } =
   productsSlice.actions
-export default productsSlice.reducer
+export const productsReducer = productsSlice.reducer

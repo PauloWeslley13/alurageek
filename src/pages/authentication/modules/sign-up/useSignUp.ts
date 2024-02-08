@@ -2,7 +2,7 @@ import { z } from 'zod'
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useAppDispatch } from '@/store/hook/useRedux'
-import { createUser } from '@/store/reducers/user'
+import { createUser } from '@/store/reducers'
 import { toasts } from '@/components/ui'
 
 export const schemaSignUp = z.object({

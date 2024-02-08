@@ -18,6 +18,8 @@ export const TextField = styled(MuiTextField)<MuiTextFieldProps>(
 
     '& .MuiInputBase-root': {
       background: alpha(theme.palette.primary.main, 0.1),
+      color: theme.palette.primary.dark,
+
       borderTopLeftRadius: 10,
       borderTopRightRadius: 10,
 

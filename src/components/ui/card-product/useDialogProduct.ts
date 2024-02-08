@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { ProductsProps } from '@/components/types/products-props'
 import { useAppDispatch } from '@/store/hook/useRedux'
-import { deleteProduct } from '@/store/reducers/products'
+import { deleteProduct } from '@/store/reducers/products/products'
 
 export const useDialogProduct = () => {
   const [open, setOpen] = useState<boolean>(false)

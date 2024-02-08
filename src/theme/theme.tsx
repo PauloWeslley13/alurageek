@@ -17,7 +17,8 @@ type ThemeCustomizationProps = { children: ReactNode }
 
 export const ThemeCustomization = ({ children }: ThemeCustomizationProps) => {
   const theme = useAppSelector((state) => state.theme.theme)
-  const themePalette = Palette({ theme })
+  const themeInitial = theme === 'dark' ? 'dark' : 'light'
+  const themePalette = Palette({ theme: themeInitial })
   const themeTypography = Typography({
     fontFamily: STYLES.FONTS.fontFamily.RALEWAY,
   })

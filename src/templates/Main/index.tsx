@@ -7,7 +7,7 @@ export const Main = () => {
   if (pathname === '/') return <Navigate to="/home" />
 
   return (
-    <div>
+    <>
       <NavBar />
 
       <main>
@@ -16,6 +16,6 @@ export const Main = () => {
 
       <FooterBar />
       <Footer />
-    </div>
+    </>
   )
 }

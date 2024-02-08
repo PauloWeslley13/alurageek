@@ -1,9 +1,9 @@
 import { useParams } from 'react-router-dom'
 import { Typography } from '@mui/material'
 import { useAppSelector } from '@/store/hook/useRedux'
-import * as S from './product-detail-styles'
 import { ProductsList } from '@/components/layout'
 import { FONTS } from '@/styles'
+import * as S from './product-detail-styles'
 
 export const ProductDetail = () => {
   const params = useParams()

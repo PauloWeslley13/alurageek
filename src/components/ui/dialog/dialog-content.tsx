@@ -1,21 +1,12 @@
 import { ComponentProps, ReactNode } from 'react'
-import { styled } from '@mui/material'
-import MuiDialogContent, {
-  DialogContentProps as MuiDialogContentProps,
-} from '@mui/material/DialogContent'
+import * as S from './dialog-styles'
 
-const DialogBody = styled(MuiDialogContent)<MuiDialogContentProps>(
-  ({ theme }) => ({
-    background: theme.palette.background.default,
-  }),
-)
-
-type DialogContentProps = ComponentProps<typeof DialogBody> & {
+type DialogContentProps = ComponentProps<typeof S.DialogBody> & {
   children: ReactNode
 }
 
 const DialogContent = ({ children, ...rest }: DialogContentProps) => (
-  <DialogBody {...rest}>{children}</DialogBody>
+  <S.DialogBody {...rest}>{children}</S.DialogBody>
 )
 
 export default DialogContent

@@ -13,13 +13,15 @@ export const Button = styled(BaseButton)(
 
   transition: all 150ms ease-in-out;
   border-radius: 5px;
-  border: 1px solid ${theme.palette.primary.main};
+  border: 1px solid ${theme.palette.primary.light};
   box-shadow: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+  text-transform: uppercase;
+  letter-spacing: ${FONTS.letterSpacings.widest};
 
   &:hover {
-    background-color: ${alpha(theme.palette.primary.contrastText, 0.2)};
-    border-color: ${theme.palette.primary.contrastText};
-    color: ${theme.palette.primary.dark};
+    background-color: ${alpha(theme.palette.primary.main, 0.1)};
+    border-color: ${theme.palette.primary.light};
+    color: ${theme.palette.primary.main};
   }
 
   &.${buttonClasses.active} {

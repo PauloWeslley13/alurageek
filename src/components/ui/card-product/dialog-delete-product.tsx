@@ -1,4 +1,4 @@
-import { Theme, alpha, useTheme } from '@mui/material'
+import { alpha, useTheme } from '@mui/material'
 import Button from '@mui/material/Button'
 import DeleteIcon from '@mui/icons-material/Delete'
 import IconButton from '@mui/material/IconButton'
@@ -21,9 +21,10 @@ export const DialogDeleteProduct = ({ product }: DialogDeleteProductProps) => {
       <IconButton
         onClick={handleOpenDialog}
         sx={{
-          color: (theme: Theme) => theme.palette.primary.contrastText,
+          color: theme.palette.primary.main,
 
           ':hover': {
+            color: theme.palette.primary.dark,
             background: alpha(COLORS.zinc[50], 0.3),
           },
         }}

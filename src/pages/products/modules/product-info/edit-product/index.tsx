@@ -1,13 +1,16 @@
 import { useTheme } from '@mui/material'
 import { Button, InputField } from '@/components/ui'
-import { useCreateProduct } from '../create-product/useCreateProduct'
+import { EditProductProps } from './edit-product-props'
+import { useEditProduct } from './useEditProduct'
 
-export const EditProduct = () => {
-  const { errors, register, handleSubmit, createdProduct } = useCreateProduct()
+export const EditProduct = ({ product }: EditProductProps) => {
+  const { errors, register, handleSubmit, updatedProduct } = useEditProduct({
+    product,
+  })
   const theme = useTheme()
 
   return (
-    <form onSubmit={handleSubmit(createdProduct)}>
+    <form onSubmit={handleSubmit(updatedProduct)}>
       <InputField
         {...register('url')}
         type="text"
@@ -53,6 +56,7 @@ export const EditProduct = () => {
         label="Cadastrar"
         type="submit"
         sx={{
+          alignSelf: 'center',
           background: theme.palette.primary.main,
           color: theme.palette.common.white,
           width: theme.spacing(40),

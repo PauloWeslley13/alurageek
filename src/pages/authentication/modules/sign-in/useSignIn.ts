@@ -3,7 +3,7 @@ import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { toasts } from '@/components/ui'
 import { useAppDispatch } from '@/store/hook/useRedux'
-import { handleSignIn } from '@/store/reducers/user'
+import { handleSignIn } from '@/store/reducers'
 
 export const schemaSignIn = z.object({
   email: z.string().email({ message: 'Informe um email válido' }),

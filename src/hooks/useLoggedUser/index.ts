@@ -1,6 +1,6 @@
 import { useEffect } from 'react'
 import { useAppDispatch, useAppSelector } from '@/store/hook/useRedux'
-import { fetchUser } from '@/store/reducers/user'
+import { fetchUser } from '@/store/reducers/user/user'
 
 export const useLoggedUser = () => {
   const dispatch = useAppDispatch()

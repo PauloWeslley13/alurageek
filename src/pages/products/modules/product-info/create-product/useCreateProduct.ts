@@ -5,7 +5,7 @@ import {
   schemaProduct,
 } from '@/components/types/products-props'
 import { useAppDispatch } from '@/store/hook/useRedux'
-import { createProduct } from '@/store/reducers/products'
+import { createProduct } from '@/store/reducers'
 
 export const useCreateProduct = () => {
   const dispatch = useAppDispatch()

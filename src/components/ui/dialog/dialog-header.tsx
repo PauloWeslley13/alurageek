@@ -1,21 +1,29 @@
-import { Theme } from '@mui/material'
-import DialogTitle from '@mui/material/DialogTitle'
+import { ComponentProps, ReactNode } from 'react'
 import Typography from '@mui/material/Typography'
-import { ComponentProps } from 'react'
+import * as S from './dialog-styles'
+import { FONTS } from '@/styles'
 
-type DialogHeaderProps = ComponentProps<typeof DialogTitle> & {
+type DialogHeaderProps = ComponentProps<typeof S.DialogHead> & {
   title: string
+  children?: ReactNode
 }
 
-const DialogHeader = ({ title, ...rest }: DialogHeaderProps) => (
-  <DialogTitle
-    {...rest}
-    sx={{ background: (theme: Theme) => theme.palette.background.default }}
-  >
-    <Typography variant="h4" color="primary">
+const DialogHeader = ({ title, children, ...rest }: DialogHeaderProps) => (
+  <S.DialogHead {...rest}>
+    <Typography
+      component="h3"
+      variant="h4"
+      color="primary"
+      sx={{
+        fontSize: FONTS.fontSizes.xl,
+        fontWeight: FONTS.fontWeight.bold,
+      }}
+    >
       {title}
     </Typography>
-  </DialogTitle>
+
+    {children}
+  </S.DialogHead>
 )
 
 export default DialogHeader

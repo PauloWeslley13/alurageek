@@ -15,7 +15,7 @@ export const Avatar = ({ user, ...rest }: AvatarProps) => {
         anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
         variant="dot"
       >
-        <MuiAvatar {...rest} alt={user} src={user} />
+        <S.Avatar {...rest} alt={user} src={user} />
       </S.Badge>
     </Stack>
   )

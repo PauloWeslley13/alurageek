@@ -3,7 +3,7 @@ import { Alert, Button, InputField } from '@/components/ui'
 import { useSignUp } from './useSignUp'
 
 export const SignUp = () => {
-  const { register, handleSubmit, signUp, errors } = useSignUp()
+  const { register, handleSubmit, signUp, errors, alertSignUp } = useSignUp()
   const theme = useTheme()
 
   return (
@@ -36,7 +36,7 @@ export const SignUp = () => {
       <Button
         label="Cadastrar"
         type="submit"
-        onClick={alert}
+        onClick={alertSignUp}
         sx={{
           background: theme.palette.primary.main,
           color: theme.palette.common.white,

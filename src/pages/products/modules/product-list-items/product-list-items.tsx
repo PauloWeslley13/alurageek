@@ -4,8 +4,8 @@ import { ProductsList } from '@/components/layout'
 import { Button } from '@/components/ui'
 
 export const ProductListItems = () => {
-  const theme = useTheme()
   const navigate = useNavigate()
+  const theme = useTheme()
 
   return (
     <ProductsList title="Todos los produtos">
@@ -15,8 +15,8 @@ export const ProductListItems = () => {
         sx={{
           background: theme.palette.primary.main,
           color: theme.palette.common.white,
-          borderColor: theme.palette.primary.dark,
-          width: theme.spacing(45),
+          borderColor: theme.palette.primary.light,
+          width: theme.spacing(50),
           height: theme.spacing(10),
         }}
       />

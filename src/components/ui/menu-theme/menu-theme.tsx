@@ -3,7 +3,7 @@ import { Menu } from '@mui/base/Menu'
 import DarkModeIcon from '@mui/icons-material/DarkMode'
 import LightModeIcon from '@mui/icons-material/LightMode'
 import { useAppDispatch, useAppSelector } from '@/store/hook/useRedux'
-import { setTheme } from '@/store/reducers/themes'
+import { setTheme } from '@/store/reducers/themes/themes'
 import * as S from './menu-theme-styled'
 
 export function MenuTheme() {

@@ -40,11 +40,13 @@ export const CardProduct = ({ card }: CardProductProps) => {
           {price}
         </Typography>
 
-        <Btn
-          label="Ver producto"
-          sx={{ border: 'none' }}
-          onClick={() => navigate(`/product/detail/${id}`)}
-        />
+        <div>
+          <Btn
+            label="Ver producto"
+            onClick={() => navigate(`/product/detail/${id}`)}
+            sx={{ border: 'none' }}
+          />
+        </div>
       </div>
     </S.CardProduct>
   )

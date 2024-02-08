@@ -5,8 +5,8 @@ import { Header, ProductsList } from '@/components/layout'
 import { Btn } from '@/components/ui'
 
 export const Home = () => {
-  const theme = useTheme()
   const navigate = useNavigate()
+  const theme = useTheme()
 
   return (
     <section>
