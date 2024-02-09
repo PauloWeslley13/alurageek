@@ -1,6 +1,5 @@
 import { PaletteOptions } from '@mui/material'
-import { deepPurple, indigo, purple } from '@mui/material/colors'
-import { COLORS } from '@/styles'
+import { COLORS, LIGHT, DARK } from '@/styles'
 
 type PaletteProps = { theme: 'light' | 'dark' }
 
@@ -11,20 +10,27 @@ export const Palette = ({ theme }: PaletteProps): PaletteOptions => ({
     white: COLORS.white,
   },
   primary: {
-    main: theme === 'light' ? indigo[500] : COLORS.violet[500],
-    light: theme === 'light' ? indigo[300] : COLORS.violet[300],
-    dark: theme === 'light' ? indigo[800] : COLORS.violet[800],
-    contrastText: theme === 'light' ? indigo.A100 : COLORS.violet[100],
+    main: theme === 'light' ? LIGHT.primary.main : DARK.primary.main,
+    light: theme === 'light' ? LIGHT.primary.light : DARK.primary.light,
+    dark: theme === 'light' ? LIGHT.primary.dark : DARK.primary.dark,
+    contrastText:
+      theme === 'light'
+        ? LIGHT.primary.contrastText
+        : DARK.primary.contrastText,
   },
   secondary: {
-    main: theme === 'light' ? deepPurple[500] : purple[500],
-    light: theme === 'light' ? deepPurple[300] : purple[300],
-    dark: theme === 'light' ? deepPurple[800] : purple[800],
-    contrastText: theme === 'light' ? deepPurple.A100 : purple.A100,
+    main: theme === 'light' ? LIGHT.secondary.main : DARK.secondary.main,
+    light: theme === 'light' ? LIGHT.secondary.light : DARK.secondary.light,
+    dark: theme === 'light' ? LIGHT.secondary.dark : DARK.secondary.dark,
+    contrastText:
+      theme === 'light'
+        ? LIGHT.secondary.contrastText
+        : DARK.secondary.contrastText,
   },
   background: {
-    paper: theme === 'light' ? COLORS.bunker[300] : COLORS.zinc[300],
-    default: theme === 'light' ? indigo[50] : COLORS.zinc[200],
+    paper: theme === 'light' ? LIGHT.background.paper : DARK.background.paper,
+    default:
+      theme === 'light' ? LIGHT.background.default : DARK.background.default,
   },
   grey: {
     50: COLORS.zinc[50],

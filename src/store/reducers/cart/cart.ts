@@ -2,7 +2,7 @@ import { PayloadAction, createSlice } from '@reduxjs/toolkit'
 import { addDoc } from 'firebase/firestore'
 import { ProductsProps } from '@/components/types/products-props'
 import { toasts } from '@/components/ui'
-import { CartType, ProductToCartProps } from '@/components/types'
+import { CartType } from '@/components/types'
 import { collectionCarts } from '@/config/firebase/collections'
 
 type QuantityProps = {
@@ -15,7 +15,7 @@ type AddToCartProps = {
   product: ProductsProps
 }
 
-const INITIAL_STATE: CartType[] = []
+const INITIAL_STATE = {} as CartType
 
 const cartSlice = createSlice({
   name: 'cart',
@@ -24,30 +24,22 @@ const cartSlice = createSlice({
     addToCart: (state, { payload }: PayloadAction<AddToCartProps>) => {
       console.log(state)
 
-      const productToCart = {
-        ...payload.product,
-        quantity: 1,
-      } satisfies ProductToCartProps
-
       const cart = {
         userId: payload.userId,
-        data: [productToCart],
+        data: [...state.data, { ...payload.product, quantity: 1 }],
         totalPrice: 0,
       } satisfies CartType
 
+      const existProductCart = state.data.find(
+        (prod) => prod.id === payload.product.id,
+      )
+
+      console.log(existProductCart)
+
       const addProductToCart = async () => {
-        const isProductCart = state.some(
-          (prod) => prod.userId === payload.userId,
-        )
+        console.log(existProductCart)
 
-        const indexProductCart = state.findIndex(
-          (prod) => prod.userId === payload.userId,
-        )
-
-        console.log(indexProductCart)
-        console.log(isProductCart)
-
-        if (indexProductCart !== -1) {
+        if (existProductCart) {
           toasts.error({ title: 'Produto já no carinho' })
           return
         }
@@ -64,7 +56,7 @@ const cartSlice = createSlice({
           })
       }
 
-      addProductToCart()
+      // addProductToCart()
     },
     removeToCart: (state, { payload }: PayloadAction<ProductsProps>) => {
       console.log(state)
@@ -76,7 +68,7 @@ const cartSlice = createSlice({
     decrementQuantity: (_, { payload }: PayloadAction<QuantityProps>) => {
       console.log(payload)
     },
-    getCart: (_, { payload }: PayloadAction<CartType[]>) => {
+    getCart: (_, { payload }: PayloadAction<CartType>) => {
       console.log(payload)
       return payload
     },
