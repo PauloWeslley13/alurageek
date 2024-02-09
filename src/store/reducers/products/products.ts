@@ -23,9 +23,8 @@ const productsSlice = createSlice({
   initialState: INITIAL_STATE,
   reducers: {
     createProduct: (state, { payload }: PayloadAction<SchemaProductProps>) => {
-      const productsRef = collection(db, 'products')
-
       const created = async () => {
+        const productsRef = collection(db, 'products')
         const exists = state.findIndex((prod) => prod.name === payload.name)
 
         if (exists !== -1) {

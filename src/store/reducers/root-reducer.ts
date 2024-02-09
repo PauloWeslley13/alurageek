@@ -1,4 +1,5 @@
 import {
+  cartReducer,
   productsReducer,
   searchReducer,
   themesReducer,
@@ -10,6 +11,7 @@ const rootReducer = {
   products: productsReducer,
   user: userReducer,
   search: searchReducer,
+  cart: cartReducer,
 }
 
 export { rootReducer }

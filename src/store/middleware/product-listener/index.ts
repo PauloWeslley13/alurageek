@@ -1,7 +1,7 @@
 import { createListenerMiddleware } from '@reduxjs/toolkit'
 import { loadProduct } from '@/store/actions'
-import productsService from '@/services/get-products'
 import { getProducts } from '@/store/reducers'
+import productsService from '@/services/get-products'
 
 const listenerProduct = createListenerMiddleware()
 

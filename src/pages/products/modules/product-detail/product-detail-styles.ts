@@ -6,7 +6,7 @@ export const ProductContainer = styled('div')(({ theme }) => ({
   gridTemplateRows: 'auto',
   columnGap: theme.spacing(2),
 
-  margin: theme.spacing(22, 65.5),
+  margin: theme.spacing(22, 72.5),
 
   [theme.breakpoints.down('sm')]: {
     gridTemplateColumns: '1fr',

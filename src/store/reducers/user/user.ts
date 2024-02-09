@@ -64,7 +64,6 @@ const usersSlice = createSlice({
     handleSignIn: (state, { payload }: PayloadAction<SignInProps>) => {
       const { email, password } = payload
 
-      state.isLogged = true
       const signIn = async () => {
         try {
           const authResponse = await signInWithEmailAndPassword(
@@ -87,6 +86,7 @@ const usersSlice = createSlice({
       }
 
       signIn()
+      state.isLogged = true
     },
     logout: (state) => {
       state.isLogged = false

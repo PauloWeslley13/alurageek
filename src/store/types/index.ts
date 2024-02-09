@@ -1,4 +1,4 @@
-import { store } from '..'
+import { store } from '../index'
 
 type GetStateType = typeof store.getState
 

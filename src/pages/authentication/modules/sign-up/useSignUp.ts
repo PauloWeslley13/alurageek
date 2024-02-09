@@ -1,3 +1,4 @@
+import { useNavigate } from 'react-router-dom'
 import { z } from 'zod'
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
@@ -15,6 +16,7 @@ export type SignUpProps = z.infer<typeof schemaSignUp>
 
 export const useSignUp = () => {
   const dispatch = useAppDispatch()
+  const navigate = useNavigate()
   const {
     reset,
     register,
@@ -26,12 +28,9 @@ export const useSignUp = () => {
     resolver: zodResolver(schemaSignUp),
   })
 
-  console.log(errors)
-
   const signUp = (data: SignUpProps) => {
-    console.log(data)
     dispatch(handleSignUp(data))
-
+    navigate('/home')
     reset()
   }
 

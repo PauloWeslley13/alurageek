@@ -3,6 +3,7 @@ import { loadUser } from '@/store/actions'
 import usersService from '@/services/get-users'
 import { getUserLogged } from '@/store/reducers'
 import { RootState } from '@/store/types'
+import { auth } from '@/config/firebase'
 
 const listenerUser = createListenerMiddleware()
 
@@ -26,8 +27,17 @@ listenerUser.startListening({
     const response = await task.result
 
     if (response.status === 'ok') {
-      if (response.value) {
-        dispatch(getUserLogged({ user: response.value, isLogged: true }))
+      const userCurrent = auth.currentUser
+
+      if (response.value && userCurrent) {
+        const userAuth = {
+          id: userCurrent.uid,
+          username: response.value.username,
+          email: response.value.email,
+          password: response.value.password,
+        }
+
+        dispatch(getUserLogged({ user: userAuth, isLogged: true }))
       }
     }
   },
