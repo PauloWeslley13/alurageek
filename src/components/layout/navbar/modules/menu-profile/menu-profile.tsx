@@ -25,6 +25,7 @@ export const MenuProfile = () => {
         aria-expanded={open ? 'true' : undefined}
         onClick={handleOpenDialog}
         user={user.username}
+        src={user.photoUrl}
         sx={{ cursor: 'pointer' }}
       />
       <Dialog.Root

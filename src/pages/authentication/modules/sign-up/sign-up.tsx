@@ -32,6 +32,14 @@ export const SignUp = () => {
         error={!!errors.password?.message}
         helperText={errors.password?.message}
       />
+      <InputField
+        {...register('photoUrl')}
+        type="text"
+        label="Foto"
+        placeholder="Informe a url da foto"
+        error={!!errors.password?.message}
+        helperText={errors.password?.message}
+      />
 
       <Button
         label="Cadastrar"

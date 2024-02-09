@@ -1,9 +1,10 @@
-import { PayloadAction, createAsyncThunk, createSlice } from '@reduxjs/toolkit'
+import { PayloadAction, createSlice } from '@reduxjs/toolkit'
 import { UsersProps } from '@/components/types/users-props'
 import {
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
   signOut,
+  updateProfile,
 } from 'firebase/auth'
 import { FirebaseError } from 'firebase/app'
 import { collectionUser } from '@/config/firebase/collections'
@@ -12,23 +13,20 @@ import { auth } from '@/config/firebase'
 import { doc, setDoc } from 'firebase/firestore'
 import { toasts } from '@/components/ui'
 import { SignInProps } from '@/pages/authentication/modules/sign-in/useSignIn'
-import { setLocalStorage } from './functions/set-local-storage'
+import { saveUserInLocalStorage } from './functions/save-user-in-local-storage'
 import { dataUserLocalStorageKey } from '@/constants/local-storage-key'
-import usersService from '@/services/get-users'
 
 type UserType = {
   user: UsersProps
   isLogged: boolean
 }
 
-const fetchUser = createAsyncThunk('user/get', usersService.get)
-
 const INITIAL_STATE: UserType = {
   user: {} as UsersProps,
   isLogged: false,
 }
 
-const usersSlice = createSlice({
+const userSlice = createSlice({
   name: 'user',
   initialState: INITIAL_STATE,
   reducers: {
@@ -44,7 +42,19 @@ const usersSlice = createSlice({
           )
           const uid = authResponse.user.uid
           const docRef = doc(collectionUser, uid)
+          const userStorage = {
+            uid,
+            username: payload.username,
+          }
 
+          await updateProfile(authResponse.user, {
+            displayName: payload.username,
+            photoURL: payload.photoUrl,
+          })
+            .then(() => console.log('Updated profile'))
+            .catch((err) => console.log(err))
+
+          saveUserInLocalStorage(userStorage)
           await setDoc(docRef, payload)
           toasts.success({ title: 'Usuário cadastrado' })
         } catch (error: unknown) {
@@ -61,23 +71,25 @@ const usersSlice = createSlice({
 
       signUp()
     },
-    handleSignIn: (state, { payload }: PayloadAction<SignInProps>) => {
+    handleSignIn: (_, { payload }: PayloadAction<SignInProps>) => {
       const { email, password } = payload
 
       const signIn = async () => {
         try {
-          const authResponse = await signInWithEmailAndPassword(
-            auth,
-            email,
-            password,
-          )
-          const uid = authResponse.user.uid
-          await setLocalStorage(uid)
+          const data = await signInWithEmailAndPassword(auth, email, password)
+
+          const signInUserStorage = {
+            uid: data.user.uid,
+            username: data.user.displayName!,
+          }
+
+          saveUserInLocalStorage(signInUserStorage)
+
           toasts.success({ title: 'Usuário logado' })
         } catch (error: unknown) {
           if (error instanceof FirebaseError) {
             if (error.code === 'auth/invalid-credential') {
-              toasts.error({ title: 'Credenciais inválidas' })
+              toasts.error({ title: 'Usuário inválido' })
               return
             }
           }
@@ -86,11 +98,26 @@ const usersSlice = createSlice({
       }
 
       signIn()
-      state.isLogged = true
+
+      const userSaved = auth.currentUser
+
+      if (userSaved) {
+        const userAuthenticated: UsersProps = {
+          id: userSaved.uid,
+          username: userSaved.displayName!,
+          photoUrl: userSaved.photoURL!,
+          ...payload,
+        }
+
+        return {
+          user: userAuthenticated,
+          isLogged: true,
+        }
+      }
     },
     logout: (state) => {
       state.isLogged = false
-      async function handleLogout() {
+      const handleLogout = async () => {
         await signOut(auth)
           .then(() => {
             localStorage.removeItem(dataUserLocalStorageKey)
@@ -107,7 +134,6 @@ const usersSlice = createSlice({
   },
 })
 
-export { fetchUser }
 export const { handleSignUp, handleSignIn, logout, getUserLogged } =
-  usersSlice.actions
-export const userReducer = usersSlice.reducer
+  userSlice.actions
+export const userReducer = userSlice.reducer

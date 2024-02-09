@@ -1,11 +1,5 @@
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit'
-import {
-  addDoc,
-  collection,
-  deleteDoc,
-  doc,
-  updateDoc,
-} from 'firebase/firestore'
+import { addDoc, deleteDoc, doc, updateDoc } from 'firebase/firestore'
 import {
   ProductsProps,
   SchemaProductProps,
@@ -13,6 +7,7 @@ import {
 import { db } from '@/config/firebase'
 import { toasts } from '@/components/ui'
 import productsService from '@/services/get-products'
+import { collectionProducts } from '@/config/firebase/collections'
 
 const fetchProducts = createAsyncThunk('products/get', productsService.get)
 
@@ -24,15 +19,14 @@ const productsSlice = createSlice({
   reducers: {
     createProduct: (state, { payload }: PayloadAction<SchemaProductProps>) => {
       const created = async () => {
-        const productsRef = collection(db, 'products')
-        const exists = state.findIndex((prod) => prod.name === payload.name)
+        const isProduct = state.findIndex((prod) => prod.name === payload.name)
 
-        if (exists !== -1) {
+        if (isProduct !== -1) {
           toasts.success({ title: 'Produto já cadastrado' })
           return
         }
 
-        await addDoc(productsRef, { ...payload })
+        await addDoc(collectionProducts, { ...payload })
           .then(() => {
             toasts.success({ title: 'Produto cadastrado' })
           })

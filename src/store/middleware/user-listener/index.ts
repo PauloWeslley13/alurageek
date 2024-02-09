@@ -4,6 +4,8 @@ import usersService from '@/services/get-users'
 import { getUserLogged } from '@/store/reducers'
 import { RootState } from '@/store/types'
 import { auth } from '@/config/firebase'
+import { UsersProps } from '@/components/types'
+import { toasts } from '@/components/ui'
 
 const listenerUser = createListenerMiddleware()
 
@@ -19,8 +21,9 @@ listenerUser.startListening({
       const userLogged = localStorage.getItem('@userData')
 
       if (userLogged) {
-        const getUserUid: string = JSON.parse(userLogged)
-        return await usersService.get(getUserUid)
+        const getUserUid = JSON.parse(userLogged)
+
+        return await usersService.get(getUserUid.uid)
       }
     })
 
@@ -30,15 +33,20 @@ listenerUser.startListening({
       const userCurrent = auth.currentUser
 
       if (response.value && userCurrent) {
-        const userAuth = {
+        const userAuth: UsersProps = {
           id: userCurrent.uid,
           username: response.value.username,
           email: response.value.email,
           password: response.value.password,
+          photoUrl: response.value.photoUrl,
         }
 
         dispatch(getUserLogged({ user: userAuth, isLogged: true }))
       }
+    }
+
+    if (response.status === 'rejected') {
+      toasts.error({ title: 'Não foi possível buscar dados do usuário' })
     }
   },
 })

@@ -13,7 +13,7 @@ const App = () => {
 
   useEffect(() => {
     if (getThemeLocalStorage) {
-      const getTheme = JSON.parse(getThemeLocalStorage)
+      const getTheme: string = JSON.parse(getThemeLocalStorage)
       const initialTheme = getTheme || 'light'
 
       dispatch(loadUser())

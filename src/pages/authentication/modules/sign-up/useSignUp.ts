@@ -8,8 +8,9 @@ import { toasts } from '@/components/ui'
 
 export const schemaSignUp = z.object({
   email: z.string().email({ message: 'Informe um email válido' }),
-  password: z.string().min(6, { message: 'Informe uma senha válida' }),
   username: z.string().min(1, { message: 'Informe seu nome' }),
+  password: z.string().min(6, { message: 'Informe uma senha válida' }),
+  photoUrl: z.string().min(1, { message: 'Informe uma url válida' }),
 })
 
 export type SignUpProps = z.infer<typeof schemaSignUp>
@@ -38,7 +39,8 @@ export const useSignUp = () => {
     if (
       errors.email?.message &&
       errors.password?.message &&
-      errors.username?.message
+      errors.username?.message &&
+      errors.photoUrl?.message
     ) {
       toasts.error({ title: 'Preencha os campos' })
     }

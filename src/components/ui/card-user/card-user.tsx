@@ -12,14 +12,17 @@ import { FONTS } from '@/styles'
 export const CardUser = () => {
   const { user } = useAppSelector((state) => state.user)
   const dispatch = useAppDispatch()
-  console.log(user)
 
   const handleLogout = () => dispatch(logout())
 
   return (
     <Card elevation={0} sx={{ maxWidth: 345, background: 'transparent' }}>
       <Stack alignItems="center" justifyContent="center">
-        <Avatar user={user.username} sx={{ width: 56, height: 56 }} />
+        <Avatar
+          user={user.username}
+          src={user.photoUrl}
+          sx={{ width: 75, height: 75 }}
+        />
       </Stack>
       <CardContent sx={{ textAlign: 'center' }}>
         <Typography

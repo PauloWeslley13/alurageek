@@ -4,4 +4,5 @@ export * from './products/products'
 export * from './search/search'
 export * from './cart/cart'
 
+/** ROOT REDUCER */
 export * from './root-reducer'

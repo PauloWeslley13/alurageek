@@ -1,7 +1,7 @@
 import { createAction } from '@reduxjs/toolkit'
 
-const loadUser = createAction('user/loadUser')
 const loadCart = createAction('cart/loadCart')
 const loadProduct = createAction('product/loadProduct')
+const loadUser = createAction('user/loadUser')
 
-export { loadUser, loadProduct, loadCart }
+export { loadProduct, loadCart, loadUser }
