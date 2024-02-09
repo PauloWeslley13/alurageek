@@ -10,6 +10,14 @@ export const Container = styled('div')(({ theme }) => ({
     alignItems: 'center',
     marginTop: theme.spacing(2),
   },
+
+  [theme.breakpoints.down('sm')]: {
+    marginInline: theme.spacing(1),
+  },
+
+  [theme.breakpoints.down('md')]: {
+    marginInline: theme.spacing(6),
+  },
 }))
 
 export const Products = styled('div')(({ theme }) => ({

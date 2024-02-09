@@ -2,43 +2,42 @@ import { Typography, useTheme } from '@mui/material'
 import { Button, InputField, SVGLogoIcon } from '@/components/ui'
 import * as S from './footer-styles'
 
-export const FooterBar = () => {
+type FooterBarProps = { footerList: string[] }
+
+export const FooterBar = ({ footerList }: FooterBarProps) => {
   const theme = useTheme()
 
   return (
     <S.FooterBar>
-      <div className="MuiFooterBar">
+      <S.FooterContent>
         <div style={{ flex: 1 }}>
           <SVGLogoIcon />
         </div>
 
         <S.FooterList sx={{ flex: 1 }}>
           <ul>
-            <li>Quienes somos</li>
-            <li>Política de privacidad</li>
-            <li>Programa de fidelidad</li>
-            <li>Nuestras Tiendas</li>
-            <li>Quiero ser franquiciado</li>
-            <li>Anúncie aquí</li>
+            {footerList.map((item, index) => (
+              <li key={index}>{item}</li>
+            ))}
           </ul>
         </S.FooterList>
-      </div>
+      </S.FooterContent>
 
       <S.FooterForm>
         <Typography
           component="h4"
-          variant="h5"
+          variant="h3"
           sx={{ color: theme.palette.primary.dark }}
         >
-          Hable con nosotros
+          Fale Conosco
         </Typography>
 
         <form>
-          <InputField label="Name" placeholder="Informe seu nome" />
-          <InputField label="Message" placeholder="Escribe tu mensaje" />
+          <InputField label="Nome" placeholder="Informe seu nome" />
+          <InputField label="Mensagem" placeholder="Informe sua mensagem" />
 
           <Button
-            label="Enviar mensaje"
+            label="Enviar mensagem"
             sx={{
               background: theme.palette.primary.main,
               color: theme.palette.common.white,

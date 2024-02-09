@@ -7,8 +7,9 @@ import Typography from '@mui/material/Typography'
 import { useAppDispatch, useAppSelector } from '@/store/hook/useRedux'
 import { logout } from '@/store/reducers'
 import { Avatar, Button } from '../index'
+import { FONTS } from '@/styles'
 
-export function CardUser() {
+export const CardUser = () => {
   const { user } = useAppSelector((state) => state.user)
   const dispatch = useAppDispatch()
   console.log(user)
@@ -23,15 +24,19 @@ export function CardUser() {
       <CardContent sx={{ textAlign: 'center' }}>
         <Typography
           gutterBottom
-          variant="h5"
           component="h4"
-          sx={{ color: (theme: Theme) => theme.palette.primary.main }}
+          variant="h4"
+          sx={{
+            color: (theme: Theme) => theme.palette.primary.main,
+            fontSize: FONTS.fontSizes['2xl'],
+            textTransform: 'capitalize',
+          }}
         >
           {user.username}
         </Typography>
         <Typography
           component="span"
-          variant="body2"
+          variant="body1"
           sx={{ color: (theme: Theme) => theme.palette.grey.A700 }}
         >
           {user.email}

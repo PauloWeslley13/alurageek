@@ -23,14 +23,14 @@ type UserType = {
 
 const fetchUser = createAsyncThunk('user/get', usersService.get)
 
-const initialState: UserType = {
+const INITIAL_STATE: UserType = {
   user: {} as UsersProps,
   isLogged: false,
 }
 
 const usersSlice = createSlice({
   name: 'user',
-  initialState,
+  initialState: INITIAL_STATE,
   reducers: {
     handleSignUp: (_, { payload }: PayloadAction<SignUpProps>) => {
       const { email, password } = payload

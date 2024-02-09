@@ -17,6 +17,7 @@ const DialogHeader = ({ title, children, ...rest }: DialogHeaderProps) => (
       sx={{
         fontSize: FONTS.fontSizes.xl,
         fontWeight: FONTS.fontWeight.bold,
+        textTransform: 'capitalize',
       }}
     >
       {title}

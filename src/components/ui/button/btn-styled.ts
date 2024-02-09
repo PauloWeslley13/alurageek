@@ -9,6 +9,7 @@ export const BtnStyled = styled(MuiButton)<MuiButtonProps>(
   font-weight: ${FONTS.fontWeight.bold};
   font-size: ${FONTS.fontSizes.md};
   color: ${theme.palette.primary.main};
+  text-transform: uppercase;
 
   transition: all 150ms ease;
   border-radius: 5px;

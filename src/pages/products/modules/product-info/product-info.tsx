@@ -16,7 +16,7 @@ export const ProductInfo = () => {
           color: theme.palette.primary.dark,
         }}
       >
-        Agregar nuevo producto
+        Cadastrar novo produto
       </Typography>
 
       <CreateProduct />

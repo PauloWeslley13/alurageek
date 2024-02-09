@@ -14,5 +14,21 @@ export const ProductInfoContainer = styled('div')(({ theme }) => ({
     display: 'flex',
     flexDirection: 'column',
     gap: theme.spacing(4),
+
+    [theme.breakpoints.down('md')]: {
+      marginTop: theme.spacing(1),
+      paddingInline: theme.spacing(2),
+    },
+  },
+
+  [theme.breakpoints.down('md')]: {
+    marginTop: theme.spacing(10),
+    marginInline: theme.spacing(5),
+  },
+
+  [theme.breakpoints.down('sm')]: {
+    justifyContent: 'center',
+    marginTop: theme.spacing(5),
+    marginInline: theme.spacing(1),
   },
 }))

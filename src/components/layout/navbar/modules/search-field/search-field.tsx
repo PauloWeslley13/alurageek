@@ -20,7 +20,7 @@ export const SearchField = () => {
   return (
     <InputBar
       type="text"
-      placeholder="¿Qué deseas buscar?"
+      placeholder="O que você quer procurar?"
       value={search}
       onChange={getSearch}
     />

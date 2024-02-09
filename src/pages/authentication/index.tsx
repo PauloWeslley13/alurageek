@@ -23,13 +23,13 @@ export const Authentication = () => {
     <S.Wrapper>
       <Typography
         component="h2"
-        variant="h4"
+        variant="h1"
         sx={{
           color: theme.palette.primary.dark,
           fontSize: FONTS.fontSizes['3xl'],
         }}
       >
-        {signInOrSignUp === 'signIn' ? 'Iniciar Sesión' : 'Cadastra-se'}
+        {signInOrSignUp === 'signIn' ? 'Login' : 'Cadastrar'}
       </Typography>
 
       {signInOrSignUp === 'signIn' ? <SignIn /> : <SignUp />}

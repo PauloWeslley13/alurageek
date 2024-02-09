@@ -9,10 +9,10 @@ export const Header = () => {
   return (
     <S.Heading imageUrl={BannerHeader}>
       <div>
-        <h3>Febrero Promocional</h3>
-        <span>Productos selecionados con 33% de descuento</span>
+        <h3>Fevereiro Promocional</h3>
+        <span>Produtos selecionados com 33% de desconto</span>
         <Button
-          label="Ver Consolas"
+          label="Promoções"
           sx={{
             background: theme.palette.primary.main,
             color: theme.palette.common.white,

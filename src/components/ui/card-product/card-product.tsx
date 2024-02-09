@@ -33,7 +33,10 @@ export const CardProduct = ({ card }: CardProductProps) => {
         <Typography
           component="h2"
           variant="h4"
-          sx={{ color: (theme: Theme) => theme.palette.grey.A700 }}
+          sx={{
+            color: (theme: Theme) => theme.palette.grey.A700,
+            textTransform: 'capitalize',
+          }}
         >
           {name}
         </Typography>
@@ -47,7 +50,7 @@ export const CardProduct = ({ card }: CardProductProps) => {
 
         <div>
           <Btn
-            label="Ver producto"
+            label="Ver produto"
             onClick={() => navigate(`/product/detail/${id}`)}
             sx={{ border: 'none' }}
           />

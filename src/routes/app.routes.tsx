@@ -13,8 +13,8 @@ export const AppRoutes: RouteObject = {
   path: '/',
   element: <Main />,
   children: [
-    { path: 'home', element: <Home /> },
     { path: 'auth', element: <Authentication /> },
+    { path: 'home', element: <Home /> },
     {
       path: 'product',
       element: <Products />,

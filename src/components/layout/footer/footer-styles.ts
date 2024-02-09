@@ -23,10 +23,9 @@ export const FooterBar = styled('footer')(({ theme }) => ({
   padding: theme.spacing(15.4, 75),
   background: theme.palette.mode === 'light' ? COLORS.violet[200] : indigo[100],
 
-  '& .MuiFooterBar': {
-    display: 'flex',
-    flexWrap: 'wrap',
-    gap: theme.spacing(2),
+  [theme.breakpoints.down('md')]: {
+    gridTemplateColumns: '1fr',
+    padding: theme.spacing(5, 10),
   },
 }))
 
@@ -43,6 +42,10 @@ export const FooterList = styled('div')(({ theme }) => ({
       ...theme.typography.h5,
       color: theme.palette.primary.dark,
     },
+
+    [theme.breakpoints.down('md')]: {
+      textAlign: 'center',
+    },
   },
 }))
 
@@ -53,5 +56,23 @@ export const FooterForm = styled('div')(({ theme }) => ({
     display: 'flex',
     flexDirection: 'column',
     gap: theme.spacing(2),
+  },
+
+  [theme.breakpoints.down('md')]: {
+    textAlign: 'center',
+  },
+}))
+
+export const FooterContent = styled('div')(({ theme }) => ({
+  display: 'flex',
+  flexWrap: 'wrap',
+  flexDirection: 'row',
+  gap: theme.spacing(2),
+
+  [theme.breakpoints.down('sm')]: {
+    flexDirection: 'column',
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginBottom: theme.spacing(3),
   },
 }))

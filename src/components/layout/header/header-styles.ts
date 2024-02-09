@@ -27,11 +27,29 @@ export const Heading = styled('header')<HeadingProps>(
       '& h3': {
         ...theme.typography.h1,
         fontSize: FONTS.fontSizes['6xl'],
+
+        [theme.breakpoints.down('sm')]: {
+          textAlign: 'center',
+        },
       },
 
       '& span': {
         ...theme.typography.subtitle1,
       },
+
+      [theme.breakpoints.down('sm')]: {
+        justifyContent: 'center',
+        alignItems: 'center',
+        marginLeft: 0,
+      },
+
+      [theme.breakpoints.down('md')]: {
+        marginLeft: theme.spacing(7),
+      },
+    },
+
+    [theme.breakpoints.down('sm')]: {
+      height: 'auto',
     },
   }),
 )

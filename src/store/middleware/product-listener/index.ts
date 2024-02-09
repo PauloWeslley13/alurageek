@@ -8,11 +8,6 @@ const listenerProduct = createListenerMiddleware()
 listenerProduct.startListening({
   actionCreator: loadProduct,
   effect: async (_, { dispatch, fork }) => {
-    // const state = getState() as RootState
-    // const product = state.products
-
-    // if (product.length === 0) return unsubscribe()
-
     const task = fork(async () => {
       return await productsService.get()
     })

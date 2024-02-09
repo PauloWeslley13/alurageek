@@ -2,7 +2,7 @@ import { createListenerMiddleware } from '@reduxjs/toolkit'
 import { loadUser } from '@/store/actions'
 import usersService from '@/services/get-users'
 import { getUserLogged } from '@/store/reducers'
-import { RootState } from '@/store'
+import { RootState } from '@/store/types'
 
 const listenerUser = createListenerMiddleware()
 

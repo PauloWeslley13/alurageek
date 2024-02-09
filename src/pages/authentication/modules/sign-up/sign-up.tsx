@@ -7,7 +7,7 @@ export const SignUp = () => {
   const theme = useTheme()
 
   return (
-    <form onSubmit={handleSubmit(signUp)}>
+    <form onSubmit={handleSubmit(signUp)} autoComplete="off">
       <InputField
         {...register('username')}
         type="text"

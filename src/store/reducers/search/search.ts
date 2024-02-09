@@ -1,13 +1,13 @@
 import { PayloadAction, createSlice } from '@reduxjs/toolkit'
 
-const initialState: string = ''
+const INITIAL_STATE: string = ''
 
 const searchSlice = createSlice({
   name: 'search',
-  initialState,
+  initialState: INITIAL_STATE,
   reducers: {
     searching: (_, { payload }: PayloadAction<string>) => payload,
-    resetSearch: () => initialState,
+    resetSearch: () => INITIAL_STATE,
   },
 })
 

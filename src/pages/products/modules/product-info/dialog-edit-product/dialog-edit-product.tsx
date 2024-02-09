@@ -63,7 +63,7 @@ export const DialogEditProduct = ({ product }: DialogEditProductProps) => {
             },
           }}
         >
-          <form onSubmit={handleSubmit(updatedProduct)}>
+          <form onSubmit={handleSubmit(updatedProduct)} autoComplete="off">
             <InputField
               {...register('url')}
               type="text"

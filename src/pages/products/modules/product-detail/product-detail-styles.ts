@@ -8,10 +8,24 @@ export const ProductContainer = styled('div')(({ theme }) => ({
 
   margin: theme.spacing(22, 65.5),
 
+  [theme.breakpoints.down('sm')]: {
+    gridTemplateColumns: '1fr',
+    margin: theme.spacing(5, 8),
+  },
+
+  [theme.breakpoints.down('md')]: {
+    margin: theme.spacing(4, 7),
+  },
+
   '& img': {
     width: theme.spacing(156.5),
     height: theme.spacing(140.5),
     objectFit: 'cover',
+
+    [theme.breakpoints.down('md')]: {
+      width: '100%',
+      height: 'auto',
+    },
   },
 
   '& .MuiCardProductInfo': {

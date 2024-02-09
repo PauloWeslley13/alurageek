@@ -16,9 +16,11 @@ import productsService from '@/services/get-products'
 
 const fetchProducts = createAsyncThunk('products/get', productsService.get)
 
+const INITIAL_STATE: ProductsProps[] = []
+
 const productsSlice = createSlice({
   name: 'products',
-  initialState: [] as ProductsProps[],
+  initialState: INITIAL_STATE,
   reducers: {
     createProduct: (state, { payload }: PayloadAction<SchemaProductProps>) => {
       const productsRef = collection(db, 'products')
