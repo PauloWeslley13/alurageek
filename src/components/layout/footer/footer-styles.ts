@@ -2,7 +2,12 @@ import { styled } from '@mui/material'
 import { indigo } from '@mui/material/colors'
 import { COLORS } from '@/styles'
 
-export const Footer = styled('footer')(({ theme }) => ({
+export const FooterRootWrap = styled('div')(() => ({
+  display: 'flex',
+  flexDirection: 'column',
+}))
+
+export const FooterBar = styled('footer')(({ theme }) => ({
   display: 'flex',
   justifyContent: 'center',
   alignItems: 'center',
@@ -13,7 +18,7 @@ export const Footer = styled('footer')(({ theme }) => ({
   background: COLORS.zinc[100],
 }))
 
-export const FooterBar = styled('footer')(({ theme }) => ({
+export const FooterBody = styled('footer')(({ theme }) => ({
   display: 'grid',
   gridTemplateColumns: '1fr 545px',
   gridTemplateRows: 'auto',

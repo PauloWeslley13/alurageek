@@ -18,8 +18,8 @@ export const CartItemContent = styled('div')(({ theme }) => ({
   width: theme.spacing(130),
 
   '& img': {
-    width: theme.spacing(30),
-    height: theme.spacing(30),
+    width: theme.spacing(23),
+    height: theme.spacing(23),
     objectFit: 'cover',
   },
 

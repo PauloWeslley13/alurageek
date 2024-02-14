@@ -1,14 +1,36 @@
-import { ProductsCart } from '@/components/types'
-import { useAppSelector } from '@/store/hook/useRedux'
 import { useMemo } from 'react'
+import { ProductsCart } from '@/components/types'
+import { useAppDispatch, useAppSelector } from '@/store/hook/useRedux'
+import { cartCheckout, handleQuantity, removeToCart } from '@/store/reducers'
 
 export const useCart = () => {
+  const { user } = useAppSelector((state) => state.user)
   const cart = useAppSelector((state) => state.cart)
   const products = useAppSelector((state) => state.products)
+  const dispatch = useAppDispatch()
 
-  const { carts, allItem } = useMemo(() => {
+  console.log(cart)
+
+  const decrementQuantity = (id: string, quantity: number) => {
+    if (quantity >= 1) {
+      dispatch(handleQuantity({ id, quantity: -1 }))
+    }
+  }
+
+  const incrementQuantity = (id: string) => {
+    dispatch(handleQuantity({ id, quantity: +1 }))
+  }
+
+  const handleDeleteItemCart = (id: string) => {
+    dispatch(removeToCart({ id }))
+  }
+
+  const { carts, calcTotal } = useMemo(() => {
+    let totalPrice = 0
+
     const cartReducer = cart.data.reduce((items: ProductsCart[], itemCart) => {
       const item = products.find((item) => item.id === itemCart.id)
+      totalPrice += Number(item?.price) * itemCart.quantity
 
       if (item) {
         items.push({
@@ -20,7 +42,7 @@ export const useCart = () => {
       return items
     }, [])
 
-    return { carts: cartReducer, allItem: cart.totalPrice }
+    return { carts: cartReducer, calcTotal: totalPrice }
   }, [cart, products])
 
   const { data } = useMemo(() => {
@@ -43,9 +65,23 @@ export const useCart = () => {
     return { data }
   }, [carts, products])
 
+  const handleCheckout = () => {
+    const dataCheckout = {
+      userId: user.id,
+      data: carts,
+      totalPrice: calcTotal,
+    }
+
+    dispatch(cartCheckout(dataCheckout))
+  }
+
   return {
     data,
     carts,
-    allItem,
+    calcTotal,
+    incrementQuantity,
+    decrementQuantity,
+    handleDeleteItemCart,
+    handleCheckout,
   }
 }

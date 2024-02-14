@@ -1,6 +1,5 @@
 import { PayloadAction, createSlice } from '@reduxjs/toolkit'
-import { doc, setDoc, updateDoc } from 'firebase/firestore'
-import { ProductsProps } from '@/components/types/products-props'
+import { addDoc, collection, doc, setDoc, updateDoc } from 'firebase/firestore'
 import { toasts } from '@/components/ui'
 import { CartType } from '@/components/types'
 import { db } from '@/config/firebase'
@@ -15,10 +14,10 @@ type AddToCartProps = {
   productId: string
 }
 
-type CartStateProps = Pick<CartType, 'data' | 'totalPrice'>
 type AddCartProps = Pick<CartType, 'userId' | 'data' | 'totalPrice'>
 
-const INITIAL_STATE: CartStateProps = {
+const INITIAL_STATE: CartType = {
+  userId: '',
   data: [],
   totalPrice: 0,
 }
@@ -56,7 +55,8 @@ const cartSlice = createSlice({
           console.log('create')
           await setDoc(cartRef, newCart)
         } else {
-          console.log('update')
+          console.log(state)
+          toasts.warn({ title: 'Não adicionou' })
           await updateDoc(cartRef, { data: updatedCart })
         }
       }
@@ -70,19 +70,33 @@ const cartSlice = createSlice({
           totalPrice: state.totalPrice,
         }
       } else {
-        state = newCart
         addProductToCart()
+        state = newCart
       }
     },
-    removeToCart: (state, { payload }: PayloadAction<ProductsProps>) => {
-      console.log(state)
-      console.log(payload)
+    removeToCart: (state, { payload }: PayloadAction<{ id: string }>) => {
+      const index = state.data.findIndex((item) => item.id === payload.id)
+      state.data.splice(index, 1)
     },
-    incrementQuantity: (_, { payload }: PayloadAction<QuantityProps>) => {
-      console.log(payload)
+    handleQuantity: (state, { payload }: PayloadAction<QuantityProps>) => {
+      state.data.map((itemCart) => {
+        if (itemCart.id === payload.id) itemCart.quantity += payload.quantity
+        return itemCart
+      })
     },
-    decrementQuantity: (_, { payload }: PayloadAction<QuantityProps>) => {
-      console.log(payload)
+    cartCheckout: (state, { payload }: PayloadAction<CartType>) => {
+      const createCartCheckout = async () => {
+        const cartRef = collection(db, 'carts', payload.userId, 'finish-cart')
+        await addDoc(cartRef, payload)
+      }
+
+      if (payload.data.length === 0 || state.data.length === 0) {
+        toasts.warn({ title: 'Não foi possível finaliza a compra ' })
+        console.log('não foi')
+      } else {
+        console.log('chegou')
+        createCartCheckout()
+      }
     },
     getCart: (_, { payload }: PayloadAction<CartType>) => {
       console.log(payload)
@@ -92,5 +106,11 @@ const cartSlice = createSlice({
   },
 })
 
-export const { addToCart, getCart } = cartSlice.actions
+export const {
+  addToCart,
+  removeToCart,
+  getCart,
+  handleQuantity,
+  cartCheckout,
+} = cartSlice.actions
 export const cartReducer = cartSlice.reducer

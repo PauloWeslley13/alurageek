@@ -1,7 +1,11 @@
-import { IconButton, TextField, Theme, Typography } from '@mui/material'
+import { IconButton, Stack, Typography } from '@mui/material'
 import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline'
+import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline'
+import RemoveCircleOutlineIcon from '@mui/icons-material/RemoveCircleOutline'
 import { priceMask } from '@/utils/price-mask'
+import { useCart } from '../../hook/useCart'
 import * as S from './cart-item-styles'
+import { FONTS } from '@/styles'
 
 type CartProductProps = {
   id: string
@@ -18,7 +22,9 @@ type CartItemProps = {
 }
 
 export const CartItem = ({ cartItem }: CartItemProps) => {
-  const { quantity, description, name, photoUrl, price } = cartItem
+  const { id, quantity, description, name, photoUrl, price } = cartItem
+  const { incrementQuantity, decrementQuantity, handleDeleteItemCart } =
+    useCart()
 
   return (
     <S.CartItemWrap>
@@ -27,7 +33,7 @@ export const CartItem = ({ cartItem }: CartItemProps) => {
 
         <div className="MuiCartItem-root">
           <div className="MuiCartItemContent-root">
-            <Typography component="h3" variant="h3">
+            <Typography component="h3" variant="h3" color="black">
               {name}
             </Typography>
             <Typography component="p" variant="body1" color="gray">
@@ -35,21 +41,36 @@ export const CartItem = ({ cartItem }: CartItemProps) => {
             </Typography>
           </div>
 
-          <Typography component="span" variant="h4">
+          <Typography component="span" variant="h4" color="black">
             {priceMask({ value: price })}
           </Typography>
         </div>
       </S.CartItemContent>
 
-      <TextField
-        value={quantity}
-        label="Quantidade"
-        type="number"
-        size="small"
-        sx={{ width: (theme: Theme) => theme.spacing(24) }}
-      />
+      <Stack alignItems="center">
+        <Typography
+          variant="subtitle2"
+          sx={{ fontWeight: FONTS.fontWeight.semibold }}
+        >
+          Quantidade
+        </Typography>
 
-      <IconButton>
+        <Stack flexDirection="row" gap={2}>
+          <RemoveCircleOutlineIcon
+            sx={{ cursor: 'pointer' }}
+            onClick={() => decrementQuantity(id, quantity)}
+          />
+          <Typography sx={{ fontWeight: FONTS.fontWeight.medium }}>
+            {quantity}
+          </Typography>
+          <AddCircleOutlineIcon
+            sx={{ cursor: 'pointer' }}
+            onClick={() => incrementQuantity(id)}
+          />
+        </Stack>
+      </Stack>
+
+      <IconButton onClick={() => handleDeleteItemCart(id)}>
         <DeleteOutlineIcon />
       </IconButton>
     </S.CartItemWrap>

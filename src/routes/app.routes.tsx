@@ -8,11 +8,11 @@ import {
   Cart,
   ProductCreate,
 } from '@/pages'
-import { Main } from '@/templates/main'
+import { RootLayout } from '@/layout/root-layout/layout'
 
 export const AppRoutes: RouteObject = {
   path: '/',
-  element: <Main />,
+  element: <RootLayout />,
   children: [
     { path: 'auth', element: <Authentication /> },
     { path: 'home', element: <Home /> },

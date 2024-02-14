@@ -24,7 +24,6 @@ listenerCart.startListening({
     if (response.status === 'ok') {
       if (response.value) {
         const userCart: CartType = {
-          id: response.value.id,
           data: response.value.data,
           userId: response.value.userId,
           totalPrice: response.value.totalPrice,
