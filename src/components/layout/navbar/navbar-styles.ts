@@ -1,4 +1,18 @@
-import { styled } from '@mui/system'
+import { styled } from '@mui/material'
+import Badge, { BadgeProps } from '@mui/material/Badge'
+
+export const BadgeCart = styled(Badge)<BadgeProps>(({ theme }) => ({
+  color: theme.palette.primary.main,
+
+  '& .MuiBadge-badge': {
+    right: -3,
+    top: 14,
+    border: `2px solid ${theme.palette.background.paper}`,
+    background: theme.palette.warning.light,
+    color: theme.palette.common.black,
+    padding: '9px 6px',
+  },
+}))
 
 export const NavBarWrap = styled('nav')(({ theme }) => ({
   padding: theme.spacing(5.5),

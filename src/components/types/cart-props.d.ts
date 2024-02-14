@@ -1,7 +1,13 @@
+type ProductsCart = {
+  id: string
+  quantity: number
+}
+
 type CartType = {
+  id: string
   userId: string
-  data: ProductToCartProps[]
+  data: ProductsCart[]
   totalPrice: number
 }
 
-export { CartType }
+export { CartType, ProductsCart }

@@ -1,8 +1,9 @@
 import { createListenerMiddleware } from '@reduxjs/toolkit'
-import { loadCart } from '@/store/actions'
+import { loadCart } from '@/store/actions/actions'
 import { getCart } from '@/store/reducers'
+import { RootState } from '@/store/types/types'
 import cartService from '@/services/get-cart'
-import { RootState } from '@/store/types'
+import { CartType } from '@/components/types'
 
 const listenerCart = createListenerMiddleware()
 
@@ -10,7 +11,7 @@ listenerCart.startListening({
   actionCreator: loadCart,
   effect: async (_, { dispatch, fork, getState }) => {
     const state = getState() as RootState
-    const { user } = state.user
+    const { user, isLogged } = state.user
 
     const task = fork(async () => {
       return await cartService.get(user.id)
@@ -19,8 +20,16 @@ listenerCart.startListening({
     const response = await task.result
 
     if (response.status === 'ok') {
-      console.log('info do carinho ==> ', response.value)
-      dispatch(getCart(response.value))
+      if (response.value && isLogged) {
+        const userCart: CartType = {
+          id: response.value.id,
+          data: response.value.data,
+          userId: response.value.userId,
+          totalPrice: response.value.totalPrice,
+        }
+
+        dispatch(getCart(userCart))
+      }
     }
   },
 })

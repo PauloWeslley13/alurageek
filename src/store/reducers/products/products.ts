@@ -1,4 +1,4 @@
-import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit'
+import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 import { addDoc, deleteDoc, doc, updateDoc } from 'firebase/firestore'
 import {
   ProductsProps,
@@ -6,10 +6,7 @@ import {
 } from '@/components/types/products-props'
 import { db } from '@/config/firebase'
 import { toasts } from '@/components/ui'
-import productsService from '@/services/get-products'
 import { collectionProducts } from '@/config/firebase/collections'
-
-const fetchProducts = createAsyncThunk('products/get', productsService.get)
 
 const INITIAL_STATE: ProductsProps[] = []
 
@@ -80,7 +77,6 @@ const productsSlice = createSlice({
   },
 })
 
-export { fetchProducts }
 export const { createProduct, updateProduct, deleteProduct, getProducts } =
   productsSlice.actions
 export const productsReducer = productsSlice.reducer

@@ -1,11 +1,11 @@
 import { doc, getDoc } from 'firebase/firestore'
-import { collectionUser } from '@/config/firebase/collections'
 import { UsersProps } from '@/components/types/users-props'
+import { db } from '@/config/firebase'
 
 const usersService = {
   get: async (uid: string) => {
-    const docRef = doc(collectionUser, uid)
-    const responseDoc = await getDoc(docRef)
+    const userDocRef = doc(db, 'users', uid)
+    const responseDoc = await getDoc(userDocRef)
     const data = responseDoc.data() as UsersProps
 
     return data

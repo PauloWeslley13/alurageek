@@ -4,7 +4,7 @@ import { Routes } from './routes/routes'
 import { ScrollTop } from './components/scroll-top'
 import { useAppDispatch } from './store/hook/useRedux'
 import { setTheme } from './store/reducers'
-import { loadUser } from './store/actions'
+import { loadCart, loadUser } from './store/actions/actions'
 import 'react-toastify/dist/ReactToastify.css'
 
 const App = () => {
@@ -16,9 +16,11 @@ const App = () => {
       const getTheme: string = JSON.parse(getThemeLocalStorage)
       const initialTheme = getTheme || 'light'
 
-      dispatch(loadUser())
       dispatch(setTheme(initialTheme))
     }
+
+    dispatch(loadCart())
+    dispatch(loadUser())
   }, [dispatch, getThemeLocalStorage])
 
   return (
@@ -27,7 +29,7 @@ const App = () => {
         <Routes />
       </ScrollTop>
       <ToastContainer
-        position="top-center"
+        position="top-right"
         autoClose={5000}
         hideProgressBar={false}
         newestOnTop={false}

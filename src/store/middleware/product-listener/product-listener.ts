@@ -1,5 +1,5 @@
 import { createListenerMiddleware } from '@reduxjs/toolkit'
-import { loadProduct } from '@/store/actions'
+import { loadProduct } from '@/store/actions/actions'
 import { getProducts } from '@/store/reducers'
 import productsService from '@/services/get-products'
 

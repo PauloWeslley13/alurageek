@@ -1,8 +1,10 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
 import { ProductsProps } from '@/components/types/products-props'
 import { useAppDispatch, useAppSelector } from '@/store/hook/useRedux'
 import { addToCart } from '@/store/reducers'
+import { loadCart } from '@/store/actions/actions'
+import { priceMask } from '@/utils/price-mask'
 
 export const useProductDetail = () => {
   const params = useParams()
@@ -14,16 +16,29 @@ export const useProductDetail = () => {
     {} as ProductsProps,
   )
 
+  useEffect(() => {
+    if (product) {
+      setProdDetail({
+        id: product.id,
+        name: product.name,
+        categoria: product.categoria,
+        description: product.description,
+        price: priceMask({ value: product.price }),
+        url: product.url,
+      })
+    }
+
+    dispatch(loadCart())
+  }, [product, setProdDetail, dispatch])
+
   const addProductCart = () => {
     if (product) {
-      dispatch(addToCart({ userId: user.id, product }))
+      dispatch(addToCart({ userId: user.id, productId: product.id }))
     }
   }
 
   return {
-    product,
     prodDetail,
-    setProdDetail,
     addProductCart,
   }
 }

@@ -1,16 +1,25 @@
-import { doc, getDoc } from 'firebase/firestore'
-import { CartType } from '@/components/types'
+import { getDocs, query, where } from 'firebase/firestore'
 import { collectionCarts } from '@/config/firebase/collections'
+import { CartType } from '@/components/types'
 
 const cartService = {
-  get: async (uid: string) => {
-    const docRef = doc(collectionCarts, uid)
-    const responseDoc = await getDoc(docRef)
-    const data = responseDoc.data() as CartType
+  get: async (userId: string) => {
+    const cartList: CartType[] = []
+    const allCart = query(collectionCarts, where('userId', '==', userId))
+    const carts = await getDocs(allCart)
 
-    console.log('função de buscar o carinho ==> ', data)
+    carts.forEach((doc) => {
+      cartList.push({
+        id: doc.id,
+        data: doc.data().data,
+        totalPrice: doc.data().totalPrice,
+        userId: doc.data().userId,
+      } as CartType)
+    })
 
-    return data
+    const dataCart = cartList.find((cart) => cart.userId === userId)
+
+    return dataCart
   },
 }
 

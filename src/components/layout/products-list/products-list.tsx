@@ -3,7 +3,7 @@ import { Stack, Typography, useTheme } from '@mui/material'
 import { CardProduct } from '@/components/ui'
 import { useAppDispatch } from '@/store/hook/useRedux'
 import * as S from './products-list-styles'
-import { loadProduct } from '@/store/actions'
+import { loadProduct } from '@/store/actions/actions'
 import { useProducts } from '@/hooks/useProducts'
 
 type ProductsListProps = {

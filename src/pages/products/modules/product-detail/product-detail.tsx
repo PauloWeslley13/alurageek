@@ -1,35 +1,15 @@
-import { useEffect } from 'react'
 import { Stack, Typography, useTheme } from '@mui/material'
 import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart'
 import { ProductsList } from '@/components/layout'
 import { FONTS } from '@/styles'
-import { priceMask } from '@/utils/price-mask'
 import { Btn } from '@/components/ui'
 import { useProductDetail } from './useProductDetail'
-import { useAppDispatch } from '@/store/hook/useRedux'
-import { loadCart } from '@/store/actions'
 import * as S from './product-detail-styles'
 
 export const ProductDetail = () => {
   const theme = useTheme()
-  const dispatch = useAppDispatch()
-  const { product, prodDetail, setProdDetail, addProductCart } =
-    useProductDetail()
+  const { prodDetail, addProductCart } = useProductDetail()
   const { name, price, description, url } = prodDetail
-
-  useEffect(() => {
-    if (product) {
-      setProdDetail({
-        id: product.id,
-        name: product.name,
-        categoria: product.categoria,
-        description: product.description,
-        price: priceMask({ value: product.price }),
-        url: product.url,
-      })
-    }
-    dispatch(loadCart())
-  }, [product, setProdDetail, dispatch])
 
   return (
     <section>

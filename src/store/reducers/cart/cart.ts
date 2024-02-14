@@ -1,9 +1,10 @@
-import { PayloadAction, createSlice } from '@reduxjs/toolkit'
+import { PayloadAction, createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 import { addDoc } from 'firebase/firestore'
 import { ProductsProps } from '@/components/types/products-props'
 import { toasts } from '@/components/ui'
 import { CartType } from '@/components/types'
 import { collectionCarts } from '@/config/firebase/collections'
+import cartService from '@/services/get-cart'
 
 type QuantityProps = {
   id: string
@@ -12,39 +13,50 @@ type QuantityProps = {
 
 type AddToCartProps = {
   userId: string
-  product: ProductsProps
+  productId: string
 }
 
-const INITIAL_STATE = {} as CartType
+type CartStateProps = Pick<CartType, 'data' | 'totalPrice'>
+type AddCartProps = Pick<CartType, 'userId' | 'data' | 'totalPrice'>
+
+const fetchCart = createAsyncThunk('cart/get', cartService.get)
+
+const INITIAL_STATE: CartStateProps = {
+  data: [],
+  totalPrice: 0,
+}
 
 const cartSlice = createSlice({
   name: 'cart',
   initialState: INITIAL_STATE,
   reducers: {
     addToCart: (state, { payload }: PayloadAction<AddToCartProps>) => {
-      console.log(state)
-
-      const cart = {
-        userId: payload.userId,
-        data: [...state.data, { ...payload.product, quantity: 1 }],
-        totalPrice: 0,
-      } satisfies CartType
-
       const existProductCart = state.data.find(
-        (prod) => prod.id === payload.product.id,
+        (prod) => prod.id === payload.productId,
       )
 
-      console.log(existProductCart)
+      const newCartProduct = {
+        id: payload.productId,
+        quantity: 1,
+      }
+
+      const newCart: AddCartProps = {
+        userId: payload.userId,
+        data: [...state.data, newCartProduct],
+        totalPrice: 0,
+      }
+
+      const existItemCart = state.data.findIndex(
+        (prod) => prod.id === payload.productId,
+      )
 
       const addProductToCart = async () => {
-        console.log(existProductCart)
-
-        if (existProductCart) {
-          toasts.error({ title: 'Produto já no carinho' })
+        if (existItemCart !== -1) {
+          toasts.error({ title: 'Seu produto já esta no carinho' })
           return
         }
 
-        await addDoc(collectionCarts, cart)
+        await addDoc(collectionCarts, newCart)
           .then(() => {
             toasts.success({ title: 'Produto adicionado ao carrinho' })
           })
@@ -56,7 +68,24 @@ const cartSlice = createSlice({
           })
       }
 
-      // addProductToCart()
+      if (existProductCart) {
+        toasts.warn({ title: 'Produto já esta no carinho' })
+
+        const updatedCart = state.data.map((item) =>
+          item.id === payload.productId
+            ? { ...item, quantity: item.quantity + 1 }
+            : item,
+        )
+
+        return {
+          userId: payload.userId,
+          data: updatedCart,
+          totalPrice: state.totalPrice,
+        }
+      } else {
+        state = newCart
+        addProductToCart()
+      }
     },
     removeToCart: (state, { payload }: PayloadAction<ProductsProps>) => {
       console.log(state)
@@ -73,6 +102,11 @@ const cartSlice = createSlice({
       return payload
     },
     resetCart: () => INITIAL_STATE,
+  },
+  extraReducers: (builder) => {
+    builder.addCase(fetchCart.fulfilled, (_, { payload }) => {
+      return payload
+    })
   },
 })
 

@@ -6,6 +6,7 @@ import {
   ProductInfo,
   ProductListItems,
   ProductDetail,
+  Cart,
 } from '@/pages'
 import { Main } from '@/templates/main'
 
@@ -24,5 +25,6 @@ export const AppRoutes: RouteObject = {
         { path: 'detail/:id', element: <ProductDetail /> },
       ],
     },
+    { path: 'cart', element: <Cart /> },
   ],
 }
