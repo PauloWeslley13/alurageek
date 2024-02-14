@@ -2,9 +2,9 @@ import { ReactNode, useEffect } from 'react'
 import { Stack, Typography, useTheme } from '@mui/material'
 import { CardProduct } from '@/components/ui'
 import { useAppDispatch } from '@/store/hook/useRedux'
-import * as S from './products-list-styles'
 import { loadProduct } from '@/store/actions/actions'
 import { useProducts } from '@/hooks/useProducts'
+import * as S from './products-list-styles'
 
 type ProductsListProps = {
   title: string

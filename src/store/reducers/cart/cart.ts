@@ -1,10 +1,9 @@
-import { PayloadAction, createAsyncThunk, createSlice } from '@reduxjs/toolkit'
-import { addDoc } from 'firebase/firestore'
+import { PayloadAction, createSlice } from '@reduxjs/toolkit'
+import { doc, setDoc, updateDoc } from 'firebase/firestore'
 import { ProductsProps } from '@/components/types/products-props'
 import { toasts } from '@/components/ui'
 import { CartType } from '@/components/types'
-import { collectionCarts } from '@/config/firebase/collections'
-import cartService from '@/services/get-cart'
+import { db } from '@/config/firebase'
 
 type QuantityProps = {
   id: string
@@ -18,8 +17,6 @@ type AddToCartProps = {
 
 type CartStateProps = Pick<CartType, 'data' | 'totalPrice'>
 type AddCartProps = Pick<CartType, 'userId' | 'data' | 'totalPrice'>
-
-const fetchCart = createAsyncThunk('cart/get', cartService.get)
 
 const INITIAL_STATE: CartStateProps = {
   data: [],
@@ -46,36 +43,26 @@ const cartSlice = createSlice({
         totalPrice: 0,
       }
 
-      const existItemCart = state.data.findIndex(
-        (prod) => prod.id === payload.productId,
+      const updatedCart = state.data.map((item) =>
+        item.id === payload.productId
+          ? { ...item, quantity: item.quantity + 1 }
+          : item,
       )
 
       const addProductToCart = async () => {
-        if (existItemCart !== -1) {
-          toasts.error({ title: 'Seu produto já esta no carinho' })
-          return
-        }
+        const cartRef = doc(db, 'carts', payload.userId)
 
-        await addDoc(collectionCarts, newCart)
-          .then(() => {
-            toasts.success({ title: 'Produto adicionado ao carrinho' })
-          })
-          .catch((err) => {
-            console.log(err)
-            toasts.error({
-              title: 'Não foi possível adicionar o produto no carrinho',
-            })
-          })
+        if (state.data.length === 0) {
+          console.log('create')
+          await setDoc(cartRef, newCart)
+        } else {
+          console.log('update')
+          await updateDoc(cartRef, { data: updatedCart })
+        }
       }
 
       if (existProductCart) {
         toasts.warn({ title: 'Produto já esta no carinho' })
-
-        const updatedCart = state.data.map((item) =>
-          item.id === payload.productId
-            ? { ...item, quantity: item.quantity + 1 }
-            : item,
-        )
 
         return {
           userId: payload.userId,
@@ -102,11 +89,6 @@ const cartSlice = createSlice({
       return payload
     },
     resetCart: () => INITIAL_STATE,
-  },
-  extraReducers: (builder) => {
-    builder.addCase(fetchCart.fulfilled, (_, { payload }) => {
-      return payload
-    })
   },
 })
 

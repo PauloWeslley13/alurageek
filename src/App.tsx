@@ -12,15 +12,15 @@ const App = () => {
   const getThemeLocalStorage = localStorage.getItem('@appTheme')
 
   useEffect(() => {
+    dispatch(loadCart())
+    dispatch(loadUser())
+
     if (getThemeLocalStorage) {
       const getTheme: string = JSON.parse(getThemeLocalStorage)
       const initialTheme = getTheme || 'light'
 
       dispatch(setTheme(initialTheme))
     }
-
-    dispatch(loadCart())
-    dispatch(loadUser())
   }, [dispatch, getThemeLocalStorage])
 
   return (

@@ -3,7 +3,7 @@ import { useParams } from 'react-router-dom'
 import { ProductsProps } from '@/components/types/products-props'
 import { useAppDispatch, useAppSelector } from '@/store/hook/useRedux'
 import { addToCart } from '@/store/reducers'
-import { loadCart } from '@/store/actions/actions'
+// import { loadCart } from '@/store/actions/actions'
 import { priceMask } from '@/utils/price-mask'
 
 export const useProductDetail = () => {
@@ -28,7 +28,7 @@ export const useProductDetail = () => {
       })
     }
 
-    dispatch(loadCart())
+    // dispatch(loadCart())
   }, [product, setProdDetail, dispatch])
 
   const addProductCart = () => {

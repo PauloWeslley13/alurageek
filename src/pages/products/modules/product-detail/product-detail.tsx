@@ -49,7 +49,7 @@ export const ProductDetail = () => {
         </div>
       </S.ProductContainer>
 
-      <ProductsList title="Productos similares" />
+      <ProductsList title="Produtos similares" />
     </section>
   )
 }

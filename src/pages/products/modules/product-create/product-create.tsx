@@ -1,9 +1,9 @@
 import { Typography, useTheme } from '@mui/material'
-import { CreateProduct } from './create-product'
+import { FormCreateProduct } from './form-create-product/form-create-product'
 import { FONTS } from '@/styles'
-import * as S from './product-info-styles'
+import * as S from './product-create-styles'
 
-export const ProductInfo = () => {
+export const ProductCreate = () => {
   const theme = useTheme()
 
   return (
@@ -19,7 +19,7 @@ export const ProductInfo = () => {
         Cadastrar novo produto
       </Typography>
 
-      <CreateProduct />
+      <FormCreateProduct />
     </S.ProductInfoContainer>
   )
 }

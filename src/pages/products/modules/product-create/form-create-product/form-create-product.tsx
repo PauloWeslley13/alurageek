@@ -2,7 +2,7 @@ import { useTheme } from '@mui/material'
 import { Button, InputField } from '@/components/ui'
 import { useCreateProduct } from './useCreateProduct'
 
-export const CreateProduct = () => {
+export const FormCreateProduct = () => {
   const { errors, register, handleSubmit, createdProduct } = useCreateProduct()
   const theme = useTheme()
 

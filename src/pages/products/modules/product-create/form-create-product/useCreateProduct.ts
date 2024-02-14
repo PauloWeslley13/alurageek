@@ -3,7 +3,7 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import { SchemaProductProps } from '@/components/types/products-props'
 import { useAppDispatch } from '@/store/hook/useRedux'
 import { createProduct } from '@/store/reducers'
-import { schemaProduct } from '../schema-product'
+import { schemaProduct } from '../../schema-product'
 
 export const useCreateProduct = () => {
   const dispatch = useAppDispatch()

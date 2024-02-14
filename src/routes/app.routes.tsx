@@ -3,10 +3,10 @@ import {
   Home,
   Authentication,
   Products,
-  ProductInfo,
   ProductListItems,
   ProductDetail,
   Cart,
+  ProductCreate,
 } from '@/pages'
 import { Main } from '@/templates/main'
 
@@ -20,7 +20,7 @@ export const AppRoutes: RouteObject = {
       path: 'product',
       element: <Products />,
       children: [
-        { path: 'info', element: <ProductInfo /> },
+        { path: 'info', element: <ProductCreate /> },
         { path: 'list', element: <ProductListItems /> },
         { path: 'detail/:id', element: <ProductDetail /> },
       ],
