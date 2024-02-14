@@ -91,7 +91,7 @@ const cartSlice = createSlice({
       }
 
       if (payload.data.length === 0 || state.data.length === 0) {
-        toasts.warn({ title: 'Não foi possível finaliza a compra ' })
+        toasts.warn({ title: 'Não foi possível finaliza a compra' })
         console.log('não foi')
       } else {
         console.log('chegou')
@@ -99,7 +99,6 @@ const cartSlice = createSlice({
       }
     },
     getCart: (_, { payload }: PayloadAction<CartType>) => {
-      console.log(payload)
       return payload
     },
     resetCart: () => INITIAL_STATE,

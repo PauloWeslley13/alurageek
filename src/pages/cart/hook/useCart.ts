@@ -9,8 +9,6 @@ export const useCart = () => {
   const products = useAppSelector((state) => state.products)
   const dispatch = useAppDispatch()
 
-  console.log(cart)
-
   const decrementQuantity = (id: string, quantity: number) => {
     if (quantity >= 1) {
       dispatch(handleQuantity({ id, quantity: -1 }))
