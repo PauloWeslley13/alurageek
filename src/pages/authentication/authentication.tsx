@@ -6,7 +6,7 @@ import * as S from './authentication-styles'
 
 type SignInOrSignUpProps = 'signIn' | 'signUp'
 
-export const Authentication = () => {
+const Authentication = () => {
   const [signInOrSignUp, setSignInOrSignUp] =
     useState<SignInOrSignUpProps>('signIn')
   const theme = useTheme()
@@ -49,3 +49,5 @@ export const Authentication = () => {
     </S.Wrapper>
   )
 }
+
+export default Authentication

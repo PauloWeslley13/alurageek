@@ -1,14 +1,23 @@
+import { lazy } from 'react'
 import { RouteObject } from 'react-router-dom'
-import {
-  Home,
-  Authentication,
-  Products,
-  ProductListItems,
-  ProductDetail,
-  Cart,
-  ProductCreate,
-} from '@/pages'
 import { RootLayout } from '@/layout/root-layout/layout'
+import { Loadable } from '@/components/loadable'
+
+const Home = Loadable(lazy(() => import('@/pages/home')))
+const Cart = Loadable(lazy(() => import('@/pages/cart')))
+const Products = Loadable(lazy(() => import('@/pages/products')))
+const ProductCreate = Loadable(
+  lazy(() => import('@/pages/products/modules/product-create')),
+)
+const ProductDetail = Loadable(
+  lazy(() => import('@/pages/products/modules/product-detail')),
+)
+const ProductListItems = Loadable(
+  lazy(() => import('@/pages/products/modules/product-list-items')),
+)
+const Authentication = Loadable(
+  lazy(() => import('@/pages/authentication/authentication')),
+)
 
 export const AppRoutes: RouteObject = {
   path: '/',

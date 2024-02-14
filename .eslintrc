@@ -7,7 +7,7 @@
   "rules": {
     "@typescript-eslint/no-non-null-asserted-optional-chain": "off",
     "react-refresh/only-export-components": [
-      "warn",
+      "off",
       {
         "allowConstantExport": true
       }

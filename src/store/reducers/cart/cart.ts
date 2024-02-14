@@ -36,11 +36,11 @@ const cartSlice = createSlice({
         quantity: 1,
       }
 
-      const newCart: AddCartProps = {
+      const newCart = {
         userId: payload.userId,
         data: [...state.data, newCartProduct],
         totalPrice: 0,
-      }
+      } satisfies AddCartProps
 
       const updatedCart = state.data.map((item) =>
         item.id === payload.productId
