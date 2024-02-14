@@ -8,7 +8,9 @@ const listenerProduct = createListenerMiddleware()
 listenerProduct.startListening({
   actionCreator: loadProduct,
   effect: async (_, { dispatch, fork }) => {
-    const task = fork(async () => {
+    const task = fork(async (api) => {
+      await api.delay(1000)
+
       return await productsService.get()
     })
 

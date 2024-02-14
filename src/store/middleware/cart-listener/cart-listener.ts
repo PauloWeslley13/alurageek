@@ -9,7 +9,8 @@ const listenerCart = createListenerMiddleware()
 listenerCart.startListening({
   actionCreator: loadCart,
   effect: async (_, { dispatch, fork }) => {
-    const task = fork(async () => {
+    const task = fork(async (api) => {
+      await api.delay(1000)
       const userLogged = localStorage.getItem('@userData')
 
       if (userLogged) {
