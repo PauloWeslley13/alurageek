@@ -73,12 +73,12 @@ export const DialogEditProduct = ({ product }: DialogEditProductProps) => {
               helperText={errors.url?.message}
             />
             <InputField
-              {...register('categoria')}
+              {...register('category')}
               type="text"
               label="Categoría"
               placeholder="Informe a categoría"
-              error={!!errors.categoria?.message}
-              helperText={errors.categoria?.message}
+              error={!!errors.category?.message}
+              helperText={errors.category?.message}
             />
             <InputField
               {...register('name')}

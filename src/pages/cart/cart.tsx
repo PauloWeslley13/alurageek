@@ -1,45 +1,48 @@
-import { useMemo } from 'react'
-import { Stack } from '@mui/material'
-import { useAppSelector } from '@/store/hook/useRedux'
-import { ProductsCart } from '@/components/types'
+import { Stack, Typography, useTheme } from '@mui/material'
+import { CartItem } from './modules'
+import { useCart } from './hook/useCart'
+import * as S from './cart-styles'
+import { Button } from '@/components/ui'
 
 export const Cart = () => {
-  const cart = useAppSelector((state) => state.cart)
-  const products = useAppSelector((state) => state.products)
+  const { carts, data } = useCart()
+  const theme = useTheme()
 
-  const { carts, allItem } = useMemo(() => {
-    const cartReducer = cart.data.reduce((items: ProductsCart[], itemCart) => {
-      const item = products.find((item) => item.id === itemCart.id)
-
-      if (item) {
-        items.push({
-          id: item.id,
-          quantity: itemCart.quantity,
-        })
-      }
-
-      return items
-    }, [])
-
-    return { carts: cartReducer, allItem: cart.totalPrice }
-  }, [cart, products])
-
-  console.log(cart)
   console.log(carts)
-  console.log(allItem)
 
   return (
-    <Stack alignItems="center" justifyContent="center">
-      <div>
-        <ul>
-          {cart.data.map((props) => (
-            <li key={props.id}>
-              <p>{props.id}</p>
-              <span>{props.quantity}</span>
-            </li>
+    <S.CartWrap>
+      <S.CartItemProduct>
+        <Stack
+          sx={{
+            borderBottom: `1px solid ${theme.palette.grey[300]}`,
+            mb: theme.spacing(3),
+          }}
+        >
+          <Typography component="h3" variant="h3" sx={{ py: 5 }}>
+            Carrinho
+          </Typography>
+        </Stack>
+
+        <Stack gap={2}>
+          {data.map((props) => (
+            <CartItem key={props.id} cartItem={props} />
           ))}
-        </ul>
-      </div>
-    </Stack>
+        </Stack>
+      </S.CartItemProduct>
+
+      <S.CartItemInfo>
+        <div>
+          <Typography>Resumo</Typography>
+        </div>
+
+        <div>
+          <Typography>Total</Typography>
+          <Typography>495</Typography>
+        </div>
+
+        <Button label="Checkout" />
+      </S.CartItemInfo>
+    </S.CartWrap>
   )
 }

@@ -9,6 +9,6 @@ export const schemaProduct = z.object({
     .refine((value) => /^\d+(\.\d{1,2})?$/.test(value), {
       message: 'Formato de preço inválido',
     }),
-  categoria: z.string().min(1, { message: 'Informe a categoria do produto' }),
+  category: z.string().min(1, { message: 'Informe a categoria do produto' }),
   url: z.string().url('Informe uma url valida'),
 })

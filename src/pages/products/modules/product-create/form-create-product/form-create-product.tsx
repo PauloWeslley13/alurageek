@@ -17,12 +17,12 @@ export const FormCreateProduct = () => {
         helperText={errors.url?.message}
       />
       <InputField
-        {...register('categoria')}
+        {...register('category')}
         type="text"
         label="Categoria"
         placeholder="Informe a categoria"
-        error={!!errors.categoria?.message}
-        helperText={errors.categoria?.message}
+        error={!!errors.category?.message}
+        helperText={errors.category?.message}
       />
       <InputField
         {...register('name')}
