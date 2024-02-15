@@ -21,7 +21,7 @@ const productsService = {
         name: doc.data().name,
         price: doc.data().price,
         description: doc.data().description,
-        categoria: doc.data().categoria,
+        category: doc.data().category,
         url: doc.data().url,
       } as ProductsProps)
     })

@@ -31,7 +31,7 @@ export const useEditProduct = ({ product }: EditProductProps) => {
     setValue('name', product.name)
     setValue('description', product.description)
     setValue('price', product.price)
-    setValue('categoria', product.categoria)
+    setValue('category', product.category)
     setValue('url', product.url)
   }, [product, setValue])
 
@@ -46,7 +46,7 @@ export const useEditProduct = ({ product }: EditProductProps) => {
       name: data.name,
       description: data.description,
       price: data.price,
-      categoria: data.categoria,
+      category: data.category,
       url: data.url,
     }
 

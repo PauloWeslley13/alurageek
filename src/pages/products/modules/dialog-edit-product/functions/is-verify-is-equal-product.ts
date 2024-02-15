@@ -13,7 +13,7 @@ export const isVerifyIsEqualProduct = ({ data, product }: Props) => {
     data.name === product.name &&
     data.description === product.description &&
     data.price === product.price &&
-    data.categoria === product.categoria &&
+    data.category === product.category &&
     data.url === product.url
 
   if (isEqualProducts) {
