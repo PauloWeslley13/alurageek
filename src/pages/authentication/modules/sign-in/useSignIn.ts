@@ -3,8 +3,7 @@ import { z } from 'zod'
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { toasts } from '@/components/ui'
-import { useAppDispatch } from '@/store/hook/useRedux'
-import { handleSignIn } from '@/store/reducers'
+import { useAuth } from '@/hooks/useAuth'
 
 export const schemaSignIn = z.object({
   email: z.string().email({ message: 'Informe um email válido' }),
@@ -24,11 +23,11 @@ export const useSignIn = () => {
     reValidateMode: 'onChange',
     resolver: zodResolver(schemaSignIn),
   })
-  const dispatch = useAppDispatch()
+  const { handleSignIn } = useAuth()
   const navigate = useNavigate()
 
   const signIn = (data: SignInProps) => {
-    dispatch(handleSignIn(data))
+    handleSignIn(data)
     navigate('/home')
 
     reset()

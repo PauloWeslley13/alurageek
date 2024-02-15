@@ -1,5 +1,5 @@
 import { PayloadAction, createSlice } from '@reduxjs/toolkit'
-import { addDoc, collection, doc, setDoc, updateDoc } from 'firebase/firestore'
+import { doc, setDoc } from 'firebase/firestore'
 import { toasts } from '@/components/ui'
 import { CartType } from '@/components/types'
 import { db } from '@/config/firebase'
@@ -42,27 +42,14 @@ const cartSlice = createSlice({
         totalPrice: 0,
       } satisfies AddCartProps
 
-      const updatedCart = state.data.map((item) =>
-        item.id === payload.productId
-          ? { ...item, quantity: item.quantity + 1 }
-          : item,
-      )
-
-      const addProductToCart = async () => {
-        const cartRef = doc(db, 'carts', payload.userId)
-
-        if (state.data.length === 0) {
-          console.log('create')
-          await setDoc(cartRef, newCart)
-        } else {
-          console.log(state)
-          toasts.warn({ title: 'Não adicionou' })
-          await updateDoc(cartRef, { data: updatedCart })
-        }
-      }
-
       if (existProductCart) {
         toasts.warn({ title: 'Produto já esta no carinho' })
+
+        const updatedCart = state.data.map((item) =>
+          item.id === payload.productId
+            ? { ...item, quantity: item.quantity + 1 }
+            : item,
+        )
 
         return {
           userId: payload.userId,
@@ -70,8 +57,12 @@ const cartSlice = createSlice({
           totalPrice: state.totalPrice,
         }
       } else {
-        addProductToCart()
-        state = newCart
+        toasts.success({ title: 'Produto adicionado no carinho' })
+        return {
+          userId: newCart.userId,
+          data: newCart.data,
+          totalPrice: newCart.totalPrice,
+        }
       }
     },
     removeToCart: (state, { payload }: PayloadAction<{ id: string }>) => {
@@ -86,15 +77,14 @@ const cartSlice = createSlice({
     },
     cartCheckout: (state, { payload }: PayloadAction<CartType>) => {
       const createCartCheckout = async () => {
-        const cartRef = collection(db, 'carts', payload.userId, 'finish-cart')
-        await addDoc(cartRef, payload)
+        const cartRef = doc(db, 'carts', payload.userId)
+        await setDoc(cartRef, payload)
       }
 
       if (payload.data.length === 0 || state.data.length === 0) {
         toasts.warn({ title: 'Não foi possível finaliza a compra' })
-        console.log('não foi')
       } else {
-        console.log('chegou')
+        toasts.success({ title: 'Compra finalizada' })
         createCartCheckout()
       }
     },
@@ -108,8 +98,9 @@ const cartSlice = createSlice({
 export const {
   addToCart,
   removeToCart,
-  getCart,
   handleQuantity,
   cartCheckout,
+  resetCart,
+  getCart,
 } = cartSlice.actions
 export const cartReducer = cartSlice.reducer

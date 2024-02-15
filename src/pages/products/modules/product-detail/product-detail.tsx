@@ -2,7 +2,7 @@ import { Stack, Typography, useTheme } from '@mui/material'
 import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart'
 import { ProductsList } from '@/components/layout'
 import { FONTS } from '@/styles'
-import { Btn } from '@/components/ui'
+import { ButtonIcon } from '@/components/ui'
 import { useProductDetail } from './useProductDetail'
 import * as S from './product-detail-styles'
 
@@ -38,11 +38,12 @@ export const ProductDetail = () => {
 
           <Stack marginTop={theme.spacing(3)}>
             <div>
-              <Btn
-                label="Adicionar ao carrinho"
+              <ButtonIcon
                 onClick={addProductCart}
-                endIcon={<AddShoppingCartIcon />}
-                sx={{ p: theme.spacing(1, 3) }}
+                props={{
+                  label: 'Adicionar ao carrinho',
+                  icon: AddShoppingCartIcon,
+                }}
               />
             </div>
           </Stack>

@@ -2,7 +2,8 @@ import { useNavigate } from 'react-router-dom'
 import { useTheme } from '@mui/material'
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward'
 import { Header, ProductsList } from '@/components/layout'
-import { Btn } from '@/components/ui'
+import { ButtonIcon } from '@/components/ui'
+import { COLORS, FONTS } from '@/styles'
 
 export const Home = () => {
   const navigate = useNavigate()
@@ -13,15 +14,19 @@ export const Home = () => {
       <Header />
 
       <ProductsList title="StarWars">
-        <Btn
-          label="Ver todos"
+        <ButtonIcon
           onClick={() => navigate('/product/list')}
+          props={{
+            label: 'Ver todos',
+            icon: ArrowForwardIcon,
+          }}
           sx={{
             border: 'none',
-            width: theme.spacing(35),
-            height: theme.spacing(10),
+            background: 'transparent',
+            fontSize: FONTS.fontSizes.md,
+            height: theme.spacing(8),
+            color: COLORS.violet[500],
           }}
-          endIcon={<ArrowForwardIcon />}
         />
       </ProductsList>
     </section>

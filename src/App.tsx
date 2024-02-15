@@ -1,13 +1,13 @@
 import { useEffect } from 'react'
 import { ToastContainer } from 'react-toastify'
-import { Routes } from './routes/routes'
+import { Routes } from './routes'
 import { ScrollTop } from './components/scroll-top'
 import { useAppDispatch } from './store/hook/useRedux'
 import { setTheme } from './store/reducers'
 import { loadCart, loadUser } from './store/actions/actions'
 import 'react-toastify/dist/ReactToastify.css'
 
-const App = () => {
+export const App = () => {
   const dispatch = useAppDispatch()
   const getThemeLocalStorage = localStorage.getItem('@appTheme')
 
@@ -43,5 +43,3 @@ const App = () => {
     </>
   )
 }
-
-export default App

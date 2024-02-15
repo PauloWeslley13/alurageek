@@ -4,7 +4,7 @@ import { ProductsProps } from '@/components/types/products-props'
 import { DialogDeleteProduct } from './dialog-delete-product'
 import { DialogEditProduct } from '@/pages/products/modules'
 import { useAppSelector } from '@/store/hook/useRedux'
-import { Btn } from '../index'
+import { Button } from '../index'
 import * as S from './card-product-styles'
 import { priceMask } from '@/utils/price-mask'
 
@@ -49,10 +49,10 @@ export const CardProduct = ({ card }: CardProductProps) => {
         </Typography>
 
         <div>
-          <Btn
+          <Button
             label="Ver produto"
             onClick={() => navigate(`/product/detail/${id}`)}
-            sx={{ border: 'none' }}
+            sx={{ border: 'none', background: 'transparent' }}
           />
         </div>
       </div>

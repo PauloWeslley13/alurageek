@@ -2,9 +2,8 @@ import { useNavigate } from 'react-router-dom'
 import { z } from 'zod'
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
-import { useAppDispatch } from '@/store/hook/useRedux'
-import { handleSignUp } from '@/store/reducers'
 import { toasts } from '@/components/ui'
+import { useAuth } from '@/hooks/useAuth'
 
 export const schemaSignUp = z.object({
   email: z.string().email({ message: 'Informe um email válido' }),
@@ -16,7 +15,7 @@ export const schemaSignUp = z.object({
 export type SignUpProps = z.infer<typeof schemaSignUp>
 
 export const useSignUp = () => {
-  const dispatch = useAppDispatch()
+  const { handleSignUp } = useAuth()
   const navigate = useNavigate()
   const {
     reset,
@@ -30,7 +29,7 @@ export const useSignUp = () => {
   })
 
   const signUp = (data: SignUpProps) => {
-    dispatch(handleSignUp(data))
+    handleSignUp(data)
     navigate('/home')
     reset()
   }

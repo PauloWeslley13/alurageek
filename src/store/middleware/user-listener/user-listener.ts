@@ -33,13 +33,13 @@ listenerUser.startListening({
       const userCurrent = auth.currentUser
 
       if (response.value && userCurrent) {
-        const userAuth: UsersProps = {
+        const userAuth = {
           id: userCurrent.uid,
           username: response.value.username,
           email: response.value.email,
           password: response.value.password,
           photoUrl: response.value.photoUrl,
-        }
+        } satisfies UsersProps
 
         dispatch(getUserLogged({ user: userAuth, isLogged: true }))
       }

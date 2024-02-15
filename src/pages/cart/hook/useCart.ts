@@ -1,7 +1,12 @@
 import { useMemo } from 'react'
 import { ProductsCart } from '@/components/types'
 import { useAppDispatch, useAppSelector } from '@/store/hook/useRedux'
-import { cartCheckout, handleQuantity, removeToCart } from '@/store/reducers'
+import {
+  cartCheckout,
+  handleQuantity,
+  removeToCart,
+  resetCart,
+} from '@/store/reducers'
 
 export const useCart = () => {
   const { user } = useAppSelector((state) => state.user)
@@ -71,6 +76,7 @@ export const useCart = () => {
     }
 
     dispatch(cartCheckout(dataCheckout))
+    dispatch(resetCart())
   }
 
   return {

@@ -2,7 +2,7 @@ import { useNavigate } from 'react-router-dom'
 import { useTheme } from '@mui/material'
 import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline'
 import { ProductsList } from '@/components/layout'
-import { Btn } from '@/components/ui'
+import { ButtonIcon } from '@/components/ui'
 import { useAppSelector } from '@/store/hook/useRedux'
 
 export const ProductListItems = () => {
@@ -13,15 +13,14 @@ export const ProductListItems = () => {
   return (
     <ProductsList title="Todos produtos">
       {isLogged && (
-        <Btn
-          label="Adicionar Produto"
+        <ButtonIcon
           onClick={() => navigate('/product/info')}
-          endIcon={<AddCircleOutlineIcon />}
+          props={{
+            label: 'Adicionar produto',
+            icon: AddCircleOutlineIcon,
+          }}
           sx={{
-            background: theme.palette.primary.main,
-            color: theme.palette.common.white,
             borderColor: theme.palette.primary.light,
-            width: theme.spacing(55),
             height: theme.spacing(10),
           }}
         />
