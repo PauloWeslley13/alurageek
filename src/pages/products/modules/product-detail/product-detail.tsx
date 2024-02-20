@@ -4,10 +4,12 @@ import { ProductsList } from '@/components/layout'
 import { FONTS } from '@/styles'
 import { ButtonIcon } from '@/components/ui'
 import { useProductDetail } from './useProductDetail'
+import { useAppSelector } from '@/store/hook/useRedux'
 import * as S from './product-detail-styles'
 
 export const ProductDetail = () => {
   const theme = useTheme()
+  const { isLogged } = useAppSelector((state) => state.user)
   const { prodDetail, addProductCart } = useProductDetail()
   const { name, price, description, url } = prodDetail
 
@@ -38,13 +40,15 @@ export const ProductDetail = () => {
 
           <Stack marginTop={theme.spacing(3)}>
             <div>
-              <ButtonIcon
-                onClick={addProductCart}
-                props={{
-                  label: 'Adicionar ao carrinho',
-                  icon: AddShoppingCartIcon,
-                }}
-              />
+              {isLogged && (
+                <ButtonIcon
+                  onClick={addProductCart}
+                  props={{
+                    label: 'Adicionar ao carrinho',
+                    icon: AddShoppingCartIcon,
+                  }}
+                />
+              )}
             </div>
           </Stack>
         </div>

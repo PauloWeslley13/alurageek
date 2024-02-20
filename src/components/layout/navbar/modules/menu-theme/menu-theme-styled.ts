@@ -70,7 +70,9 @@ export const MenuButton = styled(BaseMenuButton)(
   }
 
   &:active {
-    background: ${theme.palette.mode === 'dark' ? indigo[100] : indigo[700]};
+    background: ${theme.palette.mode === 'dark' ? indigo[100] : COLORS.violet[500]};
+    border-color: ${theme.palette.mode === 'dark' ? indigo[500] : COLORS.violet[100]};
+    color: ${theme.palette.mode === 'dark' ? indigo[500] : COLORS.violet[100]};
   }
 
   &:focus-visible {
