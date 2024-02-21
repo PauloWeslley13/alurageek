@@ -9,7 +9,7 @@ import {
 } from '@mui/material'
 import { Typography } from './typography'
 import { Palette } from './palette'
-import { FONTS, convertPixToRem } from '@/styles'
+import { FONTS, spacing } from '@/styles'
 import { GlobalStyle } from './global-styles'
 import { useAppSelector } from '@/store/hook/useRedux'
 
@@ -25,7 +25,7 @@ export const ThemeCustomization = ({ children }: ThemeCustomizationProps) => {
 
   const themeOptions: ThemeOptions = useMemo(
     () => ({
-      spacing: convertPixToRem,
+      spacing,
       typography: themeTypography,
       palette: themePalette,
     }),
