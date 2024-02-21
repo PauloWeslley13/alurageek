@@ -1,13 +1,5 @@
 import { PayloadAction, createSlice } from '@reduxjs/toolkit'
-import { UsersProps } from '@/components/types/users-props'
-import { UserCredential, signOut } from 'firebase/auth'
-import { auth } from '@/config/firebase'
-import { dataUserLocalStorageKey } from '@/constants/local-storage-key'
-
-type UserType = {
-  user: UsersProps
-  isLogged: boolean
-}
+import { UserType, UsersProps } from '@/components/types/users-props'
 
 const INITIAL_STATE: UserType = {
   user: {} as UsersProps,
@@ -18,30 +10,20 @@ const userSlice = createSlice({
   name: 'user',
   initialState: INITIAL_STATE,
   reducers: {
-    setUserAuth: (state, { payload }: PayloadAction<UserCredential>) => {
+    setUserAuth: (_, { payload }: PayloadAction<UsersProps>) => {
       return {
         user: {
-          id: payload.user.uid,
-          email: payload.user.email!,
-          username: payload.user.displayName!,
-          photoUrl: payload.user.photoURL!,
-          password: state.user.password,
+          id: payload.id,
+          email: payload.email,
+          username: payload.username,
+          photoUrl: payload.photoUrl,
+          password: payload.password,
         },
         isLogged: true,
       }
     },
     logout: (state) => {
       state.isLogged = false
-      const handleLogout = async () => {
-        await signOut(auth)
-          .then(() => {
-            localStorage.removeItem(dataUserLocalStorageKey)
-          })
-          .catch((err) => {
-            console.log(err)
-          })
-      }
-      handleLogout()
     },
     getUserLogged: (_, { payload }: PayloadAction<UserType>) => {
       return payload

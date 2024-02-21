@@ -6,4 +6,9 @@ type UsersProps = SignInProps &
     id: string
   }
 
-export type { UsersProps }
+type UserType = {
+  user: UsersProps
+  isLogged: boolean
+}
+
+export type { UsersProps, UserType }

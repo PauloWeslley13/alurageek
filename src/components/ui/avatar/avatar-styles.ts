@@ -1,10 +1,12 @@
 import { styled } from '@mui/material'
 import MuiBadge, { BadgeProps as MuiBadgeProps } from '@mui/material/Badge'
 import MuiAvatar, { AvatarProps as MuiAvatarProps } from '@mui/material/Avatar'
-import { green } from '@mui/material/colors'
+import { green, indigo } from '@mui/material/colors'
+import { COLORS } from '@/styles'
 
 export const Avatar = styled(MuiAvatar)<MuiAvatarProps>(({ theme }) => ({
   background: theme.palette.secondary.light,
+  border: `2px solid ${theme.palette.mode === 'dark' ? indigo[200] : COLORS.violet[300]}`,
 }))
 
 export const Badge = styled(MuiBadge)<MuiBadgeProps>(({ theme }) => ({

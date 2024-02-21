@@ -1,9 +1,6 @@
-import { listenerUser } from './user-listener/user-listener'
 import { listenerCart } from './cart-listener/cart-listener'
-import { listenerProduct } from './product-listener/product-listener'
+import { sagaMiddleware } from './saga-middleware/saga-middleware'
 
-export const middleware = [
-  listenerUser.middleware,
-  listenerCart.middleware,
-  listenerProduct.middleware,
-]
+export const middleware = [listenerCart.middleware, sagaMiddleware]
+
+export { sagaMiddleware }

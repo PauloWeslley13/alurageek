@@ -10,8 +10,8 @@ import {
 
 export const useCart = () => {
   const { user } = useAppSelector((state) => state.user)
+  const { products } = useAppSelector((state) => state.products)
   const cart = useAppSelector((state) => state.cart)
-  const products = useAppSelector((state) => state.products)
   const dispatch = useAppDispatch()
 
   const decrementQuantity = (id: string, quantity: number) => {
@@ -56,11 +56,11 @@ export const useCart = () => {
 
       return {
         id: props.id,
-        name: productCart?.name,
-        description: productCart?.description,
-        photoUrl: productCart?.url,
-        price: productCart?.price,
-        category: productCart?.category,
+        name: productCart.name,
+        description: productCart.description,
+        photoUrl: productCart.url,
+        price: productCart.price,
+        category: productCart.category,
         quantity: props.quantity,
       }
     })

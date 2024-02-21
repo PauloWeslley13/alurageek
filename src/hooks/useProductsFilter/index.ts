@@ -1,8 +1,8 @@
 import { useMemo } from 'react'
 import { useAppSelector } from '@/store/hook/useRedux'
 
-export const useProducts = () => {
-  const products = useAppSelector((state) => state.products)
+export const useProductsFilter = () => {
+  const { products, isLoading } = useAppSelector((state) => state.products)
   const search = useAppSelector((state) => state.search)
 
   const productsFilter = useMemo(() => {
@@ -14,5 +14,5 @@ export const useProducts = () => {
     return productsFiltered
   }, [search, products])
 
-  return { productsFilter }
+  return { productsFilter, isLoading }
 }

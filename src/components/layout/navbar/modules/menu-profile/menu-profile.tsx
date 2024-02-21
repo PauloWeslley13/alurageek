@@ -2,7 +2,7 @@ import { useState } from 'react'
 import { IconButton, useTheme } from '@mui/material'
 import CloseIcon from '@mui/icons-material/Close'
 import { useAppSelector } from '@/store/hook/useRedux'
-import { Avatar, Dialog, CardUser } from '../../../../ui/index'
+import { Avatar, Dialog, CardUser } from '@/components/ui'
 
 export const MenuProfile = () => {
   const { user } = useAppSelector((state) => state.user)

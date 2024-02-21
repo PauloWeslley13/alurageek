@@ -7,14 +7,13 @@ import {
 } from '@/components/types/products-props'
 import { EditProductProps } from './edit-product-props'
 import { isVerifyIsEqualProduct } from './functions/is-verify-is-equal-product'
-import { useAppDispatch } from '@/store/hook/useRedux'
-import { updateProduct } from '@/store/reducers'
 import { toasts } from '@/components/ui'
 import { schemaProduct } from '../schema-product'
+import { useProducts } from '../../hooks/useProducts'
 
 export const useEditProduct = ({ product }: EditProductProps) => {
   const [open, setOpen] = useState<boolean>(false)
-  const dispatch = useAppDispatch()
+  const { handleProductPUT } = useProducts()
   const {
     reset,
     setValue,
@@ -51,7 +50,7 @@ export const useEditProduct = ({ product }: EditProductProps) => {
     }
 
     if (isProductEqual) {
-      dispatch(updateProduct(dataProducts))
+      handleProductPUT(dataProducts)
       reset()
       handleCloseDialog()
     } else {

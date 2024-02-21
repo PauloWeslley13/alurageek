@@ -10,7 +10,8 @@ import * as S from './product-detail-styles'
 export const ProductDetail = () => {
   const theme = useTheme()
   const { isLogged } = useAppSelector((state) => state.user)
-  const { prodDetail, addProductCart } = useProductDetail()
+  const prodDetail = useAppSelector((state) => state.productDetail)
+  const { addProductCart } = useProductDetail()
   const { name, price, description, url } = prodDetail
 
   return (

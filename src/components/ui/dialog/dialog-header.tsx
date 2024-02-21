@@ -1,7 +1,7 @@
 import { ComponentProps, ReactNode } from 'react'
 import Typography from '@mui/material/Typography'
-import * as S from './dialog-styles'
 import { FONTS } from '@/styles'
+import * as S from './dialog-styles'
 
 type DialogHeaderProps = ComponentProps<typeof S.DialogHead> & {
   title?: string
@@ -11,7 +11,7 @@ type DialogHeaderProps = ComponentProps<typeof S.DialogHead> & {
 const DialogHeader = ({ title, children, ...rest }: DialogHeaderProps) => (
   <S.DialogHead {...rest}>
     <Typography
-      component="h3"
+      component="span"
       variant="h4"
       color="primary"
       sx={{

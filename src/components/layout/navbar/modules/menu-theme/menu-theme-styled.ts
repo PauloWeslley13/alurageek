@@ -56,7 +56,6 @@ export const MenuButton = styled(BaseMenuButton)(
   justify-content: center;
   padding: 6px;
   border-radius: 8px;
-  color: white;
   transition: all 150ms ease;
   cursor: pointer;
   background: ${theme.palette.mode === 'dark' ? indigo[500] : COLORS.violet[50]};

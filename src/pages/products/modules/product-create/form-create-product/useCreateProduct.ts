@@ -1,12 +1,11 @@
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { SchemaProductProps } from '@/components/types/products-props'
-import { useAppDispatch } from '@/store/hook/useRedux'
-import { createProduct } from '@/store/reducers'
 import { schemaProduct } from '../../schema-product'
+import { useProducts } from '../../../hooks/useProducts'
 
 export const useCreateProduct = () => {
-  const dispatch = useAppDispatch()
+  const { handleProductPOST } = useProducts()
   const {
     reset,
     register,
@@ -20,7 +19,7 @@ export const useCreateProduct = () => {
 
   const createdProduct = (data: SchemaProductProps) => {
     console.log(data)
-    dispatch(createProduct(data))
+    handleProductPOST(data)
     reset()
   }
 

@@ -1,32 +1,31 @@
-import { useEffect, useState } from 'react'
+import { useEffect } from 'react'
 import { useParams } from 'react-router-dom'
 import { ProductsProps } from '@/components/types/products-props'
 import { useAppDispatch, useAppSelector } from '@/store/hook/useRedux'
-import { addToCart } from '@/store/reducers'
+import { addToCart, getProductDetail } from '@/store/reducers'
 import { priceMask } from '@/utils/price-mask'
 
 export const useProductDetail = () => {
   const params = useParams()
   const dispatch = useAppDispatch()
   const { user } = useAppSelector((state) => state.user)
-  const products = useAppSelector((state) => state.products)
+  const { products } = useAppSelector((state) => state.products)
   const product = products.find((item) => item.id === params.id)
-  const [prodDetail, setProdDetail] = useState<ProductsProps>(
-    {} as ProductsProps,
-  )
 
   useEffect(() => {
     if (product) {
-      setProdDetail({
+      const productDetail = {
         id: product.id,
         name: product.name,
         category: product.category,
         description: product.description,
         price: priceMask({ value: product.price }),
         url: product.url,
-      })
+      } satisfies ProductsProps
+
+      dispatch(getProductDetail(productDetail))
     }
-  }, [product, setProdDetail, dispatch])
+  }, [dispatch, product])
 
   const addProductCart = () => {
     if (product) {
@@ -34,8 +33,5 @@ export const useProductDetail = () => {
     }
   }
 
-  return {
-    prodDetail,
-    addProductCart,
-  }
+  return { addProductCart }
 }

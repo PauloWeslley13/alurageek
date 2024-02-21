@@ -12,7 +12,7 @@ type DialogDeleteProductProps = {
 }
 
 export const DialogDeleteProduct = ({ product }: DialogDeleteProductProps) => {
-  const { handleDeleteProduct, handleOpenDialog, handleCloseDialog, open } =
+  const { handleDeleteProduct, handleOpenDialog, handleCloseDialog, isOpen } =
     useDialogProduct()
   const theme = useTheme()
 
@@ -32,7 +32,7 @@ export const DialogDeleteProduct = ({ product }: DialogDeleteProductProps) => {
         <DeleteIcon />
       </IconButton>
       <Dialog.Root
-        open={open}
+        open={isOpen}
         onClose={handleCloseDialog}
         aria-labelledby="alert-dialog-title"
         aria-describedby="alert-dialog-description"

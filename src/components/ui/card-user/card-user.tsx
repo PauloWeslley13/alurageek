@@ -4,16 +4,14 @@ import CardActions from '@mui/material/CardActions'
 import CardContent from '@mui/material/CardContent'
 import Stack from '@mui/material/Stack'
 import Typography from '@mui/material/Typography'
-import { useAppDispatch, useAppSelector } from '@/store/hook/useRedux'
-import { logout } from '@/store/reducers'
+import { useAppSelector } from '@/store/hook/useRedux'
 import { Avatar, Button } from '../index'
 import { FONTS } from '@/styles'
+import { useAuth } from '@/hooks/useAuth'
 
 export const CardUser = () => {
   const { user } = useAppSelector((state) => state.user)
-  const dispatch = useAppDispatch()
-
-  const handleLogout = () => dispatch(logout())
+  const { handleLogout } = useAuth()
 
   return (
     <Card elevation={0} sx={{ maxWidth: 345, background: 'transparent' }}>
@@ -27,7 +25,7 @@ export const CardUser = () => {
       <CardContent sx={{ textAlign: 'center' }}>
         <Typography
           gutterBottom
-          component="h4"
+          component="h2"
           variant="h4"
           sx={{
             color: (theme: Theme) => theme.palette.primary.main,

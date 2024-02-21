@@ -1,11 +1,10 @@
 import { useState } from 'react'
 import { ProductsProps } from '@/components/types/products-props'
-import { useAppDispatch } from '@/store/hook/useRedux'
-import { deleteProduct } from '@/store/reducers/products/products'
+import { useProducts } from '@/pages/products/hooks/useProducts'
 
 export const useDialogProduct = () => {
-  const [open, setOpen] = useState<boolean>(false)
-  const dispatch = useAppDispatch()
+  const [isOpen, setOpen] = useState<boolean>(false)
+  const { handleProductDELETE } = useProducts()
 
   const handleOpenDialog = () => {
     setOpen(true)
@@ -16,7 +15,7 @@ export const useDialogProduct = () => {
   }
 
   const handleDeleteProduct = (data: ProductsProps) => {
-    dispatch(deleteProduct(data))
+    handleProductDELETE(data)
     handleCloseDialog()
   }
 
@@ -24,6 +23,6 @@ export const useDialogProduct = () => {
     handleDeleteProduct,
     handleCloseDialog,
     handleOpenDialog,
-    open,
+    isOpen,
   }
 }

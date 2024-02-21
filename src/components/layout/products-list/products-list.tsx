@@ -1,9 +1,9 @@
 import { ReactNode, useEffect } from 'react'
-import { Stack, Typography, useTheme } from '@mui/material'
+import { CircularProgress, Stack, Typography, useTheme } from '@mui/material'
 import { CardProduct } from '@/components/ui'
 import { useAppDispatch } from '@/store/hook/useRedux'
 import { loadProduct } from '@/store/actions/actions'
-import { useProducts } from '@/hooks/useProducts'
+import { useProductsFilter } from '@/hooks/useProductsFilter'
 import * as S from './products-list-styles'
 
 type ProductsListProps = {
@@ -12,9 +12,11 @@ type ProductsListProps = {
 }
 
 export const ProductsList = ({ title, children }: ProductsListProps) => {
-  const { productsFilter } = useProducts()
+  const { productsFilter, isLoading } = useProductsFilter()
   const dispatch = useAppDispatch()
   const theme = useTheme()
+
+  console.log(isLoading)
 
   useEffect(() => {
     dispatch(loadProduct())
@@ -42,16 +44,19 @@ export const ProductsList = ({ title, children }: ProductsListProps) => {
         </S.Products>
       ) : (
         <Stack
+          flexDirection="row"
           alignItems="center"
           justifyContent="center"
+          gap={2}
           sx={{ margin: theme.spacing(15) }}
         >
+          {isLoading && <CircularProgress size={35} />}
           <Typography
             component="h3"
             variant="h2"
             sx={{ color: theme.palette.grey[900] }}
           >
-            Produtos indisponível
+            {isLoading ? 'Carregando produtos' : 'Produtos indisponível'}
           </Typography>
         </Stack>
       )}
