@@ -1,17 +1,14 @@
+import { UserUseCase } from './../../../domain/user/user-use-cases'
 import { FirebaseError } from 'firebase/app'
-import { doc, setDoc } from 'firebase/firestore'
 import {
   UserCredential,
-  createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
   signOut,
-  updateProfile,
 } from 'firebase/auth'
 import { toasts } from '@/components/ui'
 import { auth } from '@/config/firebase'
 import { saveUserInLocalStorage } from '@/functions/save-user-in-local-storage'
 import { SignInProps } from '@/pages/authentication/modules/sign-in/useSignIn'
-import { collectionUser } from '@/config/firebase/collections'
 import { SignUpProps } from '@/pages/authentication/modules/sign-up/useSignUp'
 import { useAppDispatch } from '@/store/hook/useRedux'
 import { logout, setUserAuth } from '@/store/reducers'
@@ -22,6 +19,8 @@ type UserOnAuthentication = {
   dataUser: UserCredential
   password: string
 }
+
+const userAuth = new UserUseCase()
 
 export const useAuth = () => {
   const dispatch = useAppDispatch()
@@ -44,38 +43,51 @@ export const useAuth = () => {
     photoUrl,
   }: SignUpProps) => {
     try {
-      const authResponse = await createUserWithEmailAndPassword(
-        auth,
-        email,
-        password,
-      )
+      // const authResponse = await createUserWithEmailAndPassword(
+      //   auth,
+      //   email,
+      //   password,
+      // )
 
-      const userOnAuthSignUp = userOnAuthentication({
-        password,
-        dataUser: authResponse,
-      })
+      // const userOnAuthSignUp = userOnAuthentication({
+      //   password,
+      //   dataUser: authResponse,
+      // })
 
-      dispatch(setUserAuth(userOnAuthSignUp))
+      const userOnAuthSignUp = await userAuth
+        .userAuthentication({
+          username,
+          email,
+          password,
+          photoUrl,
+        })
+        .then((user) => {
+          console.log(user)
+        })
 
-      const uid = authResponse.user.uid
-      const docRef = doc(collectionUser, uid)
-      const userStorage = {
-        uid,
-        username,
-      }
+      console.log(userOnAuthSignUp)
 
-      await updateProfile(authResponse.user, {
-        displayName: username,
-        photoURL: photoUrl,
-      })
+      // dispatch(setUserAuth(userOnAuthSignUp))
 
-      saveUserInLocalStorage(userStorage)
-      await setDoc(docRef, {
-        email,
-        username,
-        password,
-        photoUrl,
-      })
+      // const uid = authResponse.user.uid
+      // const docRef = doc(collectionUser, uid)
+      // const userStorage = {
+      //   uid,
+      //   username,
+      // }
+
+      // await updateProfile(authResponse.user, {
+      //   displayName: username,
+      //   photoURL: photoUrl,
+      // })
+
+      // saveUserInLocalStorage(userStorage)
+      // await setDoc(docRef, {
+      //   email,
+      //   username,
+      //   password,
+      //   photoUrl,
+      // })
       toasts.success({ title: 'Usuário cadastrado' })
     } catch (error: unknown) {
       if (error instanceof FirebaseError) {

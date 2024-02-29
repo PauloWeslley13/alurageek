@@ -26,12 +26,11 @@ export const AppRoutes: RouteObject = {
     { path: 'auth', element: <Authentication /> },
     { path: 'home', element: <Home /> },
     {
-      path: 'product',
       element: <Products />,
       children: [
-        { path: 'info', element: <ProductCreate /> },
-        { path: 'list', element: <ProductListItems /> },
-        { path: 'detail/:id', element: <ProductDetail /> },
+        { path: '/product/info', element: <ProductCreate /> },
+        { path: '/product/list', element: <ProductListItems /> },
+        { path: '/product/detail/:id', element: <ProductDetail /> },
       ],
     },
     { path: 'cart', element: <Cart /> },

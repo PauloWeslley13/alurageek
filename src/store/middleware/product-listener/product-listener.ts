@@ -15,7 +15,7 @@ listenerProduct.startListening({
     const response = await task.result
 
     if (response.status === 'ok') {
-      dispatch(getProducts(response.value))
+      dispatch(getProducts({ products: response.value, isLoading: false }))
     }
   },
 })

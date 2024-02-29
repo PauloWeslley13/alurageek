@@ -13,9 +13,7 @@ import { FONTS, spacing } from '@/styles'
 import { GlobalStyle } from './global-styles'
 import { useAppSelector } from '@/store/hook/useRedux'
 
-type ThemeCustomizationProps = { children: ReactNode }
-
-export const ThemeCustomization = ({ children }: ThemeCustomizationProps) => {
+export const ThemeCustomization = ({ children }: { children: ReactNode }) => {
   const { theme } = useAppSelector((state) => state.theme)
   const INITIAL_THEME = theme === 'dark' ? 'dark' : 'light'
   const themePalette = Palette({ theme: INITIAL_THEME })

@@ -16,8 +16,6 @@ export const ProductsList = ({ title, children }: ProductsListProps) => {
   const dispatch = useAppDispatch()
   const theme = useTheme()
 
-  console.log(isLoading)
-
   useEffect(() => {
     dispatch(loadProduct())
   }, [dispatch])
