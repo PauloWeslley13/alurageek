@@ -1,6 +1,6 @@
 import { collection, getDocs, orderBy, query, where } from 'firebase/firestore'
-import { db } from '@/config/firebase'
 import { ProductsProps } from '@/components/types/products-props'
+import { db } from '../../database/firebase/index'
 
 const productsService = {
   get: async () => {
@@ -21,7 +21,7 @@ const productsService = {
         name: doc.data().name,
         price: doc.data().price,
         description: doc.data().description,
-        category: doc.data().categoria,
+        category: doc.data().category,
         url: doc.data().url,
       } as ProductsProps)
     })

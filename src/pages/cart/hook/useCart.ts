@@ -1,12 +1,10 @@
+import { CartUseCase } from './../../../../domain/cart/cart-use-cases'
 import { useMemo } from 'react'
 import { ProductsCart } from '@/components/types'
 import { useAppDispatch, useAppSelector } from '@/store/hook/useRedux'
-import {
-  cartCheckout,
-  handleQuantity,
-  removeToCart,
-  resetCart,
-} from '@/store/reducers'
+import { handleQuantity, removeToCart, resetCart } from '@/store/reducers'
+
+const cartUser = new CartUseCase()
 
 export const useCart = () => {
   const { user } = useAppSelector((state) => state.user)
@@ -69,13 +67,12 @@ export const useCart = () => {
   }, [carts, products])
 
   const handleCheckout = () => {
-    const dataCheckout = {
-      userId: user.id,
+    const cartCheckout = {
       data: carts,
       totalPrice: calcTotal,
     }
 
-    dispatch(cartCheckout(dataCheckout))
+    cartUser.createCart(user.id, cartCheckout)
     dispatch(resetCart())
   }
 

@@ -1,6 +1,5 @@
 import { Navigate, Outlet, useLocation } from 'react-router-dom'
 import { NavBar, Footer } from '@/components/layout'
-import { footerList } from '@/constants'
 
 export const RootLayout = () => {
   const { pathname } = useLocation()
@@ -16,7 +15,16 @@ export const RootLayout = () => {
       </main>
 
       <Footer.Root>
-        <Footer.Content footerList={footerList} />
+        <Footer.Content
+          footerList={[
+            'Quem somos',
+            'Política de privacidade',
+            'Programa de lealdade',
+            'Nossas lojas',
+            'Quero ser um franqueado',
+            'Anuncie aqui',
+          ]}
+        />
         <Footer.Bar />
       </Footer.Root>
     </>

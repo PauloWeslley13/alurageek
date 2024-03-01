@@ -7,7 +7,7 @@ import { useAppDispatch } from './store/hook/useRedux'
 import { setTheme } from './store/reducers'
 import { loadCart, loadUser } from './store/actions/actions'
 import 'react-toastify/dist/ReactToastify.css'
-import { auth } from './config/firebase'
+import { auth } from '../database/firebase'
 
 export const App = () => {
   const dispatch = useAppDispatch()

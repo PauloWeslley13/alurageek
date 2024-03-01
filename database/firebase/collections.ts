@@ -1,5 +1,5 @@
 import { collection } from 'firebase/firestore'
-import { db } from './sdk-client'
+import { db } from './index'
 
 const collectionUser = collection(db, 'users')
 const collectionCarts = collection(db, 'carts')

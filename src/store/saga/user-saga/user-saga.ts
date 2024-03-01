@@ -2,15 +2,17 @@
 import { call, cancel, put, takeLatest } from 'redux-saga/effects'
 import { getUserLogged } from '@/store/reducers'
 import { toasts } from '@/components/ui'
-import usersService from '@/services/get-users'
 import { loadUser } from '@/store/actions/actions'
 import { UsersProps } from '@/components/types'
+import { UserUseCase } from '../../../../domain/user/user-use-cases'
+
+const usersService = new UserUseCase()
 
 function* useAuthentication(action: any) {
   const userId = action.payload! as string
 
   try {
-    const userOnAuth: UsersProps = yield call(usersService.get, userId)
+    const userOnAuth: UsersProps = yield call(usersService.userById, userId)
 
     const user = {
       id: userOnAuth.id,

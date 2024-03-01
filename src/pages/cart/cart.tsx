@@ -9,8 +9,8 @@ import * as S from './cart-styles'
 
 export const Cart = () => {
   const { data, calcTotal, handleCheckout } = useCart()
-  const theme = useTheme()
   const navigate = useNavigate()
+  const theme = useTheme()
 
   return (
     <S.CartWrap>

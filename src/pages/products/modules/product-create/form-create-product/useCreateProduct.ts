@@ -18,7 +18,6 @@ export const useCreateProduct = () => {
   })
 
   const createdProduct = (data: SchemaProductProps) => {
-    console.log(data)
     handleProductPOST(data)
     reset()
   }

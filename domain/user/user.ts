@@ -1,6 +1,9 @@
-// import { UserCredential, updateProfile } from 'firebase/auth'
-// import { doc, setDoc } from 'firebase/firestore'
-// import { collectionUser } from 'infra/firebase/collections'
+import { UserCredential, updateProfile } from 'firebase/auth'
+import { FirebaseError } from 'firebase/app'
+import { doc, setDoc } from 'firebase/firestore'
+import { collectionUser } from '../../database/firebase/collections'
+import { IUserProps } from './user-props'
+import { toasts } from '@/components/ui'
 
 // TODO: ENTIDADE User
 export class User {
@@ -11,7 +14,7 @@ export class User {
   public photoUrl: string
   public password: string
 
-  constructor(props: User) {
+  constructor(props: IUserProps) {
     this.id = props.id
     this.email = props.email
     this.username = props.username
@@ -19,14 +22,30 @@ export class User {
     this.photoUrl = props.photoUrl
   }
 
-  // async create(data: User, userAuth: UserCredential) {
-  //   const userRef = doc(collectionUser, userAuth.user.uid)
+  async create(userAuth: UserCredential) {
+    const userRef = doc(collectionUser, userAuth.user.uid)
 
-  //   await updateProfile(userAuth.user, {
-  //     displayName: data.username,
-  //     photoURL: data.photoUrl,
-  //   })
+    try {
+      await updateProfile(userAuth.user, {
+        displayName: this.username,
+        photoURL: this.photoUrl,
+      })
 
-  //   await setDoc(userRef, data)
-  // }
+      await setDoc(userRef, {
+        username: this.username,
+        email: this.email,
+        password: this.password,
+        photoUrl: this.photoUrl,
+      })
+    } catch (error: unknown) {
+      if (error instanceof FirebaseError) {
+        if (error.code === 'auth/email-already-in-use') {
+          toasts.error({ title: 'Email já cadastrado' })
+          return
+        }
+      }
+
+      toasts.error({ title: 'Ops! Aconteceu um erro inesperado' })
+    }
+  }
 }

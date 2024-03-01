@@ -1,6 +1,6 @@
 import { doc, getDoc } from 'firebase/firestore'
 import { CartType } from '@/components/types'
-import { db } from '@/config/firebase'
+import { db } from '../../database/firebase/index'
 
 const cartService = {
   get: async (userId: string) => {

@@ -1,8 +1,6 @@
 import { PayloadAction, createSlice } from '@reduxjs/toolkit'
-import { doc, setDoc } from 'firebase/firestore'
 import { toasts } from '@/components/ui'
 import { CartType } from '@/components/types'
-import { db } from '@/config/firebase'
 
 type QuantityProps = {
   id: string
@@ -75,19 +73,6 @@ const cartSlice = createSlice({
         return itemCart
       })
     },
-    cartCheckout: (state, { payload }: PayloadAction<CartType>) => {
-      const createCartCheckout = async () => {
-        const cartRef = doc(db, 'carts', payload.userId)
-        await setDoc(cartRef, payload)
-      }
-
-      if (payload.data.length === 0 || state.data.length === 0) {
-        toasts.warn({ title: 'Não foi possível finaliza a compra' })
-      } else {
-        toasts.success({ title: 'Compra finalizada' })
-        createCartCheckout()
-      }
-    },
     getCart: (_, { payload }: PayloadAction<CartType>) => {
       return payload
     },
@@ -95,12 +80,7 @@ const cartSlice = createSlice({
   },
 })
 
-export const {
-  addToCart,
-  removeToCart,
-  handleQuantity,
-  cartCheckout,
-  resetCart,
-  getCart,
-} = cartSlice.actions
+export const { addToCart, removeToCart, handleQuantity, resetCart, getCart } =
+  cartSlice.actions
+
 export const cartReducer = cartSlice.reducer
