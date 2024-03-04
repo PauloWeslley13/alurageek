@@ -6,10 +6,12 @@ import {
   SchemaProductProps,
 } from '@/components/types/products-props'
 import { EditProductProps } from './edit-product-props'
-import { isVerifyIsEqualProduct } from './functions/is-verify-is-equal-product'
 import { toasts } from '@/components/ui'
 import { schemaProduct } from '../schema-product'
 import { useProducts } from '../../hooks/useProducts'
+import { ProductUseCase } from '../../../../../domain/product/product-use-cases'
+
+const productUseCase = new ProductUseCase()
 
 export const useEditProduct = ({ product }: EditProductProps) => {
   const [open, setOpen] = useState<boolean>(false)
@@ -38,7 +40,10 @@ export const useEditProduct = ({ product }: EditProductProps) => {
   const handleCloseDialog = () => setOpen(false)
 
   const updatedProduct = (data: SchemaProductProps) => {
-    const isProductEqual = isVerifyIsEqualProduct({ data, product })
+    const isProductEqual = productUseCase.isVerifyIsEqualProduct({
+      data,
+      product,
+    })
 
     const dataProducts: ProductsProps = {
       id: product.id,

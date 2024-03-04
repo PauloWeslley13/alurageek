@@ -15,7 +15,7 @@ function* useAuthentication(action: any) {
     const userOnAuth: UsersProps = yield call(usersService.userById, userId)
 
     const user = {
-      id: userOnAuth.id,
+      id: userId,
       username: userOnAuth.username,
       email: userOnAuth.email,
       password: userOnAuth.password,

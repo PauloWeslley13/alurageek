@@ -4,14 +4,22 @@ import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline'
 import { ProductsList } from '@/components/layout'
 import { ButtonIcon } from '@/components/ui'
 import { useAppSelector } from '@/store/hook/useRedux'
+import { useProductsFilter } from '@/hooks/useProductsFilter'
 
 export const ProductListItems = () => {
+  const { productsFilter, isLoading } = useProductsFilter()
   const { isLogged } = useAppSelector((state) => state.user)
   const navigate = useNavigate()
   const theme = useTheme()
 
   return (
-    <ProductsList title="Todos produtos">
+    <ProductsList
+      props={{
+        title: 'Todos produtos',
+        productList: productsFilter,
+        isLoading,
+      }}
+    >
       {isLogged && (
         <ButtonIcon
           onClick={() => navigate('/product/info')}

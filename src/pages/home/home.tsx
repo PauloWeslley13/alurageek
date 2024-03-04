@@ -4,21 +4,24 @@ import ArrowForwardIcon from '@mui/icons-material/ArrowForward'
 import { Header, ProductsList } from '@/components/layout'
 import { ButtonIcon } from '@/components/ui'
 import { COLORS, FONTS } from '@/styles'
-import { useQuery } from 'react-query'
-import productsService from '@/services/get-products'
+import { useProductsFilter } from '@/hooks/useProductsFilter'
 
 export const Home = () => {
+  const { categoryByProduct, productsFilter, isLoading } = useProductsFilter()
   const navigate = useNavigate()
   const theme = useTheme()
-  const { data } = useQuery(['products'], () => productsService.get())
-
-  console.log(data)
 
   return (
     <section>
       <Header />
 
-      <ProductsList title="StarWars">
+      <ProductsList
+        props={{
+          title: 'StarWars',
+          productList: productsFilter,
+          isLoading,
+        }}
+      >
         <ButtonIcon
           onClick={() => navigate('/product/list')}
           props={{
@@ -34,6 +37,32 @@ export const Home = () => {
           }}
         />
       </ProductsList>
+
+      {categoryByProduct.map((props) => (
+        <ProductsList
+          key={props.id}
+          props={{
+            title: props.name,
+            productList: props.products,
+            isLoading,
+          }}
+        >
+          <ButtonIcon
+            onClick={() => navigate(`/category/${props.id}`)}
+            props={{
+              label: 'Ver todos',
+              icon: ArrowForwardIcon,
+            }}
+            sx={{
+              border: 'none',
+              background: 'transparent',
+              fontSize: FONTS.fontSizes.md,
+              height: theme.spacing(8),
+              color: COLORS.violet[500],
+            }}
+          />
+        </ProductsList>
+      ))}
     </section>
   )
 }

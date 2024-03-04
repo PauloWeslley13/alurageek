@@ -1,35 +1,22 @@
-import { CartUseCase } from './../../../../domain/cart/cart-use-cases'
 import { useMemo } from 'react'
+import { useQuery } from 'react-query'
 import { ProductsCart } from '@/components/types'
 import { useAppDispatch, useAppSelector } from '@/store/hook/useRedux'
 import { handleQuantity, removeToCart, resetCart } from '@/store/reducers'
+import { CartUseCase } from './../../../../domain/cart/cart-use-cases'
 
-const cartUser = new CartUseCase()
+const cartUseCase = new CartUseCase()
 
 export const useCart = () => {
   const { user } = useAppSelector((state) => state.user)
   const { products } = useAppSelector((state) => state.products)
-  const cart = useAppSelector((state) => state.cart)
+  const { cart } = useAppSelector((state) => state.cart)
   const dispatch = useAppDispatch()
-
-  const decrementQuantity = (id: string, quantity: number) => {
-    if (quantity >= 1) {
-      dispatch(handleQuantity({ id, quantity: -1 }))
-    }
-  }
-
-  const incrementQuantity = (id: string) => {
-    dispatch(handleQuantity({ id, quantity: +1 }))
-  }
-
-  const handleDeleteItemCart = (id: string) => {
-    dispatch(removeToCart({ id }))
-  }
 
   const { carts, calcTotal } = useMemo(() => {
     let totalPrice = 0
 
-    const cartReducer = cart.data.reduce((items: ProductsCart[], itemCart) => {
+    const cartReducer = cart.reduce((items: ProductsCart[], itemCart) => {
       const item = products.find((item) => item.id === itemCart.id)
       totalPrice += Number(item?.price) * itemCart.quantity
 
@@ -66,17 +53,49 @@ export const useCart = () => {
     return { data }
   }, [carts, products])
 
+  const decrementQuantity = (id: string, quantity: number) => {
+    if (quantity >= 1) {
+      dispatch(handleQuantity({ id, quantity: -1 }))
+    }
+  }
+
+  const incrementQuantity = (id: string) => {
+    dispatch(handleQuantity({ id, quantity: +1 }))
+  }
+
+  const handleDeleteItemCart = (id: string) => {
+    dispatch(removeToCart({ id }))
+  }
+
   const handleCheckout = () => {
-    const cartCheckout = {
+    cartUseCase.savedUserCart(user.id, {
       data: carts,
       totalPrice: calcTotal,
-    }
+    })
 
-    cartUser.createCart(user.id, cartCheckout)
+    cartUseCase.removeCart(user.id, {
+      data: carts,
+      totalPrice: calcTotal,
+    })
+
     dispatch(resetCart())
   }
 
+  const handleSavedCart = async () => {
+    cartUseCase.createCart(user.id, {
+      data: carts,
+      totalPrice: calcTotal,
+    })
+  }
+
+  const { data: cartUser } = useQuery(['cartUserSaved'], () =>
+    cartUseCase.getCartByUserIdSaved(user.id),
+  )
+
+  console.log(cartUser)
+
   return {
+    user,
     data,
     carts,
     calcTotal,
@@ -84,5 +103,6 @@ export const useCart = () => {
     decrementQuantity,
     handleDeleteItemCart,
     handleCheckout,
+    handleSavedCart,
   }
 }

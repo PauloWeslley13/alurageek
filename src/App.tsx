@@ -5,9 +5,14 @@ import { Routes } from './routes'
 import { ScrollTop } from './components/scroll-top'
 import { useAppDispatch } from './store/hook/useRedux'
 import { setTheme } from './store/reducers'
-import { loadCart, loadUser } from './store/actions/actions'
-import 'react-toastify/dist/ReactToastify.css'
+import {
+  loadCart,
+  loadCategories,
+  loadProduct,
+  loadUser,
+} from './store/actions/actions'
 import { auth } from '../database/firebase'
+import 'react-toastify/dist/ReactToastify.css'
 
 export const App = () => {
   const dispatch = useAppDispatch()
@@ -17,7 +22,7 @@ export const App = () => {
     auth.onAuthStateChanged((user) => {
       if (user) {
         const userId = user.uid
-        dispatch(loadCart())
+        dispatch(loadCart(userId as any))
         dispatch(loadUser(userId as any))
 
         return { userId }
@@ -30,6 +35,9 @@ export const App = () => {
 
       dispatch(setTheme(initialTheme))
     }
+
+    dispatch(loadProduct())
+    dispatch(loadCategories())
   }, [dispatch, getThemeLocalStorage])
 
   return (

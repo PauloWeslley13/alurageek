@@ -5,6 +5,7 @@ import {
   themesReducer,
   userReducer,
   productDetailReducer,
+  categoriesReducer,
 } from './index'
 
 const rootReducer = {
@@ -14,6 +15,7 @@ const rootReducer = {
   user: userReducer,
   search: searchReducer,
   cart: cartReducer,
+  categories: categoriesReducer,
 }
 
 export { rootReducer }

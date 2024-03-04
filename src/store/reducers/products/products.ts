@@ -26,12 +26,22 @@ const productsSlice = createSlice({
         isLoading: false,
       }
     },
+    getProductsByCategory: (_, { payload }: PayloadAction<ProductsType>) => {
+      console.log(payload)
+
+      return payload
+    },
     getProducts: (_, { payload }: PayloadAction<ProductsType>) => {
       return payload
     },
   },
 })
 
-export const { createProduct, updateProduct, deleteProduct, getProducts } =
-  productsSlice.actions
+export const {
+  createProduct,
+  updateProduct,
+  deleteProduct,
+  getProducts,
+  getProductsByCategory,
+} = productsSlice.actions
 export const productsReducer = productsSlice.reducer

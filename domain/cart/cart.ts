@@ -1,4 +1,4 @@
-import { doc, setDoc } from 'firebase/firestore'
+import { collection, deleteDoc, doc, setDoc } from 'firebase/firestore'
 import { db } from '../../database/firebase'
 import { ICart } from './cart-props'
 
@@ -21,5 +21,18 @@ export class Cart {
       cart: this.cart,
       totalPrice: this.totalPrice,
     })
+  }
+
+  async savedCart() {
+    const cartUserRef = collection(db, 'users', this.userId, 'carts')
+    await setDoc(doc(cartUserRef), {
+      userId: this.userId,
+      data: this.cart,
+      totalPrice: this.totalPrice,
+    })
+  }
+
+  async removeCart() {
+    await deleteDoc(doc(db, 'carts', this.userId))
   }
 }

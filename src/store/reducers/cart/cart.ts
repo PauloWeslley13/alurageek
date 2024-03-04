@@ -12,11 +12,11 @@ type AddToCartProps = {
   productId: string
 }
 
-type AddCartProps = Pick<CartType, 'userId' | 'data' | 'totalPrice'>
+type AddCartProps = Pick<CartType, 'userId' | 'cart' | 'totalPrice'>
 
 const INITIAL_STATE: CartType = {
   userId: '',
-  data: [],
+  cart: [],
   totalPrice: 0,
 }
 
@@ -25,7 +25,7 @@ const cartSlice = createSlice({
   initialState: INITIAL_STATE,
   reducers: {
     addToCart: (state, { payload }: PayloadAction<AddToCartProps>) => {
-      const existProductCart = state.data.find(
+      const existProductCart = state.cart.find(
         (prod) => prod.id === payload.productId,
       )
 
@@ -36,14 +36,14 @@ const cartSlice = createSlice({
 
       const newCart = {
         userId: payload.userId,
-        data: [...state.data, newCartProduct],
+        cart: [...state.cart, newCartProduct],
         totalPrice: 0,
       } satisfies AddCartProps
 
       if (existProductCart) {
         toasts.warn({ title: 'Produto já esta no carinho' })
 
-        const updatedCart = state.data.map((item) =>
+        const updatedCart = state.cart.map((item) =>
           item.id === payload.productId
             ? { ...item, quantity: item.quantity + 1 }
             : item,
@@ -51,24 +51,24 @@ const cartSlice = createSlice({
 
         return {
           userId: payload.userId,
-          data: updatedCart,
+          cart: updatedCart,
           totalPrice: state.totalPrice,
         }
       } else {
         toasts.success({ title: 'Produto adicionado no carinho' })
         return {
           userId: newCart.userId,
-          data: newCart.data,
+          cart: newCart.cart,
           totalPrice: newCart.totalPrice,
         }
       }
     },
     removeToCart: (state, { payload }: PayloadAction<{ id: string }>) => {
-      const index = state.data.findIndex((item) => item.id === payload.id)
-      state.data.splice(index, 1)
+      const index = state.cart.findIndex((item) => item.id === payload.id)
+      state.cart.splice(index, 1)
     },
     handleQuantity: (state, { payload }: PayloadAction<QuantityProps>) => {
-      state.data.map((itemCart) => {
+      state.cart.map((itemCart) => {
         if (itemCart.id === payload.id) itemCart.quantity += payload.quantity
         return itemCart
       })

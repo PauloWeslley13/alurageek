@@ -1,14 +1,16 @@
 import { call, cancel, delay, put, takeLatest } from 'redux-saga/effects'
+import { ProductUseCase } from './../../../../domain/product/product-use-cases'
 import { ProductsProps } from '@/components/types'
-import productsService from '@/services/get-products'
 import { getProducts } from '@/store/reducers'
 import { loadProduct } from '@/store/actions/actions'
+
+const product = new ProductUseCase()
 
 // TODO: função Worker, função que observar uma action
 function* observableProducts() {
   try {
     yield delay(1000)
-    const products: ProductsProps[] = yield call(productsService.get)
+    const products: ProductsProps[] = yield call(product.getProductList)
     yield put(getProducts({ products, isLoading: false }))
   } catch (error) {
     yield put(getProducts({ products: [], isLoading: true }))

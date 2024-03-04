@@ -15,7 +15,7 @@ export const GlobalStyle = {
       background: COLORS.bunker[100],
     },
     '::-webkit-scrollbar-thumb': {
-      background: COLORS.bunker[300],
+      background: COLORS.violet[300],
       borderRadius: '2.2rem',
     },
   },

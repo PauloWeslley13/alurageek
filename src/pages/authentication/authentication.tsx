@@ -1,33 +1,19 @@
-import { useState } from 'react'
-import { Link, Typography, useTheme } from '@mui/material'
+import { Link, Typography } from '@mui/material'
 import { SignIn, SignUp } from './modules'
 import { FONTS } from '@/styles'
+import { useAuthentication } from './useAuthentication'
 import * as S from './authentication-styles'
 
-type SignInOrSignUpProps = 'signIn' | 'signUp'
-
 const Authentication = () => {
-  const [signInOrSignUp, setSignInOrSignUp] =
-    useState<SignInOrSignUpProps>('signIn')
-  const theme = useTheme()
-
-  const changeAuth = (option: SignInOrSignUpProps) => {
-    setSignInOrSignUp(option)
-  }
-
-  const linkAction = () => {
-    changeAuth(signInOrSignUp === 'signIn' ? 'signUp' : 'signIn')
-  }
+  const { theme, signInOrSignUp, linkAction } = useAuthentication()
 
   return (
     <S.Wrapper>
       <Typography
         component="h2"
         variant="h1"
-        sx={{
-          color: theme.palette.primary.dark,
-          fontSize: FONTS.fontSizes['3xl'],
-        }}
+        color={theme.palette.primary.dark}
+        fontSize={FONTS.fontSizes['3xl']}
       >
         {signInOrSignUp === 'signIn' ? 'Login' : 'Cadastrar'}
       </Typography>
@@ -50,4 +36,4 @@ const Authentication = () => {
   )
 }
 
-export default Authentication
+export { Authentication }

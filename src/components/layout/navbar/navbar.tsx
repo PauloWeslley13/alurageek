@@ -10,19 +10,18 @@ import * as S from './navbar-styles'
 type NavBarProps = ComponentProps<typeof S.NavBarWrap>
 
 export const NavBar = ({ ...rest }: NavBarProps) => {
-  const cart = useAppSelector((state) => state.cart)
+  const { cart } = useAppSelector((state) => state.cart)
   const { isLogged } = useAppSelector((state) => state.user)
   const { pathname } = useLocation()
   const navigate = useNavigate()
   const theme = useTheme()
-  const allProduct = cart.data.length
 
   return (
     <S.NavBarWrap {...rest}>
       <div>
         <div>
           <SVGLogoIcon
-            onClick={() => navigate('/')}
+            onClick={() => navigate('/home')}
             style={{ cursor: 'pointer' }}
           />
 
@@ -42,13 +41,25 @@ export const NavBar = ({ ...rest }: NavBarProps) => {
           )}
 
           {isLogged && (
-            <ShoppingBadge
-              aria-label="cart"
-              badgeContent={allProduct}
-              onClick={() => navigate('/cart')}
-            >
-              <ShoppingCartIcon />
-            </ShoppingBadge>
+            <>
+              {cart.length >= 0 ? (
+                <ShoppingBadge
+                  aria-label="cart"
+                  badgeContent={0}
+                  onClick={() => navigate('/cart')}
+                >
+                  <ShoppingCartIcon />
+                </ShoppingBadge>
+              ) : (
+                <ShoppingBadge
+                  aria-label="cart"
+                  badgeContent={0}
+                  onClick={() => navigate('/cart')}
+                >
+                  <ShoppingCartIcon />
+                </ShoppingBadge>
+              )}
+            </>
           )}
 
           <MenuTheme />

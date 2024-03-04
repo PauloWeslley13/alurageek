@@ -4,12 +4,10 @@ import {
   signInWithEmailAndPassword,
   signOut,
 } from 'firebase/auth'
-import { UserRepository } from './repositories/user-repository'
 import { User } from './user'
-import { auth } from '../../database/firebase'
+import { auth, db } from '../../database/firebase'
 import { IUserProps } from './user-props'
-
-const userAuth = new UserRepository()
+import { doc, getDoc } from 'firebase/firestore'
 
 export class UserUseCase {
   async userAuthCreate(data: Omit<IUserProps, 'id'>) {
@@ -56,8 +54,11 @@ export class UserUseCase {
     await signOut(auth)
   }
 
-  userById(uid: string) {
-    const user = userAuth.getUser(uid)
-    return user
+  async userById(uid: string): Promise<IUserProps> {
+    const userDocRef = doc(db, 'users', uid)
+    const responseDoc = await getDoc(userDocRef)
+    const data = responseDoc.data() as IUserProps
+
+    return data
   }
 }

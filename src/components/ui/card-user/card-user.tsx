@@ -1,3 +1,4 @@
+import { useNavigate } from 'react-router-dom'
 import { Theme } from '@mui/material'
 import Card from '@mui/material/Card'
 import CardActions from '@mui/material/CardActions'
@@ -9,9 +10,14 @@ import { Avatar, Button } from '../index'
 import { FONTS } from '@/styles'
 import { useAuth } from '@/hooks/useAuth'
 
-export const CardUser = () => {
+type CardUserProps = {
+  closeModal: () => void
+}
+
+export const CardUser = ({ closeModal }: CardUserProps) => {
   const { user } = useAppSelector((state) => state.user)
   const { handleLogout } = useAuth()
+  const navigate = useNavigate()
 
   return (
     <Card elevation={0} sx={{ maxWidth: 345, background: 'transparent' }}>
@@ -22,26 +28,44 @@ export const CardUser = () => {
           sx={{ width: 75, height: 75 }}
         />
       </Stack>
-      <CardContent sx={{ textAlign: 'center' }}>
-        <Typography
-          gutterBottom
-          component="h2"
-          variant="h4"
-          sx={{
-            color: (theme: Theme) => theme.palette.primary.main,
-            fontSize: FONTS.fontSizes['2xl'],
-            textTransform: 'capitalize',
-          }}
-        >
-          {user.username}
-        </Typography>
-        <Typography
-          component="span"
-          variant="body1"
-          sx={{ color: (theme: Theme) => theme.palette.grey.A700 }}
-        >
-          {user.email}
-        </Typography>
+      <CardContent
+        sx={{
+          display: 'flex',
+          flexDirection: 'column',
+          gap: 2.5,
+          textAlign: 'center',
+        }}
+      >
+        <div>
+          <Typography
+            component="h2"
+            variant="h4"
+            color={(theme: Theme) => theme.palette.primary.main}
+            fontSize={FONTS.fontSizes['2xl']}
+            textTransform="capitalize"
+          >
+            {user.username}
+          </Typography>
+          <Typography
+            gutterBottom
+            component="span"
+            variant="body1"
+            color={(theme: Theme) => theme.palette.grey.A700}
+          >
+            {user.email}
+          </Typography>
+        </div>
+
+        <div>
+          <Button
+            label="Painel Adm"
+            sx={{ border: 'none' }}
+            onClick={() => {
+              navigate('/panel-adm')
+              closeModal()
+            }}
+          />
+        </div>
       </CardContent>
       <CardActions
         sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}

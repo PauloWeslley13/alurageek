@@ -1,42 +1,35 @@
-import { ReactNode, useEffect } from 'react'
+import { ReactNode } from 'react'
 import { CircularProgress, Stack, Typography, useTheme } from '@mui/material'
 import { CardProduct } from '@/components/ui'
-import { useAppDispatch } from '@/store/hook/useRedux'
-import { loadProduct } from '@/store/actions/actions'
-import { useProductsFilter } from '@/hooks/useProductsFilter'
+import { ProductsProps } from '@/components/types'
 import * as S from './products-list-styles'
 
 type ProductsListProps = {
-  title: string
+  props: {
+    title: string
+    productList: ProductsProps[]
+    isLoading: boolean
+  }
   children?: ReactNode
 }
 
-export const ProductsList = ({ title, children }: ProductsListProps) => {
-  const { productsFilter, isLoading } = useProductsFilter()
-  const dispatch = useAppDispatch()
+export const ProductsList = ({ props, children }: ProductsListProps) => {
+  const { title, isLoading, productList } = props
   const theme = useTheme()
-
-  useEffect(() => {
-    dispatch(loadProduct())
-  }, [dispatch])
 
   return (
     <S.Container>
       <div>
-        <Typography
-          component="h3"
-          variant="h2"
-          sx={{ color: theme.palette.grey[900] }}
-        >
+        <Typography component="h3" variant="h2" color={theme.palette.grey[900]}>
           {title}
         </Typography>
 
         {children}
       </div>
 
-      {productsFilter.length !== 0 ? (
+      {productList.length !== 0 ? (
         <S.Products>
-          {productsFilter.map((item, index) => (
+          {productList.map((item, index) => (
             <CardProduct key={index} card={item} />
           ))}
         </S.Products>
@@ -46,13 +39,13 @@ export const ProductsList = ({ title, children }: ProductsListProps) => {
           alignItems="center"
           justifyContent="center"
           gap={2}
-          sx={{ margin: theme.spacing(15) }}
+          margin={theme.spacing(15)}
         >
           {isLoading && <CircularProgress size={35} />}
           <Typography
             component="h3"
             variant="h2"
-            sx={{ color: theme.palette.grey[900] }}
+            color={theme.palette.grey[900]}
           >
             {isLoading ? 'Carregando produtos' : 'Produtos indisponível'}
           </Typography>

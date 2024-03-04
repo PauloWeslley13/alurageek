@@ -1,21 +1,11 @@
-import { useState } from 'react'
-import { IconButton, useTheme } from '@mui/material'
+import { IconButton } from '@mui/material'
 import CloseIcon from '@mui/icons-material/Close'
-import { useAppSelector } from '@/store/hook/useRedux'
 import { Avatar, Dialog, CardUser } from '@/components/ui'
+import { useMenuProfile } from './useMenuProfile'
 
 export const MenuProfile = () => {
-  const { user } = useAppSelector((state) => state.user)
-  const [open, setOpen] = useState<boolean>(false)
-  const theme = useTheme()
-
-  const handleOpenDialog = () => {
-    setOpen(true)
-  }
-
-  const handleCloseDialog = () => {
-    setOpen(false)
-  }
+  const { open, user, theme, handleOpenDialog, handleCloseDialog } =
+    useMenuProfile()
 
   return (
     <div>
@@ -41,7 +31,7 @@ export const MenuProfile = () => {
         </Dialog.Header>
 
         <Dialog.Content>
-          <CardUser />
+          <CardUser closeModal={handleCloseDialog} />
         </Dialog.Content>
       </Dialog.Root>
     </div>

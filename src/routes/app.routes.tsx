@@ -5,6 +5,9 @@ import { Loadable } from '@/components/loadable'
 
 const Home = Loadable(lazy(() => import('@/pages/home')))
 const Cart = Loadable(lazy(() => import('@/pages/cart')))
+const Category = Loadable(lazy(() => import('@/pages/category')))
+const PanelAdm = Loadable(lazy(() => import('@/pages/panel-adm')))
+const Authentication = Loadable(lazy(() => import('@/pages/authentication')))
 const Products = Loadable(lazy(() => import('@/pages/products')))
 const ProductCreate = Loadable(
   lazy(() => import('@/pages/products/modules/product-create')),
@@ -14,9 +17,6 @@ const ProductDetail = Loadable(
 )
 const ProductListItems = Loadable(
   lazy(() => import('@/pages/products/modules/product-list-items')),
-)
-const Authentication = Loadable(
-  lazy(() => import('@/pages/authentication/authentication')),
 )
 
 export const AppRoutes: RouteObject = {
@@ -34,5 +34,7 @@ export const AppRoutes: RouteObject = {
       ],
     },
     { path: 'cart', element: <Cart /> },
+    { path: 'panel-adm', element: <PanelAdm /> },
+    { path: 'category/:id', element: <Category /> },
   ],
 }

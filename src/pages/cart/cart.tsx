@@ -8,7 +8,7 @@ import { priceMask } from '@/utils/price-mask'
 import * as S from './cart-styles'
 
 export const Cart = () => {
-  const { data, calcTotal, handleCheckout } = useCart()
+  const { data, calcTotal, handleCheckout, handleSavedCart } = useCart()
   const navigate = useNavigate()
   const theme = useTheme()
 
@@ -19,19 +19,17 @@ export const Cart = () => {
           flexDirection="row"
           justifyContent="space-between"
           alignItems="center"
-          sx={{
-            borderBottom: `1px solid ${theme.palette.grey[300]}`,
-            mb: theme.spacing(3),
-            px: 1,
-          }}
+          marginBottom={theme.spacing(3)}
+          borderBottom={`1px solid ${theme.palette.grey[300]}`}
+          px={1}
         >
-          <Typography component="h3" variant="h3" sx={{ py: 5 }}>
+          <Typography component="h3" variant="h3" py={5}>
             Carrinho
           </Typography>
 
           <div>
             <Btn
-              label="Volta"
+              label="Voltar"
               startIcon={<KeyboardArrowLeftIcon />}
               onClick={() => navigate(-1)}
               size="small"
@@ -52,13 +50,50 @@ export const Cart = () => {
           <Typography component="h3" variant="h3">
             Resumo do pedido
           </Typography>
+
+          <Stack
+            flexDirection="column"
+            alignItems="center"
+            spacing={2}
+            marginTop={6}
+          >
+            {data.map((props) => (
+              <Stack
+                key={props.id}
+                flexDirection="row"
+                justifyContent="space-between"
+                width="100%"
+              >
+                <Typography
+                  component="span"
+                  variant="subtitle1"
+                  color={theme.palette.grey[300]}
+                  textTransform="capitalize"
+                >
+                  {props.name}
+                </Typography>
+                <Typography
+                  component="span"
+                  variant="h5"
+                  textTransform="capitalize"
+                >
+                  {priceMask({ value: String(props.price) })}
+                </Typography>
+              </Stack>
+            ))}
+          </Stack>
         </Stack>
+
+        <Button label="Salvar carrinho" onClick={handleSavedCart} />
 
         <Stack
           flexDirection="row"
           alignItems="center"
           justifyContent="space-between"
-          sx={{ ...S.mixins(theme) }}
+          p={theme.spacing(1.9)}
+          border={`1px solid ${theme.palette.grey[300]}`}
+          borderRadius={theme.spacing(2)}
+          sx={{ bgcolor: theme.palette.grey[100] }}
         >
           <Typography component="span" variant="h3">
             Total

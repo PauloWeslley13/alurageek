@@ -5,13 +5,15 @@ import { FONTS } from '@/styles'
 import { ButtonIcon } from '@/components/ui'
 import { useProductDetail } from './useProductDetail'
 import { useAppSelector } from '@/store/hook/useRedux'
+import { useProductsFilter } from '@/hooks/useProductsFilter'
 import * as S from './product-detail-styles'
 
 export const ProductDetail = () => {
-  const theme = useTheme()
+  const { productsFilter, isLoading } = useProductsFilter()
   const { isLogged } = useAppSelector((state) => state.user)
   const prodDetail = useAppSelector((state) => state.productDetail)
   const { addProductCart } = useProductDetail()
+  const theme = useTheme()
   const { name, price, description, url } = prodDetail
 
   return (
@@ -25,10 +27,8 @@ export const ProductDetail = () => {
           <Typography
             component="h3"
             variant="h1"
-            sx={{
-              fontSize: FONTS.fontSizes['6xl'],
-              textTransform: 'capitalize',
-            }}
+            fontSize={FONTS.fontSizes['6xl']}
+            textTransform="capitalize"
           >
             {name}
           </Typography>
@@ -55,7 +55,13 @@ export const ProductDetail = () => {
         </div>
       </S.ProductContainer>
 
-      <ProductsList title="Produtos similares" />
+      <ProductsList
+        props={{
+          title: 'Produtos similares',
+          productList: productsFilter,
+          isLoading,
+        }}
+      />
     </section>
   )
 }

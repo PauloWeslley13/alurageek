@@ -5,7 +5,7 @@ type ProductsCart = {
 
 type CartType = {
   userId: string
-  data: ProductsCart[]
+  cart: ProductsCart[]
   totalPrice: number
 }
 

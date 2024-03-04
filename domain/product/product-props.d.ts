@@ -6,3 +6,8 @@ export interface IProduct {
   category: string
   url: string
 }
+
+export interface IVerifyIsEqualProductProps {
+  data: Omit<IProduct, 'id'>
+  product: IProduct
+}
