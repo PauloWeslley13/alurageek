@@ -4,7 +4,7 @@ import { getUserLogged } from '@/store/reducers'
 import { toasts } from '@/components/ui'
 import { loadUser } from '@/store/actions/actions'
 import { UsersProps } from '@/components/types'
-import { UserUseCase } from '../../../../domain/user/user-use-cases'
+import { UserUseCase } from '../../../../domain/user'
 
 const usersService = new UserUseCase()
 
@@ -24,6 +24,7 @@ function* useAuthentication(action: any) {
 
     yield put(getUserLogged({ user, isLogged: true }))
   } catch (error) {
+    yield put(getUserLogged({ user: {} as UsersProps, isLogged: false }))
     toasts.error({ title: 'erro' })
   }
 }

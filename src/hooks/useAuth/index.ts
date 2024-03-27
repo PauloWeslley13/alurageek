@@ -1,5 +1,5 @@
 import { useNavigate } from 'react-router-dom'
-import { UserUseCase } from './../../../domain/user/user-use-cases'
+import { UserUseCase } from '../../../domain/user/usecases/user-use-cases'
 import { toasts } from '@/components/ui'
 import { SignInProps } from '@/pages/authentication/modules/sign-in/useSignIn'
 import { SignUpProps } from '@/pages/authentication/modules/sign-up/useSignUp'
@@ -13,9 +13,22 @@ export const useAuth = () => {
   const dispatch = useAppDispatch()
   const navigate = useNavigate()
 
+  const handleAuthUser = (user: UsersProps) => {
+    const userData = user satisfies UsersProps
+    dispatch(setUserAuth(userData))
+  }
+
   const handleSignUp = async (data: SignUpProps) => {
     await userAuth.userAuthCreate(data).then((user) => {
-      dispatch(setUserAuth(user as UsersProps))
+      if (
+        user === 'Email já cadastrado' ||
+        user === 'Ops! Aconteceu um erro inesperado'
+      ) {
+        toasts.error({ title: 'Não foi possível cadastrar usuário' })
+        return
+      }
+
+      handleAuthUser(user.user)
       toasts.success({ title: 'Usuário cadastrado' })
       navigate('/home')
     })
