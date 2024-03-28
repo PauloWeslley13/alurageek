@@ -12,13 +12,7 @@ const userSlice = createSlice({
   reducers: {
     setUserAuth: (_, { payload }: PayloadAction<UsersProps>) => {
       return {
-        user: {
-          id: payload.id,
-          email: payload.email,
-          username: payload.username,
-          photoUrl: payload.photoUrl,
-          password: payload.password,
-        },
+        user: { ...payload },
         isLogged: true,
       }
     },

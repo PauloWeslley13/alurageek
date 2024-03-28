@@ -11,13 +11,12 @@ export class User implements IUserModel {
 
   constructor(private user: UserRepository) {}
 
-  async create(userAuth: UserCredential): Promise<
+  async create(
+    userAuth: UserCredential,
+  ): Promise<
     | 'Email já cadastrado'
     | 'Ops! Aconteceu um erro inesperado'
-    | {
-        user: UserRepository
-        message: string
-      }
+    | { user: UserRepository; message: string }
   > {
     const userRef = doc(
       this.database.getCollection(COLLECTIONS.USERS),
@@ -25,6 +24,10 @@ export class User implements IUserModel {
     )
 
     try {
+      userAuth.user.getIdToken().then((token) => {
+        this.user.accessToken = token
+      })
+
       await updateProfile(userAuth.user, {
         displayName: this.user.username,
         photoURL: this.user.photoUrl,
@@ -35,6 +38,7 @@ export class User implements IUserModel {
         email: this.user.email,
         password: this.user.password,
         photoUrl: this.user.photoUrl,
+        accessToken: this.user.accessToken,
       })
 
       return {

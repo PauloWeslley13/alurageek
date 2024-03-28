@@ -19,7 +19,7 @@ export const useAuth = () => {
   }
 
   const handleSignUp = async (data: SignUpProps) => {
-    await userAuth.userAuthCreate(data).then((user) => {
+    await userAuth.userAuthSignUp(data).then((user) => {
       if (
         user === 'Email já cadastrado' ||
         user === 'Ops! Aconteceu um erro inesperado'
@@ -35,9 +35,18 @@ export const useAuth = () => {
   }
 
   const handleSignIn = async ({ email, password }: SignInProps) => {
-    await userAuth.userAuthentication({ email, password })
-    toasts.success({ title: 'Usuário logado' })
-    navigate('/home')
+    await userAuth.userAuthSignIn({ email, password }).then((user) => {
+      if (
+        user === 'Usuário inválido' ||
+        user === 'Ops! Aconteceu um erro inesperado'
+      ) {
+        toasts.error({ title: 'Usuário inválido' })
+        return
+      }
+
+      toasts.success({ title: 'Usuário logado' })
+      navigate('/home')
+    })
   }
 
   const handleLogout = async () => {

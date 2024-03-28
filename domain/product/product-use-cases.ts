@@ -7,7 +7,7 @@ import {
   where,
 } from 'firebase/firestore'
 import { collectionProducts } from '../../database/firebase/collections'
-import { Product } from './product'
+import { Product } from './entities/product'
 import { IProduct, IVerifyIsEqualProductProps } from './product-props'
 import { db } from '../../database/firebase'
 
@@ -16,7 +16,7 @@ export class ProductUseCase {
     const isProduct = products.findIndex((prod) => prod.name === data.name)
     let productInfo = {} as Product
 
-    if (isProduct !== -1) return
+    if (isProduct !== -1) return 'Produto já cadastrado'
 
     await addDoc(collectionProducts, { ...data })
       .then((newProduct) => {
@@ -32,12 +32,12 @@ export class ProductUseCase {
   updateProduct(data: IProduct): Product {
     const product = new Product({ ...data })
 
-    product.updated()
+    product.update()
 
     return product
   }
 
-  deleteProduct(data: IProduct) {
+  deleteProduct(data: IProduct): void {
     const product = new Product({ ...data })
 
     product.remove()

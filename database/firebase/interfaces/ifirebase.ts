@@ -5,9 +5,12 @@ import {
   DocumentData,
   Firestore,
 } from 'firebase/firestore'
+import { COLLECTIONS } from 'database'
 
 interface IFirebase {
-  getCollection(path: string): CollectionReference<DocumentData, DocumentData>
+  getCollection(
+    path: COLLECTIONS,
+  ): CollectionReference<DocumentData, DocumentData>
   getDB(): Firestore
   auth(): Auth
   storage(): FirebaseStorage

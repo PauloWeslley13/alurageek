@@ -1,14 +1,13 @@
-import { AuthenticationUseCase } from '../../authentication'
 import { FirebaseError } from 'firebase/app'
-import { doc, getDoc } from 'firebase/firestore'
+import { AuthenticationUseCase } from '../../authentication'
+import { UserData } from './../../../database'
 import { User } from '../entities/user'
-import { db } from '../../../database/firebase'
 import { UserRepository } from '../repositories'
 
 export class UserUseCase {
   private auth = new AuthenticationUseCase()
 
-  async userAuthCreate(data: Omit<UserRepository, 'id'>) {
+  async userAuthSignUp(data: Omit<UserRepository, 'id'>) {
     const { email, password } = data
 
     try {
@@ -29,7 +28,7 @@ export class UserUseCase {
     return 'Ops! Aconteceu um erro inesperado'
   }
 
-  async userAuthentication(data: Pick<UserRepository, 'email' | 'password'>) {
+  async userAuthSignIn(data: Pick<UserRepository, 'email' | 'password'>) {
     const { email, password } = data
 
     try {
@@ -59,9 +58,10 @@ export class UserUseCase {
   }
 
   async userById(uid: string): Promise<UserRepository> {
-    const userDocRef = doc(db, 'users', uid)
-    const responseDoc = await getDoc(userDocRef)
-    const data = responseDoc.data() as UserRepository
+    const userDataLogged = new UserData()
+    const data = await userDataLogged.getUserLoggedById(uid)
+
+    console.log(data)
 
     return data
   }

@@ -5,6 +5,7 @@
     "react-refresh"
   ],
   "rules": {
+    "@typescript-eslint/no-namespace": "off",
     "no-useless-constructor": "off",
     "@typescript-eslint/no-non-null-asserted-optional-chain": "off",
     "react-refresh/only-export-components": [

@@ -21,13 +21,13 @@ export class AuthenticationUseCase implements IAuthentication {
   }
 
   async signIn(email: string, password: string): Promise<UserCredential> {
-    const data = await signInWithEmailAndPassword(
+    const response = await signInWithEmailAndPassword(
       this.database.auth(),
       email,
       password,
     )
 
-    return data
+    return response
   }
 
   async signOut(): Promise<void> {

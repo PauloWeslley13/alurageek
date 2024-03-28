@@ -1,35 +1,33 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { call, cancel, put, takeLatest } from 'redux-saga/effects'
 import { getUserLogged } from '@/store/reducers'
-import { toasts } from '@/components/ui'
 import { loadUser } from '@/store/actions/actions'
 import { UsersProps } from '@/components/types'
 import { UserUseCase } from '../../../../domain/user'
 
 const usersService = new UserUseCase()
 
-function* useAuthentication(action: any) {
+function* userLoggedAuth(action: any) {
   const userId = action.payload! as string
 
   try {
     const userOnAuth: UsersProps = yield call(usersService.userById, userId)
 
     const user = {
+      ...userOnAuth,
       id: userId,
-      username: userOnAuth.username,
-      email: userOnAuth.email,
-      password: userOnAuth.password,
-      photoUrl: userOnAuth.photoUrl,
     } satisfies UsersProps
+
+    console.log(user)
 
     yield put(getUserLogged({ user, isLogged: true }))
   } catch (error) {
     yield put(getUserLogged({ user: {} as UsersProps, isLogged: false }))
-    toasts.error({ title: 'erro' })
+    console.log(`Error UserSaga ${error}`)
   }
 }
 
 export function* userLoggedSaga(): any {
-  const taskUser = yield takeLatest(loadUser, useAuthentication)
+  const taskUser = yield takeLatest(loadUser, userLoggedAuth)
   yield takeLatest(getUserLogged, () => cancel(taskUser))
 }
