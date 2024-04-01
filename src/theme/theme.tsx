@@ -6,6 +6,7 @@ import {
   ThemeOptions,
   ThemeProvider,
   createTheme,
+  responsiveFontSizes,
 } from '@mui/material'
 import { Typography } from './typography'
 import { Palette } from './palette'
@@ -30,7 +31,8 @@ export const ThemeCustomization = ({ children }: { children: ReactNode }) => {
     [themeTypography, themePalette],
   )
 
-  const themes = createTheme(themeOptions)
+  let themes = createTheme(themeOptions)
+  themes = responsiveFontSizes(themes)
 
   return (
     <StyledEngineProvider injectFirst>
