@@ -7,20 +7,27 @@ import {
 } from 'firebase/firestore'
 import { Auth, getAuth } from 'firebase/auth'
 import { FirebaseStorage, getStorage } from 'firebase/storage'
+import { FirebaseApp } from 'firebase/app'
 import { IFirebase, ICollection } from './interfaces'
-import { app } from '.'
+import { initApp } from './index'
 
 export class Firebase implements IFirebase {
+  private initApp: FirebaseApp = initApp.initializeApp()
+
+  app(): FirebaseApp {
+    return this.initApp
+  }
+
   auth(): Auth {
-    return getAuth(app)
+    return getAuth(this.initApp)
   }
 
   storage(): FirebaseStorage {
-    return getStorage(app)
+    return getStorage(this.initApp)
   }
 
   getDB(): Firestore {
-    return getFirestore(app)
+    return getFirestore(this.initApp)
   }
 
   getCollection(path: string): CollectionReference<DocumentData, DocumentData> {

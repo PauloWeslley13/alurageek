@@ -9,6 +9,10 @@ export class FirebaseConfig {
   private appId = import.meta.env.VITE_APP_ID
   private measurementId = import.meta.env.VITE_MEASUREMENT_ID
 
+  constructor() {
+    this.initializeApp()
+  }
+
   initializeApp(): FirebaseApp {
     const app = initializeApp({
       apiKey: this.apiKey,

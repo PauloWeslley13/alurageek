@@ -6,6 +6,7 @@ import {
   Firestore,
 } from 'firebase/firestore'
 import { COLLECTIONS } from 'database'
+import { FirebaseApp } from 'firebase/app'
 
 interface ICollection {
   path: COLLECTIONS
@@ -21,6 +22,7 @@ interface IFirebase {
   getDB(): Firestore
   auth(): Auth
   storage(): FirebaseStorage
+  app(): FirebaseApp
 }
 
 export type { IFirebase, ICollection }

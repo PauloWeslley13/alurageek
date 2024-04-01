@@ -11,10 +11,11 @@ import {
   loadProduct,
   loadUser,
 } from './store/actions/actions'
-import { auth } from '../database/firebase'
+import { DBFactory } from '../database'
 import 'react-toastify/dist/ReactToastify.css'
 
 export const App = () => {
+  const auth = DBFactory.database().auth()
   const dispatch = useAppDispatch()
   const getThemeLocalStorage = localStorage.getItem('@appTheme')
 
@@ -38,7 +39,7 @@ export const App = () => {
 
     dispatch(loadProduct())
     dispatch(loadCategories())
-  }, [dispatch, getThemeLocalStorage])
+  }, [dispatch, getThemeLocalStorage, auth])
 
   return (
     <>
