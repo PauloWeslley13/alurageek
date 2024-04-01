@@ -3,7 +3,7 @@ import { useQuery } from 'react-query'
 import { ProductsCart } from '@/components/types'
 import { useAppDispatch, useAppSelector } from '@/store/hook/useRedux'
 import { handleQuantity, removeToCart, resetCart } from '@/store/reducers'
-import { CartUseCase } from '../../../../domain/cart/usecases/cart-use-cases'
+import { CartUseCase } from '../../../../domain/cart'
 
 const cartUseCase = new CartUseCase()
 
@@ -69,12 +69,12 @@ export const useCart = () => {
 
   const handleCheckout = () => {
     cartUseCase.savedUserCart(user.id, {
-      data: carts,
+      cart: carts,
       totalPrice: calcTotal,
     })
 
     cartUseCase.removeCart(user.id, {
-      data: carts,
+      cart: carts,
       totalPrice: calcTotal,
     })
 
@@ -83,7 +83,7 @@ export const useCart = () => {
 
   const handleSavedCart = async () => {
     cartUseCase.createCart(user.id, {
-      data: carts,
+      cart: carts,
       totalPrice: calcTotal,
     })
   }
