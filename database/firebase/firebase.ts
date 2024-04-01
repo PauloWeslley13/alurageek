@@ -7,7 +7,7 @@ import {
 } from 'firebase/firestore'
 import { Auth, getAuth } from 'firebase/auth'
 import { FirebaseStorage, getStorage } from 'firebase/storage'
-import { IFirebase } from './interfaces'
+import { IFirebase, ICollection } from './interfaces'
 import { app } from '.'
 
 export class Firebase implements IFirebase {
@@ -25,5 +25,13 @@ export class Firebase implements IFirebase {
 
   getCollection(path: string): CollectionReference<DocumentData, DocumentData> {
     return collection(this.getDB(), path)
+  }
+
+  collection({
+    path,
+    id,
+    collections,
+  }: ICollection): CollectionReference<DocumentData, DocumentData> {
+    return collection(this.getDB(), path, id, collections)
   }
 }

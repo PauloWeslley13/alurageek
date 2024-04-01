@@ -9,7 +9,7 @@ import { EditProductProps } from './edit-product-props'
 import { toasts } from '@/components/ui'
 import { schemaProduct } from '../schema-product'
 import { useProducts } from '../../hooks/useProducts'
-import { ProductUseCase } from '../../../../../domain/product/product-use-cases'
+import { ProductUseCase } from '../../../../../domain/product/usecases'
 
 const productUseCase = new ProductUseCase()
 

@@ -3,7 +3,7 @@ import { call, cancel, put, takeLatest } from 'redux-saga/effects'
 import { CartType, ProductsCart } from '@/components/types'
 import { getCart } from '@/store/reducers'
 import { loadCart } from '@/store/actions/actions'
-import { CartUseCase } from '../../../../domain/cart/cart-use-cases'
+import { CartUseCase } from '../../../../domain/cart/usecases/cart-use-cases'
 
 const cartUser = new CartUseCase()
 

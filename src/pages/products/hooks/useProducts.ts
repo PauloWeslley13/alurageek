@@ -1,4 +1,4 @@
-import { ProductUseCase } from './../../../../domain/product/product-use-cases'
+import { ProductUseCase } from '../../../../domain/product'
 import { ProductsProps, SchemaProductProps } from '@/components/types'
 import { useAppDispatch, useAppSelector } from '@/store/hook/useRedux'
 import { createProduct, deleteProduct, updateProduct } from '@/store/reducers'
@@ -11,23 +11,26 @@ export const useProducts = () => {
   const dispatch = useAppDispatch()
 
   const handleProductPOST = async (data: SchemaProductProps) => {
-    productUseCase.createProduct(data, products).then((product) => {
-      if (product) {
-        dispatch(createProduct(product))
-      } else {
+    await productUseCase.createProduct(data, products).then((data) => {
+      if (data === 'Produto já cadastrado') {
         toasts.error({ title: 'Produto já cadastrado' })
+        return
       }
+
+      dispatch(createProduct(data))
+      toasts.success({ title: 'Producto criado com sucesso' })
     })
   }
 
   const handleProductPUT = async (data: ProductsProps) => {
-    const prod = productUseCase.updateProduct(data)
-    toasts.success({ title: 'Produto Atualizado' })
-    dispatch(updateProduct(prod))
+    await productUseCase.updateProduct(data).then((props) => {
+      dispatch(updateProduct(props))
+      toasts.success({ title: 'Produto Atualizado' })
+    })
   }
 
   const handleProductDELETE = async (data: ProductsProps) => {
-    productUseCase.deleteProduct(data)
+    await productUseCase.deleteProduct(data)
     toasts.success({ title: `Produto ${data.name} deletado` })
     dispatch(deleteProduct(data))
   }

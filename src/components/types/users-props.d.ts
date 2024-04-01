@@ -4,7 +4,7 @@ import { SignUpProps } from '@/pages/authentication/modules/sign-up/useSignUp'
 type UsersProps = Pick<SignInProps, 'email'> &
   Pick<SignUpProps, 'username' | 'photoUrl'> & {
     id: string
-    token: string
+    accessToken?: string
   }
 
 type UserType = {

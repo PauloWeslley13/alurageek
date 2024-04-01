@@ -1,20 +1,23 @@
 import { ProductRepository } from '../repositories'
 
 interface IProductModel {
-  create(): Promise<{ product: ProductRepository; message: string }>
-  update(): Promise<void>
-  remove(): Promise<void>
+  create(data: Omit<ProductRepository, 'id'>): Promise<ProductRepository>
+  update(data: ProductRepository): Promise<ProductRepository>
+  remove({ id }: Pick<ProductRepository, 'id'>): Promise<void>
 }
 
 export abstract class ProductModel implements IProductModel {
-  async create(): Promise<{ product: ProductRepository; message: string }> {
-    return {
-      product: new ProductRepository({} as ProductRepository),
-      message: '',
-    }
+  async create(
+    data: Omit<ProductRepository, 'id'>,
+  ): Promise<ProductRepository> {
+    return data as ProductRepository
   }
 
-  async update(): Promise<void> {}
+  async update(data: ProductRepository): Promise<ProductRepository> {
+    return data as ProductRepository
+  }
 
-  async remove(): Promise<void> {}
+  async remove({ id }: Pick<ProductRepository, 'id'>): Promise<void> {
+    console.log(id)
+  }
 }

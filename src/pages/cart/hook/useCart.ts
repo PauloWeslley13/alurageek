@@ -3,7 +3,7 @@ import { useQuery } from 'react-query'
 import { ProductsCart } from '@/components/types'
 import { useAppDispatch, useAppSelector } from '@/store/hook/useRedux'
 import { handleQuantity, removeToCart, resetCart } from '@/store/reducers'
-import { CartUseCase } from './../../../../domain/cart/cart-use-cases'
+import { CartUseCase } from '../../../../domain/cart/usecases/cart-use-cases'
 
 const cartUseCase = new CartUseCase()
 

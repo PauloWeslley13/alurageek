@@ -1,6 +1,6 @@
 import { doc, getDoc } from 'firebase/firestore'
 import { DBFactory } from './../../db-factory'
-import { UserRepository } from './../../../domain/user/repositories'
+import { UserRepository } from './../../../domain/user'
 import { COLLECTIONS } from '../../types'
 
 export class UserData {

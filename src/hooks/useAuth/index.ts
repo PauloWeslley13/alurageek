@@ -1,5 +1,5 @@
 import { useNavigate } from 'react-router-dom'
-import { UserUseCase } from '../../../domain/user/usecases/user-use-cases'
+import { UserUseCase } from '../../../domain/user'
 import { toasts } from '@/components/ui'
 import { SignInProps } from '@/pages/authentication/modules/sign-in/useSignIn'
 import { SignUpProps } from '@/pages/authentication/modules/sign-up/useSignUp'

@@ -7,13 +7,20 @@ import {
 } from 'firebase/firestore'
 import { COLLECTIONS } from 'database'
 
+interface ICollection {
+  path: COLLECTIONS
+  id: string
+  collections: COLLECTIONS
+}
+
 interface IFirebase {
   getCollection(
     path: COLLECTIONS,
   ): CollectionReference<DocumentData, DocumentData>
+  collection(path: ICollection): CollectionReference<DocumentData, DocumentData>
   getDB(): Firestore
   auth(): Auth
   storage(): FirebaseStorage
 }
 
-export type { IFirebase }
+export type { IFirebase, ICollection }

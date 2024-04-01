@@ -61,8 +61,6 @@ export class UserUseCase {
     const userDataLogged = new UserData()
     const data = await userDataLogged.getUserLoggedById(uid)
 
-    console.log(data)
-
     return data
   }
 }

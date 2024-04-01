@@ -1,64 +1,47 @@
 import { addDoc, deleteDoc, doc, updateDoc } from 'firebase/firestore'
-import { AddProduct, ProductBuild } from './../builder'
 import { ProductRepository } from './../repositories'
 import { COLLECTIONS, DBFactory } from '../../../database'
 import { ProductModel } from './product-model'
+import { Factory } from '../../../factory'
 
 // TODO: ENTIDADE Product
 export class Product implements ProductModel {
+  protected product: ProductRepository = {} as ProductRepository
   protected database = DBFactory.database()
-  protected productBuild: ProductBuild = new ProductBuild()
-  protected addProduct: AddProduct = new AddProduct(this.productBuild)
+  protected productBuild: Factory.ProductFactory = new Factory.ProductFactory()
 
-  constructor(private product: ProductRepository) {}
-
-  async create(): Promise<{ product: ProductRepository; message: string }> {
-    const data = {
-      name: this.product.name,
-      description: this.product.description,
-      price: this.product.price,
-      category: this.product.category,
-      url: this.product.url,
-    }
-
-    await addDoc(this.database.getCollection(COLLECTIONS.USERS), { ...data })
+  async create(
+    data: Omit<ProductRepository, 'id'>,
+  ): Promise<ProductRepository> {
+    await addDoc(this.database.getCollection(COLLECTIONS.PRODUCTS), { ...data })
       .then((newProduct) => {
-        this.addProduct.product({ id: newProduct.id, ...data })
+        const product = this.productBuild.add({ id: newProduct.id, ...data })
 
-        const prod = this.productBuild.getProduct()
-
-        this.product = prod
+        this.product = product
       })
       .catch((err) => console.log(err))
 
-    return {
-      product: this.product,
-      message: 'Producto criado com sucesso',
-    }
+    return this.product
   }
 
-  async update(): Promise<void> {
-    const productUpdateRef = doc(
-      this.database.getDB(),
-      COLLECTIONS.PRODUCTS,
-      this.product.id,
+  async update(data: ProductRepository): Promise<ProductRepository> {
+    this.product = data
+
+    await updateDoc(
+      doc(this.database.getDB(), COLLECTIONS.PRODUCTS, this.product.id),
+      { ...data },
     )
 
-    await updateDoc(productUpdateRef, {
-      name: this.product.name,
-      description: this.product.description,
-      price: this.product.price,
-      category: this.product.category,
-      url: this.product.url,
-    })
+    return this.product
   }
 
-  async remove(): Promise<void> {
+  async remove({ id }: Pick<ProductRepository, 'id'>): Promise<void> {
     const productRemoveRef = doc(
       this.database.getDB(),
       COLLECTIONS.PRODUCTS,
-      this.product.id,
+      id,
     )
+
     await deleteDoc(productRemoveRef)
   }
 }

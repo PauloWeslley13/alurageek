@@ -1,7 +1,7 @@
 import { UserCredential, updateProfile } from 'firebase/auth'
 import { doc, setDoc } from 'firebase/firestore'
 import { FirebaseError } from 'firebase/app'
-import { UserRepository } from './../repositories/user-repository'
+import { UserRepository } from './../repositories'
 import { COLLECTIONS, DBFactory } from './../../../database'
 import { IUserModel } from './user-model'
 

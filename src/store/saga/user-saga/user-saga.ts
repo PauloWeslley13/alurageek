@@ -18,12 +18,10 @@ function* userLoggedAuth(action: any) {
       id: userId,
     } satisfies UsersProps
 
-    console.log(user)
-
     yield put(getUserLogged({ user, isLogged: true }))
   } catch (error) {
     yield put(getUserLogged({ user: {} as UsersProps, isLogged: false }))
-    console.log(`Error UserSaga ${error}`)
+    console.error(`Error UserSaga ${error}`)
   }
 }
 
