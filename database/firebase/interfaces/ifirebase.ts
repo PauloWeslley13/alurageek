@@ -5,8 +5,8 @@ import {
   DocumentData,
   Firestore,
 } from 'firebase/firestore'
-import { COLLECTIONS } from 'database'
 import { FirebaseApp } from 'firebase/app'
+import { COLLECTIONS } from 'database'
 
 interface ICollection {
   path: COLLECTIONS
@@ -25,4 +25,8 @@ interface IFirebase {
   app(): FirebaseApp
 }
 
-export type { IFirebase, ICollection }
+interface IFirebaseConfig {
+  initializeApp(): FirebaseApp
+}
+
+export type { IFirebase, IFirebaseConfig, ICollection }

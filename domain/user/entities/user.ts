@@ -3,7 +3,7 @@ import { doc, setDoc } from 'firebase/firestore'
 import { FirebaseError } from 'firebase/app'
 import { UserRepository } from './../repositories'
 import { COLLECTIONS, DBFactory } from './../../../database'
-import { IUserModel } from './user-model'
+import { IUserModel, Create } from './user-model'
 
 // TODO: ENTIDADE User
 export class User implements IUserModel {
@@ -11,13 +11,7 @@ export class User implements IUserModel {
 
   constructor(private user: UserRepository) {}
 
-  async create(
-    userAuth: UserCredential,
-  ): Promise<
-    | 'Email já cadastrado'
-    | 'Ops! Aconteceu um erro inesperado'
-    | { user: UserRepository; message: string }
-  > {
+  async create(userAuth: UserCredential): Promise<Create> {
     const userRef = doc(
       this.database.getCollection(COLLECTIONS.USERS),
       userAuth.user.uid,

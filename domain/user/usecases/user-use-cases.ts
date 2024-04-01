@@ -53,7 +53,7 @@ export class UserUseCase {
     return 'Ops! Aconteceu um erro inesperado'
   }
 
-  async userLogout() {
+  async userLogout(): Promise<void> {
     await this.auth.signOut()
   }
 

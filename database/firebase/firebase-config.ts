@@ -1,6 +1,7 @@
 import { FirebaseApp, initializeApp } from 'firebase/app'
+import { IFirebaseConfig } from './index'
 
-export class FirebaseConfig {
+export class FirebaseConfig implements IFirebaseConfig {
   private apiKey = import.meta.env.VITE_API_KEY
   private authDomain = import.meta.env.VITE_AUTH_DOMAIN
   private projectId = import.meta.env.VITE_PROJECT_ID

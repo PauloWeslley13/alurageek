@@ -2,8 +2,9 @@ import { getDocs, orderBy, query, where } from 'firebase/firestore'
 import { ProductRepository } from './../../../domain/product/repositories'
 import { DBFactory } from './../../db-factory'
 import { COLLECTIONS } from '../../types'
+import { IProductData } from '../../interfaces'
 
-export class ProductData {
+export class ProductData implements IProductData {
   private database = DBFactory.database()
 
   async getProductList(): Promise<ProductRepository[]> {

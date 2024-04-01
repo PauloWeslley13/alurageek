@@ -10,6 +10,7 @@ import { FirebaseStorage, getStorage } from 'firebase/storage'
 import { FirebaseApp } from 'firebase/app'
 import { IFirebase, ICollection } from './interfaces'
 import { initApp } from './index'
+import { COLLECTIONS } from '../types'
 
 export class Firebase implements IFirebase {
   private initApp: FirebaseApp = initApp.initializeApp()
@@ -30,7 +31,9 @@ export class Firebase implements IFirebase {
     return getFirestore(this.initApp)
   }
 
-  getCollection(path: string): CollectionReference<DocumentData, DocumentData> {
+  getCollection(
+    path: COLLECTIONS,
+  ): CollectionReference<DocumentData, DocumentData> {
     return collection(this.getDB(), path)
   }
 

@@ -1,13 +1,10 @@
 import { doc, getDoc, getDocs, query, where } from 'firebase/firestore'
 import { DBFactory } from '../../db-factory'
 import { COLLECTIONS } from '../../types'
+import { ICartData, ICartUserSaved } from '../../interfaces'
 import { CartRepository } from '../../../domain/cart'
 
-interface ICartUserSaved extends CartRepository {
-  id: string
-}
-
-export class CartData {
+export class CartData implements ICartData {
   private database = DBFactory.database()
 
   async getCartByUserId(userId: string) {

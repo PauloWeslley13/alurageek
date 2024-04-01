@@ -2,8 +2,9 @@ import { doc, getDoc, getDocs, orderBy, query, where } from 'firebase/firestore'
 import { CategoryRepository } from './../../../domain/category'
 import { DBFactory } from './../../db-factory'
 import { COLLECTIONS } from '../../types'
+import { ICategoryData } from '../../interfaces'
 
-export class CategoryData {
+export class CategoryData implements ICategoryData {
   private database = DBFactory.database()
 
   async getCategories(): Promise<CategoryRepository[]> {
@@ -14,6 +15,7 @@ export class CategoryData {
       where('name', '!=', true),
       orderBy('name', 'asc'),
     )
+
     const queryCategories = await getDocs(filteredCategories)
 
     queryCategories.forEach((doc) => {

@@ -1,4 +1,4 @@
-import { UserData } from '.'
+import { UserData } from './user-data'
 
 export * from './user-data'
 export * from './product-data'
