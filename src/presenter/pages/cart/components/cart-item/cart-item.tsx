@@ -2,7 +2,6 @@ import { IconButton, Stack, Typography } from '@mui/material'
 import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline'
 import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline'
 import RemoveCircleOutlineIcon from '@mui/icons-material/RemoveCircleOutline'
-import { priceMask } from '@/utils/price-mask'
 import { useCart } from '../../hook/useCart'
 import { FONTS } from '@/presenter/styles'
 import * as S from './cart-item-styles'
@@ -23,8 +22,12 @@ type CartItemProps = {
 
 export const CartItem = ({ cartItem }: CartItemProps) => {
   const { id, quantity, description, name, photoUrl, price } = cartItem
-  const { incrementQuantity, decrementQuantity, handleDeleteItemCart } =
-    useCart()
+  const {
+    incrementQuantity,
+    decrementQuantity,
+    handleDeleteItemCart,
+    makeFormat,
+  } = useCart()
 
   return (
     <S.CartItemWrap>
@@ -42,7 +45,7 @@ export const CartItem = ({ cartItem }: CartItemProps) => {
           </div>
 
           <Typography component="span" variant="h4" color="black">
-            {priceMask({ value: price })}
+            {makeFormat.priceMask(price)}
           </Typography>
         </div>
       </S.CartItemContent>

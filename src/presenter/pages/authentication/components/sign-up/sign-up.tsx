@@ -1,5 +1,5 @@
 import { useTheme } from '@mui/material'
-import { Alert, Button, InputField } from '@/components/ui'
+import { Alert, Button, InputField } from '@/presenter/components/ui'
 import { useSignUp } from './useSignUp'
 
 export const SignUp = () => {

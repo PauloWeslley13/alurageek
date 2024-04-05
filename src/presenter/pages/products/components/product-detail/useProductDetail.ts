@@ -1,11 +1,13 @@
 import { useEffect } from 'react'
 import { useParams } from 'react-router-dom'
+import { useTheme } from '@mui/material'
 import { ProductsProps } from '@/presenter/components/types'
 import { useAppDispatch, useAppSelector } from '@/main/store/hook/useRedux'
 import { addToCart, getProductDetail } from '@/main/store/reducers'
-import { priceMask } from '@/utils/price-mask'
 import { useProductsFilter } from '@/presenter/hooks/useProductsFilter'
-import { useTheme } from '@mui/material'
+import { Format } from '@/domain/format'
+
+const makeFormat = (): Format => new Format()
 
 export const useProductDetail = () => {
   const { isLogged } = useAppSelector((state) => state.user)
@@ -16,6 +18,7 @@ export const useProductDetail = () => {
   const params = useParams()
   const theme = useTheme()
   const dispatch = useAppDispatch()
+  const format = makeFormat()
   const product = products.find((item) => item.id === params.id)
 
   useEffect(() => {
@@ -25,13 +28,13 @@ export const useProductDetail = () => {
         name: product.name,
         category: product.category,
         description: product.description,
-        price: priceMask({ value: product.price }),
+        price: format.priceMask(product.price),
         url: product.url,
       } satisfies ProductsProps
 
       dispatch(getProductDetail(productDetail))
     }
-  }, [dispatch, product])
+  }, [dispatch, product, format])
 
   const addProductCart = () => {
     if (product) {

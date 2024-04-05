@@ -1,14 +1,21 @@
-import { Stack, Typography } from '@mui/material'
+import Stack from '@mui/material/Stack'
+import Typography from '@mui/material/Typography'
 import KeyboardArrowLeftIcon from '@mui/icons-material/KeyboardArrowLeft'
 import { CartItem } from './components'
 import { Btn, Button } from '@/presenter/components/ui'
 import { useCart } from './hook/useCart'
-import { priceMask } from '@/utils/price-mask'
 import * as S from './cart-styles'
 
 export const Cart = () => {
-  const { data, calcTotal, handleCheckout, handleSavedCart, theme, navigate } =
-    useCart()
+  const {
+    data,
+    theme,
+    calcTotal,
+    makeFormat,
+    navigate,
+    handleCheckout,
+    handleSavedCart,
+  } = useCart()
 
   return (
     <S.CartWrap>
@@ -75,7 +82,7 @@ export const Cart = () => {
                   variant="h5"
                   textTransform="capitalize"
                 >
-                  {priceMask({ value: String(props.price) })}
+                  {makeFormat.priceMask(String(props.price))}
                 </Typography>
               </Stack>
             ))}
@@ -97,7 +104,7 @@ export const Cart = () => {
             Total
           </Typography>
           <Typography component="span" variant="subtitle1">
-            {priceMask({ value: String(calcTotal) })}
+            {makeFormat.priceMask(String(calcTotal))}
           </Typography>
         </Stack>
 

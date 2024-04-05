@@ -6,15 +6,29 @@ import { ProductsCart } from '@/presenter/components/types'
 import { useAppDispatch, useAppSelector } from '@/main/store/hook/useRedux'
 import { handleQuantity, removeToCart, resetCart } from '@/main/store/reducers'
 import { CartUseCase } from '@/domain/cart'
+import { Format } from '@/domain/format'
 
-const makeCart = (): CartUseCase => new CartUseCase()
+type SutTypes = {
+  makeCart: CartUseCase
+  makeFormat: Format
+}
+
+const makeSut = (): SutTypes => {
+  const makeCart = new CartUseCase()
+  const makeFormat = new Format()
+
+  return {
+    makeCart,
+    makeFormat,
+  }
+}
 
 export const useCart = () => {
   const { user } = useAppSelector((state) => state.user)
   const { products } = useAppSelector((state) => state.products)
   const { cart } = useAppSelector((state) => state.cart)
   const dispatch = useAppDispatch()
-  const cartUseCase = makeCart()
+  const { makeCart, makeFormat } = makeSut()
   const navigate = useNavigate()
   const theme = useTheme()
 
@@ -73,12 +87,12 @@ export const useCart = () => {
   }
 
   const handleCheckout = () => {
-    cartUseCase.savedUserCart(user.id, {
+    makeCart.savedUserCart(user.id, {
       cart: carts,
       totalPrice: calcTotal,
     })
 
-    cartUseCase.removeCart(user.id, {
+    makeCart.removeCart(user.id, {
       cart: carts,
       totalPrice: calcTotal,
     })
@@ -87,14 +101,14 @@ export const useCart = () => {
   }
 
   const handleSavedCart = async () => {
-    cartUseCase.createCart(user.id, {
+    makeCart.createCart(user.id, {
       cart: carts,
       totalPrice: calcTotal,
     })
   }
 
   const { data: cartUser } = useQuery(['cartUserSaved'], () =>
-    cartUseCase.getCartByUserIdSaved(user.id),
+    makeCart.getCartByUserIdSaved(user.id),
   )
 
   console.log(cartUser)
@@ -105,6 +119,7 @@ export const useCart = () => {
     data,
     carts,
     calcTotal,
+    makeFormat,
     incrementQuantity,
     decrementQuantity,
     handleDeleteItemCart,

@@ -1,12 +1,10 @@
-import { useNavigate } from 'react-router-dom'
 import { Theme } from '@mui/material'
 import Typography from '@mui/material/Typography'
 import { DialogDeleteProduct } from './dialog-delete-product'
-import { useAppSelector } from '@/main/store/hook/useRedux'
-import { priceMask } from '@/utils/price-mask'
 import { DialogEditProduct } from '@/presenter/pages/products/components'
 import { ProductsProps } from '../../types'
 import { Button } from '../index'
+import { useCardProduct } from './hook/useCardProduct'
 import * as S from './card-product-styles'
 
 type CardProductProps = {
@@ -15,8 +13,7 @@ type CardProductProps = {
 
 export const CardProduct = ({ card }: CardProductProps) => {
   const { id, name, price, url } = card
-  const { isLogged } = useAppSelector((state) => state.user)
-  const navigate = useNavigate()
+  const { isLogged, navigate, format } = useCardProduct()
 
   return (
     <S.CardProduct>
@@ -46,7 +43,7 @@ export const CardProduct = ({ card }: CardProductProps) => {
           variant="subtitle1"
           sx={{ color: (theme: Theme) => theme.palette.grey.A700 }}
         >
-          {priceMask({ value: price })}
+          {format.priceMask(price)}
         </Typography>
 
         <div>
