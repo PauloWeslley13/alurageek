@@ -1,5 +1,6 @@
 import { useTheme } from '@mui/material'
-import { Button } from '../../ui'
+import Button from '@mui/material/Button'
+
 import BannerHeader from '@/presenter/assets/Hero.svg'
 import * as S from './header-styles'
 
@@ -12,15 +13,14 @@ export const Header = () => {
         <h3>Fevereiro Promocional</h3>
         <span>Produtos selecionados com 33% de desconto</span>
         <Button
-          label="Promoções"
+          variant="primary"
           sx={{
-            background: theme.palette.primary.main,
-            color: theme.palette.common.white,
-            borderColor: theme.palette.primary.dark,
             width: theme.spacing(40),
             height: theme.spacing(12),
           }}
-        />
+        >
+          Promoções
+        </Button>
       </div>
     </S.Heading>
   )

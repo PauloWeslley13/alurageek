@@ -1,5 +1,6 @@
 import { Typography, useTheme } from '@mui/material'
-import { Button, InputField, SVGLogoIcon } from '../../ui'
+import Button from '@mui/material/Button'
+import { InputField, SVGLogoIcon } from '../../ui'
 import * as S from './footer-styles'
 
 type FooterBarProps = { footerList: string[] }
@@ -37,15 +38,15 @@ export const FooterContent = ({ footerList }: FooterBarProps) => {
           <InputField label="Mensagem" placeholder="Informe sua mensagem" />
 
           <Button
-            label="Enviar mensagem"
+            variant="primary"
             sx={{
-              background: theme.palette.primary.main,
-              color: theme.palette.common.white,
               height: theme.spacing(11),
               textTransform: 'uppercase',
               letterSpacing: 1.2,
             }}
-          />
+          >
+            Enviar mensagem
+          </Button>
         </form>
       </S.FooterForm>
     </S.FooterBody>

@@ -1,5 +1,6 @@
 import { useTheme } from '@mui/material'
-import { Alert, Button, InputField } from '@/presenter/components/ui'
+import Button from '@mui/material/Button'
+import { Alert, InputField } from '@/presenter/components/ui'
 import { useSignUp } from './useSignUp'
 
 export const SignUp = () => {
@@ -42,19 +43,19 @@ export const SignUp = () => {
       />
 
       <Button
-        label="Cadastrar"
+        variant="primary"
         type="submit"
         onClick={alertSignUp}
         sx={{
-          background: theme.palette.primary.main,
-          color: theme.palette.common.white,
           width: '100%',
           height: theme.spacing(12),
           marginTop: theme.spacing(2),
           textTransform: 'uppercase',
           letterSpacing: 1.2,
         }}
-      />
+      >
+        Cadastrar
+      </Button>
 
       <Alert
         errors={{

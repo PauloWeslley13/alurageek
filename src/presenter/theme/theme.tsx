@@ -8,6 +8,7 @@ import {
   createTheme,
   responsiveFontSizes,
 } from '@mui/material'
+import { ComponentOverrides } from './overrides'
 import { Typography } from './typography'
 import { Palette } from './palette'
 import { GlobalStyle } from './global-styles'
@@ -16,8 +17,7 @@ import { useAppSelector } from '@/main/store/hook/useRedux'
 
 export const ThemeCustomization = ({ children }: { children: ReactNode }) => {
   const { theme } = useAppSelector((state) => state.theme)
-  const INITIAL_THEME = theme === 'dark' ? 'dark' : 'light'
-  const themePalette = Palette({ theme: INITIAL_THEME })
+  const themePalette = Palette({ theme: theme === 'dark' ? 'dark' : 'light' })
   const themeTypography = Typography({
     fontFamily: FONTS.fontFamily.RALEWAY,
   })
@@ -32,6 +32,7 @@ export const ThemeCustomization = ({ children }: { children: ReactNode }) => {
   )
 
   let themes = createTheme(themeOptions)
+  themes.components = ComponentOverrides(themes)
   themes = responsiveFontSizes(themes)
 
   return (

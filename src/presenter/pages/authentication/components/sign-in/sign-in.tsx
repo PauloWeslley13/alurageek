@@ -1,5 +1,6 @@
 import { useTheme } from '@mui/material'
-import { Button, InputField } from '@/presenter/components/ui'
+import Button from '@mui/material/Button'
+import { InputField } from '@/presenter/components/ui'
 import { useSignIn } from './useSignIn'
 
 export const SignIn = () => {
@@ -27,19 +28,19 @@ export const SignIn = () => {
       />
 
       <Button
-        label="Entrar"
+        variant="primary"
         type="submit"
         onClick={alert}
         sx={{
-          background: theme.palette.primary.main,
-          color: theme.palette.common.white,
           width: '100%',
           height: theme.spacing(12),
           marginTop: theme.spacing(2),
           textTransform: 'uppercase',
           letterSpacing: 1.2,
         }}
-      />
+      >
+        Entrar
+      </Button>
     </form>
   )
 }
