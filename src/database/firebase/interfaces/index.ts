@@ -1,1 +1,1 @@
-export type * from './ifirebase'
+export * from './firebase-interface'

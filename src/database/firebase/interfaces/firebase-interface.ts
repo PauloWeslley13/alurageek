@@ -6,27 +6,27 @@ import {
   Firestore,
 } from 'firebase/firestore'
 import { FirebaseApp } from 'firebase/app'
-import { COLLECTIONS } from 'database'
+import { COLLECTIONS } from '@/database/types'
 
-interface ICollection {
+export type CollectionParams = {
   path: COLLECTIONS
   id: string
   collections: COLLECTIONS
 }
 
-interface IFirebase {
+export interface IFirebase {
   getCollection(
     path: COLLECTIONS,
   ): CollectionReference<DocumentData, DocumentData>
-  collection(path: ICollection): CollectionReference<DocumentData, DocumentData>
+  collection(
+    path: CollectionParams,
+  ): CollectionReference<DocumentData, DocumentData>
   getDB(): Firestore
   auth(): Auth
   storage(): FirebaseStorage
   app(): FirebaseApp
 }
 
-interface IFirebaseConfig {
+export interface IFirebaseConfig {
   initializeApp(): FirebaseApp
 }
-
-export type { IFirebase, IFirebaseConfig, ICollection }

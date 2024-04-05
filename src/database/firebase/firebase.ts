@@ -8,7 +8,7 @@ import {
 import { Auth, getAuth } from 'firebase/auth'
 import { FirebaseStorage, getStorage } from 'firebase/storage'
 import { FirebaseApp } from 'firebase/app'
-import { IFirebase, ICollection } from './interfaces'
+import { IFirebase, CollectionParams } from './interfaces'
 import { initApp } from './index'
 import { COLLECTIONS } from '../types'
 
@@ -41,7 +41,7 @@ export class Firebase implements IFirebase {
     path,
     id,
     collections,
-  }: ICollection): CollectionReference<DocumentData, DocumentData> {
+  }: CollectionParams): CollectionReference<DocumentData, DocumentData> {
     return collection(this.getDB(), path, id, collections)
   }
 }
