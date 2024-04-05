@@ -1,8 +1,8 @@
 import { doc, getDoc, getDocs, query, where } from 'firebase/firestore'
 import { DBFactory } from '@/database/db-factory'
 import { COLLECTIONS } from '@/database/types'
-import { ICartData, ICartUserSaved } from '@/database/interfaces'
 import { CartRepository } from '@/domain/cart'
+import { ICartData, ICartUserSaved } from './cart-data-interface'
 
 export class CartData implements ICartData {
   private database = DBFactory.database()
