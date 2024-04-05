@@ -1,6 +1,6 @@
-import { CartRepository } from './../../domain/cart'
-import { ProductRepository } from '../../domain/product'
-import { CategoryRepository } from '../../domain/category'
+import { CartRepository } from '@/domain/cart'
+import { ProductRepository } from '@/domain/product'
+import { CategoryRepository } from '@/domain/category'
 import { IFactory } from '../interfaces'
 
 export namespace Factory {
