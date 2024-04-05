@@ -17,7 +17,7 @@ export class CartData implements ICartData {
   }
 
   async getCartByUserIdSaved(userId: string) {
-    const userCartList: ICartUserSaved[] = []
+    const userCartList: ICartUserSaved.Props[] = []
 
     const userCartRef = this.database.collection({
       path: COLLECTIONS.USERS,
@@ -35,7 +35,7 @@ export class CartData implements ICartData {
         cart: doc.data().data,
         totalPrice: doc.data().totalPrice,
         userId: doc.data().userId,
-      } as ICartUserSaved)
+      } as ICartUserSaved.Props)
     })
 
     return userCartList
