@@ -1,8 +1,8 @@
 import { doc, getDoc } from 'firebase/firestore'
-import { DBFactory } from './../../db-factory'
-import { UserRepository } from './../../../domain/user'
-import { COLLECTIONS } from '../../types'
-import { IUserData } from '../../interfaces'
+import { UserRepository } from '@/domain/user'
+import { DBFactory } from '@/database/db-factory'
+import { COLLECTIONS } from '@/database/types'
+import { IUserData } from '@/database/interfaces'
 
 export class UserData implements IUserData {
   private database = DBFactory.database()

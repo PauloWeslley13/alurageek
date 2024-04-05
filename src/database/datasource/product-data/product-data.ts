@@ -1,8 +1,8 @@
 import { getDocs, orderBy, query, where } from 'firebase/firestore'
-import { ProductRepository } from './../../../domain/product/repositories'
-import { DBFactory } from './../../db-factory'
-import { COLLECTIONS } from '../../types'
-import { IProductData } from '../../interfaces'
+import { ProductRepository } from '@/domain/product/repositories'
+import { DBFactory } from '@/database/db-factory'
+import { COLLECTIONS } from '@/database/types'
+import { IProductData } from '@/database/interfaces'
 
 export class ProductData implements IProductData {
   private database = DBFactory.database()

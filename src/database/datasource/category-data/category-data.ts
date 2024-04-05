@@ -1,8 +1,8 @@
 import { doc, getDoc, getDocs, orderBy, query, where } from 'firebase/firestore'
-import { CategoryRepository } from './../../../domain/category'
-import { DBFactory } from './../../db-factory'
-import { COLLECTIONS } from '../../types'
-import { ICategoryData } from '../../interfaces'
+import { CategoryRepository } from '@/domain/category'
+import { DBFactory } from '@/database/db-factory'
+import { COLLECTIONS } from '@/database/types'
+import { ICategoryData } from '@/database/interfaces'
 
 export class CategoryData implements ICategoryData {
   private database = DBFactory.database()
