@@ -1,6 +1,8 @@
-import { Category } from '../entities/category'
+import { CategoryData } from '@/database'
+import { Category } from '../entities'
 import { CategoryRepository } from '..'
-import { CategoryData } from '../../../database'
+
+type CreateCategory = CategoryRepository | 'Categoria já cadastrada'
 
 export class CategoryUseCase {
   protected category = new Category()
@@ -8,16 +10,16 @@ export class CategoryUseCase {
   async createCategory(
     data: Omit<CategoryRepository, 'id'>,
     categories: CategoryRepository[],
-  ): Promise<CategoryRepository | 'Categoria já cadastrada'> {
+  ): Promise<CreateCategory> {
     const isCategory = categories.findIndex((prod) => prod.name === data.name)
 
     if (isCategory !== -1) return 'Categoria já cadastrada'
 
-    return this.category.created({ ...data })
+    return await this.category.created({ ...data })
   }
 
-  updateCategory(data: CategoryRepository): Promise<CategoryRepository> {
-    return this.category.updated({ ...data })
+  async updateCategory(data: CategoryRepository): Promise<CategoryRepository> {
+    return await this.category.updated({ ...data })
   }
 
   async getCategories(): Promise<CategoryRepository[]> {

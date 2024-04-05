@@ -4,13 +4,14 @@ import {
   signInWithEmailAndPassword,
   signOut,
 } from 'firebase/auth'
-import { IAuthentication } from '../interfaces'
-import { DBFactory } from './../../../database'
+import { AuthenticationParams, IAuthentication } from '../interfaces'
+import { DBFactory } from '@/database'
 
 export class AuthenticationUseCase implements IAuthentication {
   protected database = DBFactory.database()
 
-  async signUp(email: string, password: string): Promise<UserCredential> {
+  async signUp(params: AuthenticationParams): Promise<UserCredential> {
+    const { email, password } = params
     const response = await createUserWithEmailAndPassword(
       this.database.auth(),
       email,
@@ -20,7 +21,8 @@ export class AuthenticationUseCase implements IAuthentication {
     return response
   }
 
-  async signIn(email: string, password: string): Promise<UserCredential> {
+  async signIn(params: AuthenticationParams): Promise<UserCredential> {
+    const { email, password } = params
     const response = await signInWithEmailAndPassword(
       this.database.auth(),
       email,

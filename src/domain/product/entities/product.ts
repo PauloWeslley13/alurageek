@@ -1,8 +1,8 @@
 import { addDoc, deleteDoc, doc, updateDoc } from 'firebase/firestore'
+import { COLLECTIONS, DBFactory } from '@/database'
 import { ProductRepository } from './../repositories'
-import { COLLECTIONS, DBFactory } from '../../../database'
 import { ProductModel } from './product-model'
-import { Factory } from '../../../factory'
+import { Factory } from '@/factory'
 
 // TODO: ENTIDADE Product
 export class Product implements ProductModel {

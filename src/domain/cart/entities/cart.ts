@@ -1,8 +1,8 @@
 import { deleteDoc, doc, setDoc } from 'firebase/firestore'
-import { CartRepository } from '..'
 import { CartModel } from './cart-model'
-import { COLLECTIONS, DBFactory } from '../../../database'
-import { Factory } from '../../../factory'
+import { COLLECTIONS, DBFactory } from '@/database'
+import { Factory } from '@/factory'
+import { CartRepository } from '..'
 
 // ENTIDADE Cart
 export class Cart implements CartModel {

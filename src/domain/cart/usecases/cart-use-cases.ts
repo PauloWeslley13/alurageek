@@ -1,6 +1,6 @@
-import { Cart } from '../entities/cart'
+import { CartData } from '@/database'
+import { Cart } from '../entities'
 import { CartRepository } from '..'
-import { CartData } from '../../../database'
 
 export class CartUseCase {
   protected cart = new Cart()
@@ -34,14 +34,12 @@ export class CartUseCase {
   async getCartByUserId(userId: string) {
     const data = new CartData()
     const response = await data.getCartByUserId(userId)
-
     return response
   }
 
   async getCartByUserIdSaved(userId: string) {
     const data = new CartData()
     const response = await data.getCartByUserIdSaved(userId)
-
     return response
   }
 }

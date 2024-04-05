@@ -1,17 +1,18 @@
+/* eslint-disable prettier/prettier */
 import { UserCredential, updateProfile } from 'firebase/auth'
 import { doc, setDoc } from 'firebase/firestore'
 import { FirebaseError } from 'firebase/app'
 import { UserRepository } from './../repositories'
-import { COLLECTIONS, DBFactory } from './../../../database'
+import { COLLECTIONS, DBFactory } from '@/database'
 import { IUserModel, Create } from './user-model'
 
 // TODO: ENTIDADE User
 export class User implements IUserModel {
   private database = DBFactory.database()
 
-  constructor(private user: UserRepository) {}
+  constructor(private user: UserRepository) { }
 
-  async create(userAuth: UserCredential): Promise<Create> {
+  async create(userAuth: UserCredential): Promise<Create.Props> {
     const userRef = doc(
       this.database.getCollection(COLLECTIONS.USERS),
       userAuth.user.uid,

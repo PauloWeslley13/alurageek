@@ -1,8 +1,8 @@
 import { addDoc, doc, updateDoc } from 'firebase/firestore'
+import { COLLECTIONS, DBFactory } from '@/database'
+import { Factory } from '@/factory'
 import { CategoryModel } from './category-modal'
 import { CategoryRepository } from '..'
-import { COLLECTIONS, DBFactory } from '../../../database'
-import { Factory } from '../../../factory'
 
 // ENTIDADE Category
 export class Category implements CategoryModel {

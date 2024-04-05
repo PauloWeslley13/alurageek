@@ -1,1 +1,1 @@
-export type * from './iauthentication'
+export type * from './authentication-interface'
