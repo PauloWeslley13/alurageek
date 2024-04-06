@@ -2,9 +2,8 @@ import { useNavigate } from 'react-router-dom'
 import { Button, useTheme } from '@mui/material'
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward'
 import { Header, ProductsList } from '@/presenter/components/layout'
-import { ButtonIcon } from '@/presenter/components/ui'
 import { useProductsFilter } from '@/presenter/hooks/useProductsFilter'
-import { COLORS, FONTS } from '@/presenter/styles'
+import { FONTS } from '@/presenter/styles'
 
 export const Home = () => {
   const { categoryByProduct, productsFilter, isLoading } = useProductsFilter()
@@ -44,20 +43,17 @@ export const Home = () => {
             isLoading,
           }}
         >
-          <ButtonIcon
+          <Button
+            variant="secondary"
+            endIcon={<ArrowForwardIcon />}
             onClick={() => navigate(`/category/${props.id}`)}
-            props={{
-              label: 'Ver todos',
-              icon: ArrowForwardIcon,
-            }}
             sx={{
-              border: 'none',
-              background: 'transparent',
               fontSize: FONTS.fontSizes.md,
               height: theme.spacing(8),
-              color: COLORS.violet[500],
             }}
-          />
+          >
+            Ver todos
+          </Button>
         </ProductsList>
       ))}
     </section>

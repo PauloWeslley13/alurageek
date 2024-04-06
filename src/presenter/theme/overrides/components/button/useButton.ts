@@ -1,6 +1,6 @@
 import { Theme } from '@mui/material'
 import { Button } from './types'
-import { usePrimary, useSecondary } from './variants'
+import { useContained, usePrimary, useSecondary } from './variants'
 
 declare module '@mui/material/Button' {
   interface ButtonPropsVariantOverrides {
@@ -21,6 +21,13 @@ const useButton = (theme: Theme) => {
     secondaryStyles,
   } = useSecondary(theme)
 
+  const {
+    activeContainedStyles,
+    focusVisibleContainedStyles,
+    hoverContainedStyles,
+    containedStyles,
+  } = useContained(theme)
+
   return {
     MuiButton: {
       defaultProps: {
@@ -30,7 +37,12 @@ const useButton = (theme: Theme) => {
       } satisfies Button.DefaultProps,
       styleOverrides: {
         root: {},
-        contained: {},
+        contained: {
+          ...containedStyles,
+          ...activeContainedStyles,
+          ...hoverContainedStyles,
+          ...focusVisibleContainedStyles,
+        },
         outlined: {},
       } satisfies Button.StyleOverridesProps,
       variants: [

@@ -1,8 +1,8 @@
 import Stack from '@mui/material/Stack'
+import Button from '@mui/material/Button'
 import Typography from '@mui/material/Typography'
 import KeyboardArrowLeftIcon from '@mui/icons-material/KeyboardArrowLeft'
 import { CartItem } from './components'
-import { Btn, Button } from '@/presenter/components/ui'
 import { useCart } from './hook/useCart'
 import * as S from './cart-styles'
 
@@ -28,18 +28,24 @@ export const Cart = () => {
           borderBottom={`1px solid ${theme.palette.grey[300]}`}
           px={1}
         >
-          <Typography component="h3" variant="h3" py={5}>
+          <Typography
+            component="h3"
+            variant="h3"
+            py={5}
+            color={theme.palette.grey[800]}
+          >
             Carrinho
           </Typography>
 
           <div>
-            <Btn
-              label="Voltar"
+            <Button
+              variant="secondary"
               startIcon={<KeyboardArrowLeftIcon />}
               onClick={() => navigate(-1)}
-              size="small"
-              sx={{ py: 0, px: 3, border: 'none' }}
-            />
+              sx={{ '&.MuiButton-secondary ': { padding: '3px 6px' } }}
+            >
+              Voltar
+            </Button>
           </div>
         </Stack>
 
@@ -52,7 +58,11 @@ export const Cart = () => {
 
       <S.CartItemInfo>
         <Stack sx={{ ...S.mixins(theme) }}>
-          <Typography component="h3" variant="h3">
+          <Typography
+            component="h3"
+            variant="h3"
+            color={theme.palette.grey[800]}
+          >
             Resumo do pedido
           </Typography>
 
@@ -72,7 +82,7 @@ export const Cart = () => {
                 <Typography
                   component="span"
                   variant="subtitle1"
-                  color={theme.palette.grey[300]}
+                  color={theme.palette.grey[800]}
                   textTransform="capitalize"
                 >
                   {props.name}
@@ -81,6 +91,7 @@ export const Cart = () => {
                   component="span"
                   variant="h5"
                   textTransform="capitalize"
+                  color={theme.palette.grey[800]}
                 >
                   {makeFormat.priceMask(String(props.price))}
                 </Typography>
@@ -89,7 +100,9 @@ export const Cart = () => {
           </Stack>
         </Stack>
 
-        <Button label="Salvar carrinho" onClick={handleSavedCart} />
+        <Button variant="contained" onClick={handleSavedCart}>
+          Salvar carrinho
+        </Button>
 
         <Stack
           flexDirection="row"
@@ -100,15 +113,25 @@ export const Cart = () => {
           borderRadius={theme.spacing(2)}
           sx={{ bgcolor: theme.palette.grey[100] }}
         >
-          <Typography component="span" variant="h3">
+          <Typography
+            component="span"
+            variant="h3"
+            color={theme.palette.grey[800]}
+          >
             Total
           </Typography>
-          <Typography component="span" variant="subtitle1">
+          <Typography
+            component="span"
+            variant="subtitle1"
+            color={theme.palette.grey[800]}
+          >
             {makeFormat.priceMask(String(calcTotal))}
           </Typography>
         </Stack>
 
-        <Button label="Checkout" onClick={handleCheckout} />
+        <Button variant="contained" onClick={handleCheckout}>
+          Checkout
+        </Button>
       </S.CartItemInfo>
     </S.CartWrap>
   )

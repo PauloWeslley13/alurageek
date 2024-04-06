@@ -1,8 +1,9 @@
-import { Stack, Typography } from '@mui/material'
+import Stack from '@mui/material/Stack'
+import Typography from '@mui/material/Typography'
+import Button from '@mui/material/Button'
 import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart'
 import { ProductsList } from '@/presenter/components/layout'
 import { FONTS } from '@/presenter/styles'
-import { ButtonIcon } from '@/presenter/components/ui'
 import { useProductDetail } from './useProductDetail'
 import * as S from './product-detail-styles'
 
@@ -43,13 +44,13 @@ export const ProductDetail = () => {
           <Stack marginTop={theme.spacing(3)}>
             <div>
               {isLogged && (
-                <ButtonIcon
+                <Button
+                  variant="contained"
+                  endIcon={<AddShoppingCartIcon />}
                   onClick={addProductCart}
-                  props={{
-                    label: 'Adicionar ao carrinho',
-                    icon: AddShoppingCartIcon,
-                  }}
-                />
+                >
+                  Adicionar ao carrinho
+                </Button>
               )}
             </div>
           </Stack>

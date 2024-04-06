@@ -34,7 +34,7 @@ export const useProductDetail = () => {
 
       dispatch(getProductDetail(productDetail))
     }
-  }, [dispatch, product, format])
+  }, [dispatch, product])
 
   const addProductCart = () => {
     if (product) {

@@ -1,6 +1,6 @@
 import { COLORS, FONTS } from '@/presenter/styles'
 import { Theme } from '@mui/material'
-import { grey, indigo } from '@mui/material/colors'
+import { indigo } from '@mui/material/colors'
 
 const useSecondary = (theme: Theme) => {
   const secondaryStyles = {
@@ -19,7 +19,7 @@ const useSecondary = (theme: Theme) => {
       textTransform: 'uppercase',
       border: 'none',
       background: 'transparent',
-      color: theme.palette.mode === 'dark' ? indigo[50] : COLORS.violet[500],
+      color: theme.palette.mode === 'dark' ? indigo[500] : COLORS.violet[500],
       boxShadow: '0 1px 2px 0 rgb(0 0 0 / 0.05)',
     },
   }
@@ -27,15 +27,15 @@ const useSecondary = (theme: Theme) => {
   const hoverSecondaryStyles = {
     '&:hover': {
       background:
-        theme.palette.mode === 'dark' ? indigo[700] : COLORS.violet[50],
-      borderColor: theme.palette.mode === 'dark' ? grey[600] : grey[300],
+        theme.palette.mode === 'dark' ? indigo[100] : COLORS.violet[50],
     },
   }
 
   const activeSecondaryStyles = {
     '&:active': {
       background:
-        theme.palette.mode === 'dark' ? indigo[700] : COLORS.violet[100],
+        theme.palette.mode === 'dark' ? indigo.A100 : COLORS.violet[100],
+      color: theme.palette.mode === 'dark' ? indigo.A700 : COLORS.violet[500],
     },
   }
 
