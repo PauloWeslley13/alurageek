@@ -1,6 +1,6 @@
 import { Theme } from '@mui/material'
 import { Button } from './types'
-import { usePrimary } from './variants'
+import { usePrimary, useSecondary } from './variants'
 
 declare module '@mui/material/Button' {
   interface ButtonPropsVariantOverrides {
@@ -13,6 +13,13 @@ declare module '@mui/material/Button' {
 const useButton = (theme: Theme) => {
   const { primaryStyles, hoverPrimaryStyles, activePrimaryStyles } =
     usePrimary(theme)
+
+  const {
+    activeSecondaryStyles,
+    focusVisibleStyles,
+    hoverSecondaryStyles,
+    secondaryStyles,
+  } = useSecondary(theme)
 
   return {
     MuiButton: {
@@ -41,7 +48,12 @@ const useButton = (theme: Theme) => {
         },
         {
           props: { variant: 'secondary', disableElevation: false },
-          style: {},
+          style: {
+            ...secondaryStyles,
+            ...activeSecondaryStyles,
+            ...hoverSecondaryStyles,
+            ...focusVisibleStyles,
+          },
         },
       ] satisfies Button.VariantsProps,
     },

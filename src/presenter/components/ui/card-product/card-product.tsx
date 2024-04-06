@@ -1,9 +1,9 @@
 import { Theme } from '@mui/material'
 import Typography from '@mui/material/Typography'
+import Button from '@mui/material/Button'
 import { DialogDeleteProduct } from './dialog-delete-product'
 import { DialogEditProduct } from '@/presenter/pages/products/components'
-import { ProductsProps } from '../../types'
-import { Button } from '../index'
+import { ProductsProps } from '@/presenter/components/types'
 import { useCardProduct } from './hook/useCardProduct'
 import * as S from './card-product-styles'
 
@@ -48,10 +48,12 @@ export const CardProduct = ({ card }: CardProductProps) => {
 
         <div>
           <Button
-            label="Ver produto"
+            variant="secondary"
             onClick={() => navigate(`/product/detail/${id}`)}
-            sx={{ border: 'none', background: 'transparent' }}
-          />
+            sx={(theme) => ({ height: theme.spacing(8) })}
+          >
+            Ver produto
+          </Button>
         </div>
       </div>
     </S.CardProduct>

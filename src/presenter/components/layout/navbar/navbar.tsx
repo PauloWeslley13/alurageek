@@ -1,9 +1,10 @@
 import { ComponentProps } from 'react'
 import { useLocation, useNavigate } from 'react-router-dom'
 import { useTheme } from '@mui/material'
+import Button from '@mui/material/Button'
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart'
 import { useAppSelector } from '@/main/store/hook/useRedux'
-import { Button, SVGLogoIcon, ShoppingBadge } from '../../ui'
+import { SVGLogoIcon, ShoppingBadge } from '@/presenter/components/ui'
 import { MenuProfile, MenuTheme, SearchField } from './components'
 import * as S from './navbar-styles'
 
@@ -31,13 +32,15 @@ export const NavBar = ({ ...rest }: NavBarProps) => {
         <div>
           {pathname === '/auth' || isLogged ? null : (
             <Button
-              label="Login"
+              variant="secondary"
               onClick={() => navigate('/auth')}
               sx={{
                 height: theme.spacing(9),
                 width: theme.spacing(20),
               }}
-            />
+            >
+              Login
+            </Button>
           )}
 
           {isLogged && (
