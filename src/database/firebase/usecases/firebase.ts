@@ -8,9 +8,9 @@ import {
 import { Auth, getAuth } from 'firebase/auth'
 import { FirebaseStorage, getStorage } from 'firebase/storage'
 import { FirebaseApp } from 'firebase/app'
-import { IFirebase, CollectionParams } from './interfaces'
-import { initApp } from './index'
-import { COLLECTIONS } from '../types'
+import { IFirebase, CollectionParams } from '../interfaces'
+import { initApp } from '../index'
+import { COLLECTIONS } from '../../types'
 
 export class Firebase implements IFirebase {
   private initApp: FirebaseApp = initApp.initializeApp()
