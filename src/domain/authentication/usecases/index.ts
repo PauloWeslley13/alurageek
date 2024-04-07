@@ -1,1 +1,1 @@
-export * from './authentication-usecases'
+export * from './authentication'

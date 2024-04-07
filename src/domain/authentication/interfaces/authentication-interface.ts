@@ -1,12 +1,10 @@
-import { UserCredential } from 'firebase/auth'
-
 export type AuthenticationParams = {
   email: string
   password: string
 }
 
-export interface IAuthentication {
-  signUp(params: AuthenticationParams): Promise<UserCredential>
-  signIn(params: AuthenticationParams): Promise<UserCredential>
+export interface IAuthentication<T> {
+  signUp(params: AuthenticationParams): Promise<T>
+  signIn(params: AuthenticationParams): Promise<T>
   signOut(): Promise<void>
 }

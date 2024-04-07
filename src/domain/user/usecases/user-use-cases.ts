@@ -1,5 +1,5 @@
 import { FirebaseError } from 'firebase/app'
-import { AuthenticationUseCase } from '@/domain/authentication'
+import { Authentication } from '@/domain/authentication'
 import { UserData } from '@/database'
 import { User, Create } from '../entities'
 import { UserRepository } from '../repositories'
@@ -11,7 +11,7 @@ type AuthSignInReturn =
   | 'Usuário inválido'
 
 export class UserUseCase {
-  private auth = new AuthenticationUseCase()
+  private auth = new Authentication()
   private userAuth = new UserBuilder()
 
   async userAuthSignUp(
