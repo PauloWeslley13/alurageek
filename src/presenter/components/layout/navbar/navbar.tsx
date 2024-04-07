@@ -32,7 +32,7 @@ export const NavBar = ({ ...rest }: NavBarProps) => {
         <div>
           {pathname === '/auth' || isLogged ? null : (
             <Button
-              variant="secondary"
+              variant="contained"
               onClick={() => navigate('/auth')}
               sx={{
                 height: theme.spacing(9),

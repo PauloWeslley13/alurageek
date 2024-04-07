@@ -1,5 +1,6 @@
 import { useTheme } from '@mui/material'
-import { Button, InputField } from '@/presenter/components/ui'
+import Button from '@mui/material/Button'
+import { InputField } from '@/presenter/components/ui'
 import { useCreateCategory } from './useCreateCategory'
 
 export const CreateCategory = () => {
@@ -19,15 +20,16 @@ export const CreateCategory = () => {
       />
 
       <Button
-        label="Cadastrar"
+        variant="primary"
         type="submit"
         sx={{
-          background: theme.palette.primary.main,
-          color: theme.palette.common.white,
+          alignSelf: 'center',
           width: theme.spacing(40),
           height: theme.spacing(12),
         }}
-      />
+      >
+        Cadastrar
+      </Button>
     </form>
   )
 }

@@ -21,9 +21,9 @@ export const useCreateCategory = () => {
     resolver: zodResolver(schemaCategory),
   })
 
-  const handleCategoryPOST = (data: CreateCategoryProps) => {
+  const handleCategoryPOST = async (data: CreateCategoryProps) => {
     console.log(data)
-    categoryUseCase.createCategory(data, categories)
+    await categoryUseCase.createCategory(data, categories)
     reset()
   }
 

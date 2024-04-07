@@ -12,6 +12,7 @@ import {
   loadUser,
 } from './store/actions/actions'
 import { DBFactory } from '../database'
+import { ThemeCustomization } from '@/presenter/theme'
 import 'react-toastify/dist/ReactToastify.css'
 
 export const App = () => {
@@ -40,7 +41,7 @@ export const App = () => {
   }, [dispatch, getThemeLocalStorage, auth])
 
   return (
-    <>
+    <ThemeCustomization>
       <ScrollTop>
         <Routes />
       </ScrollTop>
@@ -56,6 +57,6 @@ export const App = () => {
         pauseOnHover
         theme="colored"
       />
-    </>
+    </ThemeCustomization>
   )
 }

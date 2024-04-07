@@ -1,6 +1,6 @@
-import { CreateCategory } from './modules'
-import * as S from './panel-adm-styles'
 import Typography from '@mui/material/Typography'
+import { CreateCategory } from './components'
+import * as S from './panel-adm-styles'
 
 export const PanelAdm = () => {
   return (
