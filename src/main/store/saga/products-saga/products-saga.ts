@@ -1,5 +1,5 @@
 import { call, cancel, delay, put, takeLatest } from 'redux-saga/effects'
-import { ProductUseCase } from '@/domain/product/usecases/product-use-cases'
+import { ProductUseCase } from '@/domain/product'
 import { ProductsProps } from '@/presenter/components/types'
 import { getProducts } from '@/main/store/reducers'
 import { loadProduct } from '@/main/store/actions/actions'

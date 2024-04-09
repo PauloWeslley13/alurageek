@@ -1,33 +1,37 @@
 import { RouteObject } from 'react-router-dom'
-import { RootLayout } from '@/presenter/layout/root-layout/layout'
+import { RootLayout } from '@/presenter/layout'
 import {
-  Home,
   Authentication,
-  Products,
-  ProductCreate,
-  ProductListItems,
-  ProductDetail,
   Cart,
-  PanelAdm,
   Category,
+  Home,
+  PanelAdm,
+  ProductCreate,
+  ProductDetail,
+  ProductListItems,
+  Products,
 } from './pages'
 
-export const useAppRoutes = (): RouteObject => ({
+const products = (): RouteObject => ({
+  element: <Products />,
+  children: [
+    { path: '/product/info', element: <ProductCreate /> },
+    { path: '/product/list', element: <ProductListItems /> },
+    { path: '/product/detail/:id', element: <ProductDetail /> },
+  ],
+})
+
+const useAppRoutes = (): RouteObject => ({
   path: '/',
   element: <RootLayout />,
   children: [
     { path: 'auth', element: <Authentication /> },
     { path: 'home', element: <Home /> },
-    {
-      element: <Products />,
-      children: [
-        { path: '/product/info', element: <ProductCreate /> },
-        { path: '/product/list', element: <ProductListItems /> },
-        { path: '/product/detail/:id', element: <ProductDetail /> },
-      ],
-    },
+    products(),
     { path: 'cart', element: <Cart /> },
     { path: 'panel-adm', element: <PanelAdm /> },
     { path: 'category/:id', element: <Category /> },
   ],
 })
+
+export { useAppRoutes }

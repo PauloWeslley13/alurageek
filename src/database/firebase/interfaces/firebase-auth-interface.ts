@@ -1,13 +1,15 @@
-export interface IFirebaseAuth<T, R> {
+import { Auth, UserCredential } from 'firebase/auth'
+
+export interface IFirebaseAuth {
   createUserWithEmailAndPassword(
-    auth: R,
+    auth: Auth,
     email: string,
     password: string,
-  ): Promise<T>
+  ): Promise<UserCredential>
   signInWithEmailAndPassword(
-    auth: R,
+    auth: Auth,
     email: string,
     password: string,
-  ): Promise<T>
-  signOut(auth: R): Promise<void>
+  ): Promise<UserCredential>
+  signOut(auth: Auth): Promise<void>
 }

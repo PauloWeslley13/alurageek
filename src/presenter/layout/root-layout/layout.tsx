@@ -1,5 +1,5 @@
 import { Navigate, Outlet, useLocation } from 'react-router-dom'
-import { NavBar, Footer } from '@/presenter/components/layout'
+import { Footer, NavBar } from '@/presenter/components/layout'
 
 export const RootLayout = () => {
   const { pathname } = useLocation()

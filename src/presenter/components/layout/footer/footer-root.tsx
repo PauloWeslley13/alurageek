@@ -5,6 +5,6 @@ type FooterRootProps = ComponentProps<typeof S.FooterRootWrap> & {
   children: ReactNode
 }
 
-export const FooterRoot = ({ children }: FooterRootProps) => {
-  return <S.FooterRootWrap>{children}</S.FooterRootWrap>
+export const FooterRoot = ({ ...rest }: FooterRootProps) => {
+  return <S.FooterRootWrap {...rest} />
 }

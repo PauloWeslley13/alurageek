@@ -1,5 +1,4 @@
 import { useNavigate } from 'react-router-dom'
-import { Theme } from '@mui/material'
 import Card from '@mui/material/Card'
 import CardActions from '@mui/material/CardActions'
 import CardContent from '@mui/material/CardContent'
@@ -10,9 +9,7 @@ import { FONTS } from '@/presenter/styles'
 import { useAuth } from '@/presenter/hooks/useAuth'
 import { Avatar, Button } from '../index'
 
-type CardUserProps = {
-  closeModal: () => void
-}
+type CardUserProps = { closeModal: () => void }
 
 export const CardUser = ({ closeModal }: CardUserProps) => {
   const { user } = useAppSelector((state) => state.user)
@@ -40,7 +37,7 @@ export const CardUser = ({ closeModal }: CardUserProps) => {
           <Typography
             component="h2"
             variant="h4"
-            color={(theme: Theme) => theme.palette.primary.main}
+            color={(theme) => theme.palette.primary.main}
             fontSize={FONTS.fontSizes['2xl']}
             textTransform="capitalize"
           >
@@ -50,7 +47,7 @@ export const CardUser = ({ closeModal }: CardUserProps) => {
             gutterBottom
             component="span"
             variant="body1"
-            color={(theme: Theme) => theme.palette.grey.A700}
+            color={(theme) => theme.palette.grey.A700}
           >
             {user.email}
           </Typography>

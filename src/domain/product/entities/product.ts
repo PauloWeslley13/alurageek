@@ -1,18 +1,16 @@
 import { addDoc, deleteDoc, doc, updateDoc } from 'firebase/firestore'
 import { COLLECTIONS, DBFactory } from '@/database'
-import { ProductRepository } from './../repositories'
-import { ProductModel } from './product-model'
 import { Factory } from '@/factory'
+import { ProductTypes } from '@/domain/product/types'
+import { ProductModel } from './product-model'
 
 // TODO: ENTIDADE Product
 export class Product implements ProductModel {
-  protected product: ProductRepository = {} as ProductRepository
+  protected product: ProductTypes.Data = {} as ProductTypes.Data
   protected database = DBFactory.database()
   protected productBuild: Factory.ProductFactory = new Factory.ProductFactory()
 
-  async create(
-    data: Omit<ProductRepository, 'id'>,
-  ): Promise<ProductRepository> {
+  async create(data: ProductTypes.DataParams): Promise<ProductTypes.Data> {
     await addDoc(this.database.getCollection(COLLECTIONS.PRODUCTS), { ...data })
       .then((newProduct) => {
         const product = this.productBuild.add({ id: newProduct.id, ...data })
@@ -24,7 +22,7 @@ export class Product implements ProductModel {
     return this.product
   }
 
-  async update(data: ProductRepository): Promise<ProductRepository> {
+  async update(data: ProductTypes.Data): Promise<ProductTypes.Data> {
     this.product = data
 
     await updateDoc(
@@ -35,13 +33,7 @@ export class Product implements ProductModel {
     return this.product
   }
 
-  async remove({ id }: Pick<ProductRepository, 'id'>): Promise<void> {
-    const productRemoveRef = doc(
-      this.database.getDB(),
-      COLLECTIONS.PRODUCTS,
-      id,
-    )
-
-    await deleteDoc(productRemoveRef)
+  async remove(id: string): Promise<void> {
+    await deleteDoc(doc(this.database.getDB(), COLLECTIONS.PRODUCTS, id))
   }
 }

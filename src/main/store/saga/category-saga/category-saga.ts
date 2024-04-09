@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { call, delay, put, takeLatest } from 'redux-saga/effects'
-import { CategoryUseCase } from '@/domain/category/usecases/category-use-cases'
+import { CategoryUseCase } from '@/domain/category'
 import { CategoryProps } from '@/presenter/components/types'
 import { getCategories } from '@/main/store/reducers'
 import { loadCategories, loadCategory } from '@/main/store/actions/actions'

@@ -1,6 +1,7 @@
 import { addDoc, doc, updateDoc } from 'firebase/firestore'
 import { COLLECTIONS, DBFactory } from '@/database'
 import { Factory } from '@/factory'
+import { CategoryTypes } from '@/domain/category/types'
 import { CategoryModel } from './category-modal'
 import { CategoryRepository } from '..'
 
@@ -11,9 +12,7 @@ export class Category implements CategoryModel {
   protected categoryBuild: Factory.CategoryFactory =
     new Factory.CategoryFactory()
 
-  async created(
-    data: Omit<CategoryRepository, 'id'>,
-  ): Promise<CategoryRepository> {
+  async created(data: CategoryTypes.DataParams): Promise<CategoryRepository> {
     await addDoc(this.database.getCollection(COLLECTIONS.CATEGORIES), {
       ...data,
     })

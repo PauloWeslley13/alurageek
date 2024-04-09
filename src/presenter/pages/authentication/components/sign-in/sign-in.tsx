@@ -21,7 +21,7 @@ export const SignIn = () => {
       <InputField
         {...register('password')}
         type="password"
-        label="Password"
+        label="Senha"
         placeholder="Informe a senha"
         error={!!errors.password?.message}
         helperText={errors.password?.message}

@@ -1,16 +1,14 @@
 import { CategoryData } from '@/database'
-import { Category } from '../entities'
-import { CategoryRepository } from '..'
-
-type CreateCategory = CategoryRepository | 'Categoria já cadastrada'
+import { Category } from '@/domain/category/entities'
+import { CategoryTypes } from '@/domain/category/types'
 
 export class CategoryUseCase {
   protected category = new Category()
 
   async createCategory(
-    data: Omit<CategoryRepository, 'id'>,
-    categories: CategoryRepository[],
-  ): Promise<CreateCategory> {
+    data: CategoryTypes.DataParams,
+    categories: CategoryTypes.ListDataParams,
+  ): Promise<CategoryTypes.ReturnPromiseParams> {
     const isCategory = categories.findIndex((prod) => prod.name === data.name)
 
     if (isCategory !== -1) return 'Categoria já cadastrada'
@@ -18,18 +16,18 @@ export class CategoryUseCase {
     return await this.category.created({ ...data })
   }
 
-  async updateCategory(data: CategoryRepository): Promise<CategoryRepository> {
+  async updateCategory(data: CategoryTypes.Data): Promise<CategoryTypes.Data> {
     return await this.category.updated({ ...data })
   }
 
-  async getCategories(): Promise<CategoryRepository[]> {
+  async getCategories(): Promise<CategoryTypes.ListDataParams> {
     const data = new CategoryData()
     const response = await data.getCategories()
 
     return response
   }
 
-  async getCategoryById(categoryId: string): Promise<CategoryRepository> {
+  async getCategoryById(categoryId: string): Promise<CategoryTypes.Data> {
     const data = new CategoryData()
     const response = await data.getCategoryById(categoryId)
 

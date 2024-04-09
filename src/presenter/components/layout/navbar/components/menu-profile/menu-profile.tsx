@@ -1,6 +1,6 @@
 import { IconButton } from '@mui/material'
 import CloseIcon from '@mui/icons-material/Close'
-import { Avatar, Dialog, CardUser } from '@/presenter/components/ui'
+import { Avatar, CardUser, Dialog } from '@/presenter/components/ui'
 import { useMenuProfile } from './useMenuProfile'
 
 export const MenuProfile = () => {

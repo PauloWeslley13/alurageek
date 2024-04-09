@@ -1,15 +1,14 @@
 import { Product } from '../entities/product'
-import { IVerifyIsEqualProduct } from '../interfaces'
-import { ProductRepository } from '../repositories'
-import { ProductData } from '../../../database'
+import { ProductTypes } from '../types'
+import { ProductData } from '@/database'
 
 export class ProductUseCase {
   protected product = new Product()
 
   async createProduct(
-    data: Omit<ProductRepository, 'id'>,
-    products: ProductRepository[],
-  ): Promise<ProductRepository | 'Produto já cadastrado'> {
+    data: ProductTypes.DataParams,
+    products: ProductTypes.ListDataParams,
+  ): Promise<ProductTypes.ReturnPromiseParams> {
     const isProduct = products.findIndex((prod) => prod.name === data.name)
 
     if (isProduct !== -1) return 'Produto já cadastrado'
@@ -17,15 +16,18 @@ export class ProductUseCase {
     return this.product.create({ ...data })
   }
 
-  async updateProduct(data: ProductRepository): Promise<ProductRepository> {
+  async updateProduct(data: ProductTypes.Data): Promise<ProductTypes.Data> {
     return await this.product.update({ ...data })
   }
 
-  async deleteProduct(data: ProductRepository): Promise<void> {
-    await this.product.remove({ id: data.id })
+  async deleteProduct(data: ProductTypes.Data): Promise<void> {
+    await this.product.remove(data.id)
   }
 
-  isVerifyIsEqualProduct({ data, product }: IVerifyIsEqualProduct) {
+  verifyToEqualProduct({
+    data,
+    product,
+  }: ProductTypes.Params<ProductTypes.DataParams, ProductTypes.Data>): boolean {
     const isEqualProducts =
       data.name === product.name &&
       data.description === product.description &&
@@ -40,7 +42,7 @@ export class ProductUseCase {
     }
   }
 
-  async getProductList(): Promise<ProductRepository[]> {
+  async getProductList(): Promise<ProductTypes.ListDataParams> {
     const data = new ProductData()
     const response = await data.getProductList()
 

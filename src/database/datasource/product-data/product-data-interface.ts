@@ -1,6 +1,8 @@
-import { ProductRepository } from '@/domain/product'
+import { ProductTypes } from '@/domain/product/types'
 
 export interface IProductData {
-  getProductList(): Promise<ProductRepository[]>
-  getProductListByCategory(category: string): Promise<ProductRepository[]>
+  getProductList(): Promise<ProductTypes.ListDataParams>
+  getProductListByCategory(
+    category: string,
+  ): Promise<ProductTypes.ListDataParams>
 }

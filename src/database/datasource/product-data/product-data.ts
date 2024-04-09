@@ -1,5 +1,5 @@
 import { getDocs, orderBy, query, where } from 'firebase/firestore'
-import { ProductRepository } from '@/domain/product/repositories'
+import { ProductTypes } from '@/domain/product/types'
 import { DBFactory } from '@/database/db-factory'
 import { COLLECTIONS } from '@/database/types'
 import { IProductData } from './product-data-interface'
@@ -7,8 +7,8 @@ import { IProductData } from './product-data-interface'
 export class ProductData implements IProductData {
   private database = DBFactory.database()
 
-  async getProductList(): Promise<ProductRepository[]> {
-    const productList: ProductRepository[] = []
+  async getProductList(): Promise<ProductTypes.ListDataParams> {
+    const productList: ProductTypes.ListDataParams = []
 
     const productRef = this.database.getCollection(COLLECTIONS.PRODUCTS)
     const filteredProduct = query(
@@ -27,7 +27,7 @@ export class ProductData implements IProductData {
         description: doc.data().description,
         category: doc.data().category,
         url: doc.data().url,
-      } as ProductRepository)
+      } as ProductTypes.Data)
     })
 
     return productList
@@ -35,8 +35,8 @@ export class ProductData implements IProductData {
 
   async getProductListByCategory(
     category: string,
-  ): Promise<ProductRepository[]> {
-    const productListCategory: ProductRepository[] = []
+  ): Promise<ProductTypes.ListDataParams> {
+    const productListCategory: ProductTypes.ListDataParams = []
 
     const productRef = this.database.getCollection(COLLECTIONS.PRODUCTS)
     const productFilterCategory = query(
@@ -54,7 +54,7 @@ export class ProductData implements IProductData {
         description: doc.data().description,
         category: doc.data().category,
         url: doc.data().url,
-      } as ProductRepository)
+      } as ProductTypes.Data)
     })
 
     console.log(productListCategory)

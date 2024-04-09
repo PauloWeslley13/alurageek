@@ -7,7 +7,7 @@ import {
 } from 'firebase/auth'
 import { IFirebaseAuth } from '../interfaces'
 
-export class FirebaseAuth implements IFirebaseAuth<UserCredential, Auth> {
+export class FirebaseAuth implements IFirebaseAuth {
   async createUserWithEmailAndPassword(
     auth: Auth,
     email: string,

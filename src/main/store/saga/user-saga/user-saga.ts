@@ -14,12 +14,15 @@ function* userLoggedAuth(action: any) {
   try {
     const userOnAuth: UsersProps = yield call(usersService.userById, userId)
 
-    const user = {
-      ...userOnAuth,
-      id: userId,
-    } satisfies UsersProps
-
-    yield put(getUserLogged({ user, isLogged: true }))
+    yield put(
+      getUserLogged({
+        user: {
+          ...userOnAuth,
+          id: userId,
+        },
+        isLogged: true,
+      }),
+    )
   } catch (error) {
     yield put(getUserLogged({ user: {} as UsersProps, isLogged: false }))
     console.error(`Error UserSaga ${error}`)

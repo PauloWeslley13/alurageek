@@ -3,9 +3,9 @@ import { call, cancel, put, takeLatest } from 'redux-saga/effects'
 import { CartType, ProductsCart } from '@/presenter/components/types'
 import { getCart } from '@/main/store/reducers'
 import { loadCart } from '@/main/store/actions/actions'
-import { CartUseCase } from '@/domain/cart/usecases/cart-use-cases'
+import { CartUseCase } from '@/domain/cart'
 
-const makeCartUser = () => new CartUseCase()
+const makeCartUser = (): CartUseCase => new CartUseCase()
 
 // TODO: função Worker, função que observar uma action
 function* observableCarts(action: any) {
