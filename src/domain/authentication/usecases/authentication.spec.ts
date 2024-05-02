@@ -1,14 +1,14 @@
-import { UserCredential } from 'firebase/auth'
 import { AuthenticationSpy, mockAuthentication } from '../test'
 import { Authentication } from './authentication'
+import { IAuthentication } from '../interfaces'
 
 type SutTypes = {
   sut: Authentication
-  authenticationSpy: AuthenticationSpy<UserCredential>
+  authenticationSpy: AuthenticationSpy<IAuthentication.Model>
 }
 
-export const makeSut = (): SutTypes => {
-  const authenticationSpy = new AuthenticationSpy<UserCredential>()
+const makeSut = (): SutTypes => {
+  const authenticationSpy = new AuthenticationSpy<IAuthentication.Model>()
   const sut = new Authentication()
 
   return {

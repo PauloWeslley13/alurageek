@@ -1,51 +1,41 @@
 import { FirebaseError } from 'firebase/app'
 import { Authentication } from '@/domain/authentication'
-import { UserData } from '@/database'
-import { User, Create } from '../entities'
-import { UserRepository } from '../repositories'
-import { UserBuilder } from '../interface'
-
-type AuthSignInReturn =
-  | User
-  | 'Ops! Aconteceu um erro inesperado'
-  | 'Usuário inválido'
+import { HttpStatusCode, UserData } from '@/database'
+import { User, userAdapter, UserRepository } from '@/domain/user'
+import { Errors } from '@/domain/errors'
 
 export class UserUseCase {
   private auth = new Authentication()
-  private userAuth = new UserBuilder()
 
   async userAuthSignUp(
     data: Omit<UserRepository, 'id'>,
-  ): Promise<Create.Props> {
+  ): Promise<UserUseCase.ReturnAuthSignUp> {
     const { email, password } = data
 
     try {
       const register = await this.auth.signUp({ email, password })
-
-      const userAuth = this.userAuth.create({ id: register.user.uid, ...data })
-
-      const user = userAuth.create(register)
+      const userAuth = userAdapter({ id: register.user.uid, ...data })
+      const user = await userAuth.create(register)
 
       return user
     } catch (error: unknown) {
       if (error instanceof FirebaseError) {
-        if (error.code === 'auth/email-already-in-use') {
-          return 'Email já cadastrado'
+        if (error.code === HttpStatusCode.badRequest) {
+          return new Errors.EmailInUseError()
         }
       }
     }
-    return 'Ops! Aconteceu um erro inesperado'
+    return new Errors.UnexpectedError()
   }
 
   async userAuthSignIn(
     data: Pick<UserRepository, 'email' | 'password'>,
-  ): Promise<AuthSignInReturn> {
+  ): Promise<UserUseCase.ReturnAuthSignIn> {
     const { email, password } = data
 
     try {
       const { user } = await this.auth.signIn({ email, password })
-
-      const userAuth = this.userAuth.create({
+      const userAuth = userAdapter({
         id: user.uid,
         photoUrl: user.photoURL!,
         username: user.displayName!,
@@ -55,13 +45,13 @@ export class UserUseCase {
       return userAuth
     } catch (err: unknown) {
       if (err instanceof FirebaseError) {
-        if (err.code === 'auth/invalid-credential') {
-          return 'Usuário inválido'
+        if (err.code === HttpStatusCode.forbidden) {
+          return new Errors.InvalidCredentialsError()
         }
       }
     }
 
-    return 'Ops! Aconteceu um erro inesperado'
+    return new Errors.UnexpectedError()
   }
 
   async userLogout(): Promise<void> {
@@ -74,4 +64,16 @@ export class UserUseCase {
 
     return data
   }
+}
+
+export namespace UserUseCase {
+  export type ReturnAuthSignUp =
+    | UserRepository
+    | 'Email já cadastrado'
+    | 'Algo de errado aconteceu. Tente novamente em breve.'
+
+  export type ReturnAuthSignIn =
+    | User
+    | Errors.InvalidCredentialsError
+    | Errors.UnexpectedError
 }

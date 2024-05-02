@@ -1,4 +1,4 @@
-import { ComponentProps, InputHTMLAttributes, forwardRef } from 'react'
+import { ComponentProps, forwardRef, InputHTMLAttributes } from 'react'
 import * as S from './input-field-styles'
 
 type InputFieldProps = InputHTMLAttributes<HTMLInputElement> &

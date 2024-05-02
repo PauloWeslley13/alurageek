@@ -1,14 +1,13 @@
-import { UserCredential } from 'firebase/auth'
-import { AuthenticationParams, IAuthentication } from '../interfaces'
+import { IAuthentication } from '../interfaces'
 import { DBFactory } from '@/database'
 
-export class Authentication implements IAuthentication<UserCredential> {
+export class Authentication implements IAuthentication<IAuthentication.Model> {
   protected database = DBFactory.database()
   protected authentication = DBFactory.auth()
 
-  async signUp(params: AuthenticationParams): Promise<UserCredential> {
+  async signUp(params: IAuthentication.Params): Promise<IAuthentication.Model> {
     const { email, password } = params
-    const response = await this.authentication.createUserWithEmailAndPassword(
+    const response = await this.authentication.signUp(
       this.database.auth(),
       email,
       password,
@@ -17,9 +16,9 @@ export class Authentication implements IAuthentication<UserCredential> {
     return response
   }
 
-  async signIn(params: AuthenticationParams): Promise<UserCredential> {
+  async signIn(params: IAuthentication.Params): Promise<IAuthentication.Model> {
     const { email, password } = params
-    const response = await this.authentication.signInWithEmailAndPassword(
+    const response = await this.authentication.signIn(
       this.database.auth(),
       email,
       password,

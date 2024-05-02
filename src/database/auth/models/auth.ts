@@ -11,3 +11,7 @@ export interface IAuthSignUp<T, R> {
 export interface IAuthSignIn<T, R> {
   signInWithEmailAndPassword(params: T): Promise<R>
 }
+
+export interface ILogout {
+  signOut(): Promise<void>
+}

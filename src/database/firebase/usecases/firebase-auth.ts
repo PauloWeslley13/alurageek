@@ -1,14 +1,14 @@
 import {
   Auth,
-  signOut,
-  UserCredential,
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
+  signOut,
+  UserCredential,
 } from 'firebase/auth'
 import { IFirebaseAuth } from '../interfaces'
 
 export class FirebaseAuth implements IFirebaseAuth {
-  async createUserWithEmailAndPassword(
+  async signUp(
     auth: Auth,
     email: string,
     password: string,
@@ -17,7 +17,7 @@ export class FirebaseAuth implements IFirebaseAuth {
     return response
   }
 
-  async signInWithEmailAndPassword(
+  async signIn(
     auth: Auth,
     email: string,
     password: string,

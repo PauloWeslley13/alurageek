@@ -1,13 +1,10 @@
 import { UserCredential } from 'firebase/auth'
-import { UserRepository } from '../repositories'
+import { UserRepository } from '@/domain/user'
 
-export namespace Create {
-  export type Props =
-    | 'Email já cadastrado'
-    | 'Ops! Aconteceu um erro inesperado'
-    | { user: UserRepository; message: string }
+export namespace IUserModel {
+  export type Result = UserRepository
 }
 
 export interface IUserModel {
-  create(userAuth: UserCredential): Promise<Create.Props>
+  create(userAuth: UserCredential): Promise<IUserModel.Result>
 }
