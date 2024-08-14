@@ -1,13 +1,36 @@
-import { IFormat } from '../interface'
+export class Format {
+  priceMask(value: number): string {
+    if (isNaN(value)) {
+      return "Valor inválido";
+    }
 
-export class Format implements IFormat {
-  priceMask(params: string): string {
-    const valueMoney = params.replace(/[^0-9]/g, '')
-    const formattedValue = new Intl.NumberFormat('pt-BR', {
-      style: 'currency',
-      currency: 'BRL',
-    }).format(Number(valueMoney) / 100)
+    return new Intl.NumberFormat("pt-BR", {
+      style: "currency",
+      currency: "BRL",
+    }).format(value);
+  }
 
-    return formattedValue
+  formatPrice(value: string): string {
+    const valueNumeric = parseFloat(
+      value.replace(/[^0-9,-]+/g, "").replace(",", "."),
+    );
+
+    if (isNaN(valueNumeric)) {
+      return "";
+    }
+
+    const valueMonetary = valueNumeric.toLocaleString("pt-BR", {
+      style: "currency",
+      currency: "BRL",
+    });
+
+    return valueMonetary.replace("R$", "").trim();
+  }
+
+  formatDecimalValue(params: string): number {
+    const cleaned = params.replace(/[^0-9,]/g, "");
+    const numeric = cleaned.replace(",", ".");
+    const numericValue = parseFloat(numeric);
+    return numericValue;
   }
 }

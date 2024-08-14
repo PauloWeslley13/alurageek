@@ -1,39 +1,54 @@
-import { Link, Typography } from '@mui/material'
-import { SignIn, SignUp } from './components'
-import { FONTS } from '@/presenter/styles'
-import { useAuthentication } from './useAuthentication'
-import * as S from './authentication-styles'
+import { FC } from "react";
+import Container from "@mui/material/Container";
+import { useAppSelector } from "@/main/store/hook/useRedux";
+import { Alert, Loader } from "@/presenter/components/ui";
+import { SignIn, SignUp } from "./components";
+import { useAuthentication } from "./hook";
+import * as S from "./styles";
 
-const Authentication = () => {
-  const { theme, signInOrSignUp, linkAction } = useAuthentication()
+const Authentication: FC = () => {
+  const { error, isLoading } = useAppSelector((state) => state.authentication);
+  const {
+    hasLoginOrRegister,
+    loadAuthInformation,
+    handlerChangeViewLoginOrRegister,
+  } = useAuthentication();
+
+  if (isLoading) {
+    return <Loader.Content message="Processando" sx={{ height: 450 }} />;
+  }
 
   return (
-    <S.Wrapper>
-      <Typography
-        component="h2"
-        variant="h1"
-        color={theme.palette.primary.dark}
-        fontSize={FONTS.fontSizes['3xl']}
-      >
-        {signInOrSignUp === 'signIn' ? 'Login' : 'Cadastrar'}
-      </Typography>
+    <Container maxWidth="sm">
+      <S.Wrapper>
+        <S.StyledTypography component="h2" variant="h2">
+          {loadAuthInformation.title}
+        </S.StyledTypography>
 
-      {signInOrSignUp === 'signIn' ? <SignIn /> : <SignUp />}
+        {hasLoginOrRegister ? <SignIn /> : <SignUp />}
 
-      <Link
-        component="button"
-        variant="h5"
-        onClick={linkAction}
-        sx={{
-          textDecoration: 'none',
-          marginTop: theme.spacing(5),
-          ':hover': { color: theme.palette.primary.dark },
-        }}
-      >
-        {signInOrSignUp === 'signIn' ? 'criar conta' : 'ja tenho conta'}
-      </Link>
-    </S.Wrapper>
-  )
-}
+        <S.StyledLink
+          component="button"
+          variant="h5"
+          onClick={handlerChangeViewLoginOrRegister}
+        >
+          {loadAuthInformation.link}
+        </S.StyledLink>
 
-export { Authentication }
+        {error && (
+          <Alert
+            message={error}
+            sx={{
+              mt: 5,
+              width: "100%",
+              display: "flex",
+              justifyContent: "center",
+            }}
+          />
+        )}
+      </S.Wrapper>
+    </Container>
+  );
+};
+
+export default Authentication;

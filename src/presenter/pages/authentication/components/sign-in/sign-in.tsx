@@ -1,25 +1,25 @@
-import { useTheme } from '@mui/material'
-import Button from '@mui/material/Button'
-import { InputField } from '@/presenter/components/ui'
-import { useSignIn } from './useSignIn'
+import { FC } from "react";
+import Button from "@mui/material/Button";
+import { Alert, InputField } from "@/presenter/components/ui";
+import { useSignIn } from "./hook";
 
-export const SignIn = () => {
-  const { register, handleSubmit, alert, signIn, errors } = useSignIn()
-  const theme = useTheme()
+export const SignIn: FC = () => {
+  const { errors, register, handleSubmit, handlerSignIn, isValidInputSignIn } =
+    useSignIn();
 
   return (
-    <form onSubmit={handleSubmit(signIn)} autoComplete="off">
+    <form onSubmit={handleSubmit(handlerSignIn)} autoComplete="off">
       <InputField
-        {...register('email')}
+        {...register("email")}
         type="text"
         label="Email"
-        placeholder="Informe o usuário"
+        placeholder="Informe o email"
         error={!!errors.email?.message}
         helperText={errors.email?.message}
       />
 
       <InputField
-        {...register('password')}
+        {...register("password")}
         type="password"
         label="Senha"
         placeholder="Informe a senha"
@@ -27,20 +27,20 @@ export const SignIn = () => {
         helperText={errors.password?.message}
       />
 
-      <Button
-        variant="primary"
-        type="submit"
-        onClick={alert}
-        sx={{
-          width: '100%',
-          height: theme.spacing(12),
-          marginTop: theme.spacing(2),
-          textTransform: 'uppercase',
-          letterSpacing: 1.2,
-        }}
-      >
+      <Button variant="primary" type="submit">
         Entrar
       </Button>
+
+      {isValidInputSignIn() && (
+        <Alert
+          message="Campos preenchido incorretamente"
+          sx={{
+            width: "100%",
+            display: "flex",
+            justifyContent: "center",
+          }}
+        />
+      )}
     </form>
-  )
-}
+  );
+};

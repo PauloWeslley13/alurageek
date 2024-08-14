@@ -1,26 +1,34 @@
-import { COLORS, FONTS } from '../styles/index'
+import { css, Theme } from "@mui/material/styles";
+import { cyan, indigo } from "@mui/material/colors";
 
-export const GlobalStyle = {
-  '*': {
-    boxSizing: 'border-box',
-    margin: 0,
-    padding: 0,
+export const Global = (theme: Theme) => css`
+  * {
+    box-sizing: "border-box";
+    margin: 0;
+    padding: 0;
+    font-family: ${theme.typography.font.OPEN_SANS};
 
-    fontFamily: FONTS.fontFamily.OPEN_SANS,
+    ::-webkit-scrollbar {
+      width: 0.5rem;
+    }
+    ::-webkit-scrollbar-track {
+      background: ${theme.palette.background.default};
+    }
+    ::-webkit-scrollbar-thumb {
+      background: ${theme.palette.mode === "dark" ? indigo[500] : cyan[500]};
+      border-radius: ${theme.spacing(2)};
+    }
 
-    '::-webkit-scrollbar': {
-      width: '0.65rem',
-    },
-    '::-webkit-scrollbar-track': {
-      background: COLORS.bunker[100],
-    },
-    '::-webkit-scrollbar-thumb': {
-      background: COLORS.violet[300],
-      borderRadius: '2.2rem',
-    },
-  },
+    font-display: swap;
+  }
 
-  button: {
-    cursor: 'pointer',
-  },
-}
+  html,
+  body,
+  #root {
+    height: 100%;
+  }
+
+  button {
+    cursor: pointer;
+  }
+`;

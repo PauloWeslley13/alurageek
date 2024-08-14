@@ -1,37 +1,24 @@
-import { RouteObject } from 'react-router-dom'
-import { RootLayout } from '@/presenter/layout'
-import {
-  Authentication,
-  Cart,
-  Category,
-  Home,
-  PanelAdm,
-  ProductCreate,
-  ProductDetail,
-  ProductListItems,
-  Products,
-} from './pages'
+import { RouteObject } from "react-router-dom";
+import { PanelAdmLayout, RootLayout } from "@/presenter/layout";
+import * as Page from "@/presenter/pages";
 
-const products = (): RouteObject => ({
-  element: <Products />,
-  children: [
-    { path: '/product/info', element: <ProductCreate /> },
-    { path: '/product/list', element: <ProductListItems /> },
-    { path: '/product/detail/:id', element: <ProductDetail /> },
-  ],
-})
-
-const useAppRoutes = (): RouteObject => ({
-  path: '/',
+export const appRoutes = (): RouteObject => ({
+  path: "/",
   element: <RootLayout />,
   children: [
-    { path: 'auth', element: <Authentication /> },
-    { path: 'home', element: <Home /> },
-    products(),
-    { path: 'cart', element: <Cart /> },
-    { path: 'panel-adm', element: <PanelAdm /> },
-    { path: 'category/:id', element: <Category /> },
+    { path: "home", element: <Page.Home /> },
+    { path: "auth", element: <Page.Authentication /> },
+    { path: "cart", element: <Page.Cart /> },
+    { path: "product-list", element: <Page.ProductListItems /> },
+    { path: "product-detail/:productId", element: <Page.ProductDetail /> },
+    {
+      path: "panel-adm",
+      element: <PanelAdmLayout />,
+      children: [
+        { path: "products", element: <Page.PanelAdmProduct /> },
+        { path: "categories", element: <Page.PanelAdmCategory /> },
+      ],
+    },
+    { path: "*", element: <div>NotFound</div> },
   ],
-})
-
-export { useAppRoutes }
+});

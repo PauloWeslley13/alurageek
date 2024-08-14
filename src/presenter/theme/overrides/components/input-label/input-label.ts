@@ -1,53 +1,37 @@
-import { Theme } from '@mui/material'
-import { blueGrey, red } from '@mui/material/colors'
-import { FONTS } from '@/presenter/styles'
+import { ComponentsOverrides, darken, lighten, Theme } from "@mui/material";
+import { blueGrey, red } from "@mui/material/colors";
 
-export const InputLabel = (theme: Theme) => {
-  const error = {
-    '&.Mui-error': {
-      color: red[600],
+export const MuiInputLabel = (theme: Theme) => {
+  const inputSmall = {
+    "&.Mui-error": {
+      color: theme.palette.mode === "dark" ? red.A200 : red[500],
     },
-  }
-
-  const disabled = {
-    '&.Mui-disabled': {
+    "&.Mui-disabled": {
       color: blueGrey[400],
     },
-  }
-
-  const inputSmall = {
-    '&.MuiInputLabel-sizeSmall': {
-      ...error,
-      ...disabled,
-    },
-  }
+  };
 
   return {
     MuiInputLabel: {
       styleOverrides: {
         root: {
-          fontWeight: FONTS.fontWeight.semibold,
+          fontWeight: theme.typography.font.semibold,
         },
         filled: {
-          ...theme.typography.h4,
-          letterSpacing: FONTS.letterSpacings.widest,
-
+          ...theme.typography.h5,
+          fontWeight: theme.typography.font.bold,
+          letterSpacing: theme.typography.letterSpacing.widest,
           color:
-            theme.palette.mode === 'light'
-              ? theme.palette.primary[500]
-              : theme.palette.secondary[500],
-
+            theme.palette.mode === "dark"
+              ? lighten(theme.palette.primary.main, 0.4)
+              : darken(theme.palette.primary.main, 0.5),
           ...inputSmall,
         },
         outlined: {
-          color:
-            theme.palette.mode === 'light'
-              ? theme.palette.primary[900]
-              : theme.palette.secondary[100],
-
+          color: theme.palette.primary.main,
           ...inputSmall,
         },
-      },
+      } satisfies ComponentsOverrides<Theme>["MuiInputLabel"],
     },
-  }
-}
+  };
+};

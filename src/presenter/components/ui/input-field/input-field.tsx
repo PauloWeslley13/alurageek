@@ -1,11 +1,13 @@
-import { ComponentProps, InputHTMLAttributes, forwardRef } from 'react'
-import * as S from './input-field-styles'
+import { ComponentProps, forwardRef } from "react";
+import TextField from "@mui/material/TextField";
 
-type InputFieldProps = InputHTMLAttributes<HTMLInputElement> &
-  ComponentProps<typeof S.TextField>
+type InputFieldProps = ComponentProps<"input"> &
+  ComponentProps<typeof TextField>;
 
 export const InputField = forwardRef<HTMLInputElement, InputFieldProps>(
-  ({ ...rest }, ref) => <S.TextField {...rest} ref={ref} variant="filled" />,
-)
+  ({ ...rest }, ref) => (
+    <TextField {...rest} ref={ref} variant="filled" size="small" />
+  ),
+);
 
-InputField.displayName = 'InputField'
+InputField.displayName = "InputField";

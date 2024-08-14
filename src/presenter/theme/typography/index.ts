@@ -1,84 +1,81 @@
-import { TypographyOptions } from '@mui/material/styles/createTypography'
-import { FONTS } from '@/presenter/styles'
+import { TypographyOptions } from "@mui/material/styles/createTypography";
+import { FONTS } from "@/presenter/styles";
 
-type TypographyProps = { fontFamily: string }
+type TypographyProps = { fontFamily: string };
 
 export const Typography = ({
   fontFamily,
 }: TypographyProps): TypographyOptions => ({
+  htmlFontSize: 16,
   fontFamily,
-  fontWeightLight: FONTS.fontWeight.light,
-  fontWeightRegular: FONTS.fontWeight.regular,
-  fontWeightMedium: FONTS.fontWeight.medium,
-  fontWeightBold: FONTS.fontWeight.semibold,
+  letterSpacing: { ...FONTS.letterSpacing },
+  lineHeight: { ...FONTS.lineHeight },
+  font: {
+    ...FONTS.fontFamily,
+    ...FONTS.fontSize,
+    ...FONTS.fontWeight,
+  },
+  text: {
+    ...FONTS.text,
+  },
   h1: {
-    fontFamily: FONTS.fontFamily.RALEWAY,
     fontWeight: FONTS.fontWeight.semibold,
-    fontSize: FONTS.fontSizes['4xl'],
+    fontSize: "2.375rem",
     lineHeight: 1.21,
   },
   h2: {
-    fontFamily: FONTS.fontFamily.RALEWAY,
     fontWeight: FONTS.fontWeight.semibold,
-    fontSize: FONTS.fontSizes['3xl'],
+    fontSize: "1.875rem",
     lineHeight: 1.27,
   },
   h3: {
-    fontFamily: FONTS.fontFamily.RALEWAY,
     fontWeight: FONTS.fontWeight.semibold,
-    fontSize: FONTS.fontSizes['2xl'],
+    fontSize: "1.5rem",
     lineHeight: 1.33,
   },
   h4: {
-    fontFamily: FONTS.fontFamily.RALEWAY,
     fontWeight: FONTS.fontWeight.semibold,
-    fontSize: FONTS.fontSizes.md,
+    fontSize: "1.25rem",
     lineHeight: 1.4,
   },
   h5: {
-    fontFamily: FONTS.fontFamily.RALEWAY,
     fontWeight: FONTS.fontWeight.semibold,
-    fontSize: FONTS.fontSizes.sm,
+    fontSize: "1rem",
     lineHeight: 1.5,
   },
   h6: {
-    fontFamily: FONTS.fontFamily.RALEWAY,
     fontWeight: FONTS.fontWeight.regular,
-    fontSize: FONTS.fontSizes.xs,
+    fontSize: "0.875rem",
     lineHeight: 1.57,
   },
   caption: {
-    fontFamily: FONTS.fontFamily.OPEN_SANS,
     fontWeight: FONTS.fontWeight.regular,
-    fontSize: FONTS.fontSizes.xs,
+    fontSize: "0.75rem",
     lineHeight: 1.66,
   },
   body1: {
-    fontFamily: FONTS.fontFamily.OPEN_SANS,
-    fontSize: FONTS.fontSizes.sm,
+    fontSize: "0.875rem",
     lineHeight: 1.57,
   },
   body2: {
-    fontFamily: FONTS.fontFamily.OPEN_SANS,
-    fontSize: FONTS.fontSizes.xs,
+    fontSize: "0.75rem",
     lineHeight: 1.66,
   },
   subtitle1: {
-    fontFamily: FONTS.fontFamily.OPEN_SANS,
-    fontSize: FONTS.fontSizes.sm,
+    fontSize: "0.875rem",
     fontWeight: FONTS.fontWeight.semibold,
     lineHeight: 1.57,
   },
   subtitle2: {
-    fontSize: FONTS.fontSizes.xs,
-    fontWeight: FONTS.fontWeight.regular,
+    fontSize: "0.75rem",
+    fontWeight: 500,
     lineHeight: 1.66,
   },
   overline: {
     lineHeight: 1.66,
   },
   button: {
-    fontFamily: FONTS.fontFamily.RALEWAY,
-    textTransform: 'capitalize',
+    fontFamily: FONTS.fontFamily.OPEN_SANS,
+    textTransform: "capitalize",
   },
-})
+});

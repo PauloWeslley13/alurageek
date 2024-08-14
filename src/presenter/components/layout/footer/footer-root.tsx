@@ -1,10 +1,6 @@
-import { ComponentProps, ReactNode } from 'react'
-import * as S from './footer-styles'
+import { styled } from "@mui/material";
 
-type FooterRootProps = ComponentProps<typeof S.FooterRootWrap> & {
-  children: ReactNode
-}
-
-export const FooterRoot = ({ ...rest }: FooterRootProps) => {
-  return <S.FooterRootWrap {...rest} />
-}
+export const FooterRoot = styled("div")`
+  display: flex;
+  flex-direction: column;
+`;

@@ -1,12 +1,12 @@
-import { ComponentProps, ReactNode } from 'react'
-import * as S from './dialog-styles'
+import { ComponentProps, ReactNode } from "react";
+import { StyledDialogRoot } from "./styles";
 
-type DialogRootProps = ComponentProps<typeof S.DialogWrapper> & {
-  children: ReactNode
-}
+type DialogRootProps = ComponentProps<typeof StyledDialogRoot> & {
+  children: ReactNode;
+};
 
 const DialogRoot = ({ children, ...rest }: DialogRootProps) => (
-  <S.DialogWrapper {...rest}>{children}</S.DialogWrapper>
-)
+  <StyledDialogRoot {...rest}>{children}</StyledDialogRoot>
+);
 
-export default DialogRoot
+export default DialogRoot;

@@ -1,30 +1,31 @@
-import { ComponentProps, ReactNode } from 'react'
-import Typography from '@mui/material/Typography'
-import { FONTS } from '@/presenter/styles'
-import * as S from './dialog-styles'
+import { ComponentProps, ReactNode } from "react";
+import Typography from "@mui/material/Typography";
+import { StyledDialogHeader } from "./styles";
 
-type DialogHeaderProps = ComponentProps<typeof S.DialogHead> & {
-  title?: string
-  children?: ReactNode
-}
+type DialogHeaderProps = ComponentProps<typeof StyledDialogHeader> & {
+  title?: string;
+  children?: ReactNode;
+};
 
-const DialogHeader = ({ title, children, ...rest }: DialogHeaderProps) => (
-  <S.DialogHead {...rest}>
-    <Typography
-      component="span"
-      variant="h4"
-      color="primary"
-      sx={{
-        fontSize: FONTS.fontSizes.xl,
-        fontWeight: FONTS.fontWeight.bold,
-        textTransform: 'capitalize',
-      }}
-    >
-      {title}
-    </Typography>
+const DialogHeader = ({ title = "", children, ...rest }: DialogHeaderProps) => (
+  <StyledDialogHeader {...rest}>
+    {title && (
+      <Typography
+        component="span"
+        variant="h4"
+        sx={{
+          fontSize: (theme) => theme.typography.font.lg,
+          fontWeight: (theme) => theme.typography.font.bold,
+          color: "primary.main",
+          textTransform: "capitalize",
+        }}
+      >
+        {title}
+      </Typography>
+    )}
 
-    {children}
-  </S.DialogHead>
-)
+    {children && children}
+  </StyledDialogHeader>
+);
 
-export default DialogHeader
+export default DialogHeader;

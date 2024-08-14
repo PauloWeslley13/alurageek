@@ -1,39 +1,36 @@
-import { IconButton } from '@mui/material'
-import CloseIcon from '@mui/icons-material/Close'
-import { Avatar, CardUser, Dialog } from '@/presenter/components/ui'
-import { useMenuProfile } from './useMenuProfile'
+import { FC } from "react";
+import { styled } from "@mui/system";
+import DashboardRoundedIcon from "@mui/icons-material/DashboardRounded";
+import LogoutRoundedIcon from "@mui/icons-material/LogoutRounded";
+import { MenuButton as BaseMenuButton } from "@mui/base/MenuButton";
+import { CardUser, Dropdown } from "@/presenter/components/ui";
+import { useMenuProfile } from "./hook";
 
-export const MenuProfile = () => {
-  const { open, user, theme, handleOpenDialog, handleCloseDialog } =
-    useMenuProfile()
+const DropdownButton = styled(BaseMenuButton)`
+  display: flex;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+`;
+
+export const MenuProfile: FC = () => {
+  const { handlerNavPainel, handlerLogout } = useMenuProfile();
 
   return (
-    <div>
-      <Avatar
-        aria-haspopup="true"
-        aria-controls={open ? 'basic-menu' : undefined}
-        aria-expanded={open ? 'true' : undefined}
-        onClick={handleOpenDialog}
-        user={user.username}
-        src={user.photoUrl}
-        sx={{ cursor: 'pointer' }}
-      />
-      <Dialog.Root
-        open={open}
-        onClose={handleCloseDialog}
-        aria-labelledby="alert-dialog-title"
-        aria-describedby="alert-dialog-description"
-      >
-        <Dialog.Header id="alert-dialog-title">
-          <IconButton onClick={handleCloseDialog}>
-            <CloseIcon sx={{ color: theme.palette.grey[600] }} />
-          </IconButton>
-        </Dialog.Header>
-
-        <Dialog.Content>
-          <CardUser closeModal={handleCloseDialog} />
-        </Dialog.Content>
-      </Dialog.Root>
-    </div>
-  )
-}
+    <Dropdown.Root>
+      <DropdownButton>
+        <CardUser />
+      </DropdownButton>
+      <Dropdown.List>
+        <Dropdown.Item onClick={handlerNavPainel}>
+          <DashboardRoundedIcon />
+          Panel Adm
+        </Dropdown.Item>
+        <Dropdown.Item onClick={handlerLogout}>
+          <LogoutRoundedIcon />
+          Logout
+        </Dropdown.Item>
+      </Dropdown.List>
+    </Dropdown.Root>
+  );
+};

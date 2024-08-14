@@ -1,61 +1,58 @@
-import { useNavigate } from 'react-router-dom'
-import { Button, useTheme } from '@mui/material'
-import ArrowForwardIcon from '@mui/icons-material/ArrowForward'
-import { Header, ProductsList } from '@/presenter/components/layout'
-import { useProductsFilter } from '@/presenter/hooks/useProductsFilter'
-import { FONTS } from '@/presenter/styles'
+import { useNavigate } from "react-router-dom";
+import Stack from "@mui/material/Stack";
+import Button from "@mui/material/Button";
+import ArrowForwardIosRoundedIcon from "@mui/icons-material/ArrowForwardIosRounded";
+import { Header, ProductsList } from "@/presenter/components/layout";
+import { useHome } from "./hook/useHome";
 
-export const Home = () => {
-  const { categoryByProduct, productsFilter, isLoading } = useProductsFilter()
-  const navigate = useNavigate()
-  const theme = useTheme()
+function Home() {
+  const {
+    searchingProducts,
+    loadSearchingCategories,
+    isLoading,
+    hasMore,
+    loadMoreProducts,
+  } = useHome();
+  const navigate = useNavigate();
 
   return (
-    <section>
+    <>
       <Header />
 
-      <ProductsList
-        props={{
-          title: 'StarWars',
-          productList: productsFilter,
-          isLoading,
-        }}
-      >
-        <Button
-          variant="secondary"
-          endIcon={<ArrowForwardIcon />}
-          onClick={() => navigate('/product/list')}
-          sx={{
-            fontSize: FONTS.fontSizes.md,
-            height: theme.spacing(8),
-          }}
-        >
-          Ver todos
-        </Button>
-      </ProductsList>
-
-      {categoryByProduct.map((props) => (
+      {loadSearchingCategories.map((props) => (
         <ProductsList
           key={props.id}
-          props={{
-            title: props.name,
-            productList: props.products,
-            isLoading,
-          }}
+          title={props.name}
+          products={props.products}
+          isLoading={isLoading}
         >
           <Button
             variant="secondary"
-            endIcon={<ArrowForwardIcon />}
-            onClick={() => navigate(`/category/${props.id}`)}
+            endIcon={<ArrowForwardIosRoundedIcon />}
+            onClick={() => navigate("/product-list")}
             sx={{
-              fontSize: FONTS.fontSizes.md,
-              height: theme.spacing(8),
+              fontSize: (theme) => theme.typography.font.sm,
+              height: (theme) => theme.spacing(8),
             }}
           >
             Ver todos
           </Button>
         </ProductsList>
       ))}
-    </section>
-  )
+
+      {hasMore < searchingProducts.length && (
+        <Stack sx={{ justifyContent: "center", alignItems: "center" }}>
+          <Button
+            variant="default"
+            sx={{ width: "fit-content" }}
+            onClick={loadMoreProducts}
+          >
+            Carrega mais produtos
+          </Button>
+        </Stack>
+      )}
+    </>
+  );
 }
+
+export default Home;

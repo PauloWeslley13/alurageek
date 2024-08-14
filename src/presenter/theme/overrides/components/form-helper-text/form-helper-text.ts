@@ -1,20 +1,22 @@
-import { Theme } from '@mui/material'
-import { red } from '@mui/material/colors'
-import { FONTS } from '@/presenter/styles'
+import { ComponentsOverrides, Theme } from "@mui/material";
+import { blueGrey, red } from "@mui/material/colors";
 
-export const FormHelperText = (theme: Theme) => {
+export const MuiFormHelperText = (theme: Theme) => {
   return {
     MuiFormHelperText: {
       styleOverrides: {
         root: {
           ...theme.typography.h5,
-          letterSpacing: FONTS.letterSpacings.widest,
+          letterSpacing: theme.typography.letterSpacing.widest,
 
-          '&.MuiFormHelperText-sizeSmall': {
-            color: red[600],
+          "&.Mui-error": {
+            color: theme.palette.mode === "dark" ? red.A200 : red[500],
+          },
+          "&.Mui-disabled": {
+            color: blueGrey[400],
           },
         },
-      },
+      } satisfies ComponentsOverrides<Theme>["MuiFormHelperText"],
     },
-  }
-}
+  };
+};

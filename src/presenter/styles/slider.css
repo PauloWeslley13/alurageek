@@ -1,0 +1,44 @@
+:root {
+  --black-shadow: rgba(0, 0, 0, 0.9);
+  --gray-shadow: rgba(0, 0, 0, 0.3);
+  --gray-10: #adadad;
+}
+
+.swiper .swiper-slide {
+  display: flex;
+  justify-content: center;
+}
+
+.swiper .swiper-slide .swiper-slide-shadow {
+  background: none;
+}
+
+.swiper .swiper-pagination-bullet-active {
+  background-color: var(--gray-10);
+}
+
+.swiper .swiper-button-prev {
+  color: var(--black-shadow);
+}
+
+.swiper .swiper-button-next {
+  color: var(--black-shadow);
+}
+
+
+@media only screen and (min-width: 800px) {
+  .swiper {
+    padding: 3.2rem;
+  }
+}
+
+@media only screen and (max-width: 400px) {
+  .swiper {
+    padding-block: 3.2rem;
+  }
+
+  .swiper .swiper-button-next,
+  .swiper-button-prev {
+    display: none;
+  }
+}

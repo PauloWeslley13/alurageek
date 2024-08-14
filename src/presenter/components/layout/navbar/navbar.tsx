@@ -1,75 +1,66 @@
-import { ComponentProps } from 'react'
-import { useLocation, useNavigate } from 'react-router-dom'
-import { useTheme } from '@mui/material'
-import Button from '@mui/material/Button'
-import ShoppingCartIcon from '@mui/icons-material/ShoppingCart'
-import { useAppSelector } from '@/main/store/hook/useRedux'
-import { SVGLogoIcon, ShoppingBadge } from '@/presenter/components/ui'
-import { MenuProfile, MenuTheme, SearchField } from './components'
-import * as S from './navbar-styles'
+import { FC, useEffect, useRef, useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { Stack, useMediaQuery } from "@mui/material";
+import { LogoTipo } from "@/presenter/components/ui";
+import { Nav, SearchField } from "./components";
+import * as S from "./styles";
 
-type NavBarProps = ComponentProps<typeof S.NavBarWrap>
+export const NavBar: FC = () => {
+  const [scrollPosition, setScrollPosition] = useState<boolean>(false);
+  const markerRef = useRef<HTMLDivElement>(null);
+  const navigate = useNavigate();
+  const hasMaxScreen = useMediaQuery("(max-width:899px)");
 
-export const NavBar = ({ ...rest }: NavBarProps) => {
-  const { cart } = useAppSelector((state) => state.cart)
-  const { isLogged } = useAppSelector((state) => state.user)
-  const { pathname } = useLocation()
-  const navigate = useNavigate()
-  const theme = useTheme()
+  useEffect(() => {
+    const marker = markerRef.current;
+
+    if (!marker) {
+      return;
+    }
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        setScrollPosition(!entry.isIntersecting);
+      },
+      { threshold: 0.1 },
+    );
+
+    console.log(observer);
+
+    observer.observe(marker);
+
+    return () => {
+      if (marker) observer.unobserve(marker);
+    };
+  }, []);
+
+  // const handleScroll = () => {
+  //   const position = window.scrollY
+  //   setScrollPosition(position)
+  // }
+
+  // useEffect(() => {
+  //   window.addEventListener('scroll', handleScroll)
+
+  //   return () => {
+  //     window.removeEventListener('scroll', handleScroll)
+  //   }
+  // }, [])
 
   return (
-    <S.NavBarWrap {...rest}>
-      <div>
-        <div>
-          <SVGLogoIcon
-            onClick={() => navigate('/home')}
-            style={{ cursor: 'pointer' }}
+    <S.NavBarContainer scroll={scrollPosition}>
+      <S.Nav>
+        <Stack sx={{ flexDirection: "row", alignItems: "center", gap: 2.5 }}>
+          <LogoTipo
+            onClick={() => navigate("/home")}
+            style={{ cursor: "pointer" }}
           />
 
-          <SearchField />
-        </div>
+          {!hasMaxScreen && <SearchField />}
+        </Stack>
 
-        <div>
-          {pathname === '/auth' || isLogged ? null : (
-            <Button
-              variant="contained"
-              onClick={() => navigate('/auth')}
-              sx={{
-                height: theme.spacing(9),
-                width: theme.spacing(20),
-              }}
-            >
-              Login
-            </Button>
-          )}
-
-          {isLogged && (
-            <>
-              {cart.length >= 0 ? (
-                <ShoppingBadge
-                  aria-label="cart"
-                  badgeContent={0}
-                  onClick={() => navigate('/cart')}
-                >
-                  <ShoppingCartIcon />
-                </ShoppingBadge>
-              ) : (
-                <ShoppingBadge
-                  aria-label="cart"
-                  badgeContent={0}
-                  onClick={() => navigate('/cart')}
-                >
-                  <ShoppingCartIcon />
-                </ShoppingBadge>
-              )}
-            </>
-          )}
-
-          <MenuTheme />
-
-          {isLogged && <MenuProfile />}
-        </div>
-      </div>
-    </S.NavBarWrap>
-  )
-}
+        <Nav />
+      </S.Nav>
+    </S.NavBarContainer>
+  );
+};

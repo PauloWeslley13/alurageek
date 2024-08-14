@@ -1,20 +1,23 @@
-/* eslint-disable prettier/prettier */
-import { ComponentType, FC, ReactNode, Suspense } from 'react'
-import { Loader } from './ui'
+import { ComponentType, FC, ReactNode, Suspense } from "react";
+import { Loader } from "@/presenter/components/ui";
 
-type LoadableProps = { children?: ReactNode }
+type LoadableProps = { children?: ReactNode };
 
-const Loadable = <T extends LoadableProps>(Component: ComponentType<T>): FC<T> => {
+export const Loadable = <T extends LoadableProps>(
+  Component: ComponentType<T>,
+): FC<T> => {
   const LoadableComponent: FC<T> = (props) => (
-    <Suspense fallback={<Loader label="Carregando" sx={{ height: '100%' }} />}>
+    <Suspense
+      fallback={
+        <Loader.Root>
+          <Loader.Content message="Carregando" />
+        </Loader.Root>
+      }
+    >
       <Component {...props} />
     </Suspense>
-  )
+  );
 
-  // Adicione um nome de exibição ao componente
-  LoadableComponent.displayName = `Loadable(${Component.displayName || Component.name || 'Component'})`
-
-  return LoadableComponent
-}
-
-export { Loadable }
+  LoadableComponent.displayName = `Loadable(${Component.displayName || Component.name})`;
+  return LoadableComponent;
+};

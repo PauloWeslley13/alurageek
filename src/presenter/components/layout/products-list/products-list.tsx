@@ -1,56 +1,54 @@
-import { ReactNode } from 'react'
-import { CircularProgress, Stack, Typography, useTheme } from '@mui/material'
-import { CardProduct } from '@/presenter/components/ui'
-import { ProductsProps } from '@/presenter/components/types'
-import * as S from './products-list-styles'
+import { FC, ReactNode } from "react";
+import { Container, Typography } from "@mui/material";
+import { Loader } from "@/presenter/components/ui";
+import { ProductModel } from "@/domain/models";
+import ProductCarousel from "./product-carousel";
+import * as S from "./styles";
 
 type ProductsListProps = {
-  props: {
-    title: string
-    productList: ProductsProps[]
-    isLoading: boolean
-  }
-  children?: ReactNode
-}
+  title: string;
+  products: ProductModel[];
+  isLoading: boolean;
+  children?: ReactNode;
+};
 
-export const ProductsList = ({ props, children }: ProductsListProps) => {
-  const { title, isLoading, productList } = props
-  const theme = useTheme()
+export const ProductsList: FC<ProductsListProps> = ({
+  title = "",
+  isLoading = false,
+  products = [],
+  children,
+}) => {
+  if (isLoading) {
+    return (
+      <Loader.Content message="Carregando produtos" sx={{ height: 250 }} />
+    );
+  }
 
   return (
-    <S.Container>
-      <div>
-        <Typography component="h3" variant="h2" color={theme.palette.grey[900]}>
-          {title}
-        </Typography>
+    <Container maxWidth="lg">
+      <S.ProductListContainer>
+        <div>
+          <Typography component="h3" variant="h2">
+            {title}
+          </Typography>
 
-        {children}
-      </div>
+          {children && children}
+        </div>
 
-      {productList.length !== 0 ? (
-        <S.Products>
-          {productList.map((item, index) => (
-            <CardProduct key={index} card={item} />
-          ))}
-        </S.Products>
-      ) : (
-        <Stack
-          flexDirection="row"
-          alignItems="center"
-          justifyContent="center"
-          gap={2}
-          margin={theme.spacing(15)}
-        >
-          {isLoading && <CircularProgress size={35} />}
+        {products.length <= 0 && (
           <Typography
             component="h3"
             variant="h2"
-            color={theme.palette.grey[900]}
+            sx={{ mt: 3, textAlign: "center" }}
           >
-            {isLoading ? 'Carregando produtos' : 'Produtos indisponível'}
+            Produto indisponível
           </Typography>
-        </Stack>
-      )}
-    </S.Container>
-  )
-}
+        )}
+
+        {!isLoading && (
+          <>{products && <ProductCarousel product={products} />}</>
+        )}
+      </S.ProductListContainer>
+    </Container>
+  );
+};

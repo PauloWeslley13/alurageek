@@ -1,3 +1,3 @@
-export * from './primary'
-export * from './secondary'
-export * from './contained'
+export * from "./usePrimary";
+export * from "./useSecondary";
+export * from "./useDefault";

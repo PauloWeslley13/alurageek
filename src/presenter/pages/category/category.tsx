@@ -1,9 +1,10 @@
-import { useParams } from 'react-router-dom'
-import { useCategory } from './useCategory'
+import { FC } from "react";
+import { useParams } from "react-router-dom";
+import { useCategory } from "./useCategory";
 
-export const Category = () => {
-  const { id } = useParams()
-  const { categories } = useCategory()
+const Category: FC = () => {
+  const { id } = useParams();
+  const { categories } = useCategory();
 
   return (
     <>
@@ -15,5 +16,7 @@ export const Category = () => {
         ))}
       </div>
     </>
-  )
-}
+  );
+};
+
+export default Category;

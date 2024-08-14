@@ -1,15 +1,11 @@
-import { useNavigate } from 'react-router-dom'
-import { useAppSelector } from '@/main/store/hook/useRedux'
-import { Format } from '@/domain/format'
+import { useNavigate } from "react-router-dom";
 
-const makeFormat = (): Format => new Format()
+export function useCardProduct() {
+  const navigate = useNavigate();
 
-const useCardProduct = () => {
-  const { isLogged } = useAppSelector((state) => state.user)
-  const navigate = useNavigate()
-  const format = makeFormat()
+  const handlerNavProductDetail = (productId: string) => {
+    return navigate(`/product-detail/${productId}`);
+  };
 
-  return { navigate, format, isLogged }
+  return { handlerNavProductDetail };
 }
-
-export { useCardProduct }

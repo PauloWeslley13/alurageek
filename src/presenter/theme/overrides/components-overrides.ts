@@ -1,18 +1,13 @@
-import { Components, Theme } from '@mui/material'
-import {
-  FilledInput,
-  FormHelperText,
-  InputLabel,
-  OutlinedInput,
-  useButton,
-} from './components'
+import { Components, Theme } from "@mui/material";
+import * as Component from "./components";
 
 export const ComponentOverrides = (theme: Theme): Components => {
-  const { MuiButton } = useButton(theme)
-  const { MuiFilledInput } = FilledInput(theme)
-  const { MuiOutlinedInput } = OutlinedInput(theme)
-  const { MuiInputLabel } = InputLabel(theme)
-  const { MuiFormHelperText } = FormHelperText(theme)
+  const { MuiButton } = Component.MuiButton(theme);
+  const { MuiFilledInput } = Component.MuiFilledInput(theme);
+  const { MuiOutlinedInput } = Component.MuiOutlinedInput(theme);
+  const { MuiInputLabel } = Component.MuiInputLabel(theme);
+  const { MuiFormHelperText } = Component.MuiFormHelperText(theme);
+  const { MuiMenuItem } = Component.MuiMenuItem(theme);
 
   return {
     MuiButton,
@@ -20,5 +15,6 @@ export const ComponentOverrides = (theme: Theme): Components => {
     MuiFilledInput,
     MuiOutlinedInput,
     MuiFormHelperText,
-  }
-}
+    MuiMenuItem,
+  };
+};

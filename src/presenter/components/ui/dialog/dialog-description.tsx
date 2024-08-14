@@ -1,12 +1,12 @@
-import DialogContentText from '@mui/material/DialogContentText'
-import { ComponentProps } from 'react'
+import { ComponentProps } from "react";
+import DialogContentText from "@mui/material/DialogContentText";
 
 type DialogDescriptionProps = ComponentProps<typeof DialogContentText> & {
-  description: string
-}
+  description: string;
+};
 
 const DialogDescription = ({
-  description,
+  description = "",
   ...rest
 }: DialogDescriptionProps) => (
   <DialogContentText
@@ -17,6 +17,6 @@ const DialogDescription = ({
   >
     {description}
   </DialogContentText>
-)
+);
 
-export default DialogDescription
+export default DialogDescription;

@@ -1,27 +1,30 @@
-import { Dropdown } from '@mui/base/Dropdown'
-import { Menu } from '@mui/base/Menu'
-import DarkModeIcon from '@mui/icons-material/DarkMode'
-import LightModeIcon from '@mui/icons-material/LightMode'
-import { useMenuTheme } from './hook/useMenuTheme'
-import * as S from './menu-theme-styled'
+import { FC } from "react";
+import Brightness7RoundedIcon from "@mui/icons-material/Brightness7Rounded";
+import Brightness4RoundedIcon from "@mui/icons-material/Brightness4Rounded";
+import { useMenuTheme } from "./hook/useMenuTheme";
+import { Dropdown } from "@/presenter/components/ui";
+import { useAppSelector } from "@/main/store/hook/useRedux";
 
-export function MenuTheme() {
-  const { handleThemeChange, themes } = useMenuTheme()
+export const MenuTheme: FC = () => {
+  const { handleChangeTheme, menuTheme } = useMenuTheme();
+  const { theme } = useAppSelector((state) => state.theme);
 
   return (
-    <Dropdown>
-      <S.MenuButton>
-        {themes === 'light' ? <LightModeIcon /> : <DarkModeIcon />}
-      </S.MenuButton>
-      <Menu slots={{ listbox: S.MenuList }}>
-        <S.MenuItem onClick={() => handleThemeChange('light')}>
-          <LightModeIcon /> Light
-        </S.MenuItem>
-        <S.MenuItem onClick={() => handleThemeChange('dark')}>
-          <DarkModeIcon />
-          Dark
-        </S.MenuItem>
-      </Menu>
-    </Dropdown>
-  )
-}
+    <Dropdown.Root>
+      <Dropdown.Button>
+        {theme === "light" ? (
+          <Brightness7RoundedIcon />
+        ) : (
+          <Brightness4RoundedIcon />
+        )}
+      </Dropdown.Button>
+      <Dropdown.List>
+        {menuTheme.map(({ label, value, icon: Icon }) => (
+          <Dropdown.Item key={value} onClick={() => handleChangeTheme(value)}>
+            <Icon /> {label}
+          </Dropdown.Item>
+        ))}
+      </Dropdown.List>
+    </Dropdown.Root>
+  );
+};

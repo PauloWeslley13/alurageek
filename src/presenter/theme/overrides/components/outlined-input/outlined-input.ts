@@ -1,74 +1,76 @@
-import { Theme, alpha } from '@mui/material'
-import { COLORS, FONTS } from '@/presenter/styles'
-import { red } from '@mui/material/colors'
-import { Input } from './types'
+import { alpha, ComponentsOverrides, darken, Theme } from "@mui/material";
+import { blueGrey, grey, red } from "@mui/material/colors";
 
-export const OutlinedInput = (theme: Theme) => ({
+export const MuiOutlinedInput = (theme: Theme) => ({
   MuiOutlinedInput: {
     styleOverrides: {
       root: {
-        boxShadow: `0px 2px 2px ${COLORS.bunker[200]}`,
-        background: COLORS.bunker[50],
-        borderRadius: '1.2rem',
+        background:
+          theme.palette.mode === "light"
+            ? grey[100]
+            : darken(blueGrey[900], 0.1),
+        borderRadius: theme.spacing(2),
 
-        '& fieldset': {
-          borderColor: COLORS.bunker[300],
-
-          borderWidth: '1px',
-          borderRadius: '1.2rem',
-          transition: 'all .2s ease-in-out',
+        "& fieldset": {
+          borderColor:
+            theme.palette.mode === "light" ? grey[100] : blueGrey[900],
+          borderWidth: "1px",
+          borderRadius: theme.spacing(2),
+          transition: "all .2s ease-in-out",
         },
 
-        '&:hover .MuiOutlinedInput-notchedOutline': {
-          borderColor: theme.palette.primary.light,
+        "&:hover .MuiOutlinedInput-notchedOutline": {
+          borderColor: "transparent",
         },
 
-        '& input': {
+        "& input": {
           ...theme.typography.h4,
-          fontSize: FONTS.fontSizes.md,
-          fontWeight: FONTS.fontWeight.semibold,
-          letterSpacing: FONTS.letterSpacings.widest,
-          width: 320,
-          fontFamily: FONTS.fontFamily.OPEN_SANS,
-          color: theme.palette.primary.main,
+          fontWeight: theme.typography.font.semibold,
+          letterSpacing: theme.typography.letterSpacing.widest,
+          fontFamily: theme.typography.font.OPEN_SANS,
+          color: theme.palette.primary.light,
 
-          transition: 'all .3s ease-in-out',
-
-          '&::placeholder': {
-            ...theme.typography.h4,
-            color: theme.palette.primary[700],
-            fontWeight: FONTS.fontWeight.bold,
+          "&::placeholder": {
+            ...theme.typography.h5,
+            color: theme.palette.mode === "light" ? grey[700] : blueGrey[200],
+            fontWeight: theme.typography.font.bold,
           },
 
-          '&:focus-visible': {
+          "&:focus-visible": {
             outline: 0,
-            width: 450,
+          },
+
+          [theme.breakpoints.down("md")]: {
+            width: "100%",
+
+            "&:focus-visible": {
+              width: "inherit",
+            },
           },
         },
 
-        '&.Mui-focused': {
-          '& .MuiOutlinedInput-notchedOutline': {
-            border: `1px solid ${theme.palette.primary[500]}`,
-            boxShadow: `0 0 0 1px ${theme.palette.secondary.A200}`,
+        "&.Mui-focused": {
+          "& .MuiOutlinedInput-notchedOutline": {
+            border: `2px solid ${theme.palette.primary.main}`,
           },
         },
 
-        '&.Mui-error': {
-          '&:hover .MuiOutlinedInput-notchedOutline': {
+        "&.Mui-error": {
+          "&:hover .MuiOutlinedInput-notchedOutline": {
             borderColor: red[800],
           },
 
-          '&.Mui-focused': {
-            '& .MuiOutlinedInput-notchedOutline': {
+          "&.Mui-focused": {
+            "& .MuiOutlinedInput-notchedOutline": {
               borderColor: red[500],
             },
           },
         },
 
-        '&.Mui-disabled': {
+        "&.Mui-disabled": {
           color: alpha(theme.palette.grey[200], 0.3),
         },
       },
-    } satisfies Input.StyleOverridesProps,
+    } satisfies ComponentsOverrides<Theme>["MuiOutlinedInput"],
   },
-})
+});

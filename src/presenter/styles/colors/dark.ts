@@ -1,5 +1,4 @@
-import { deepPurple, indigo } from '@mui/material/colors'
-import { COLORS } from '../index'
+import { blueGrey, indigo } from "@mui/material/colors";
 
 export const DARK = {
   primary: {
@@ -9,13 +8,13 @@ export const DARK = {
     contrastText: indigo.A100,
   },
   secondary: {
-    main: deepPurple[500],
-    light: deepPurple[300],
-    dark: deepPurple[800],
-    contrastText: deepPurple.A100,
+    main: blueGrey[500],
+    light: blueGrey[300],
+    dark: blueGrey[800],
+    contrastText: blueGrey.A100,
   },
   background: {
-    paper: COLORS.bunker[300],
-    default: indigo[50],
+    paper: blueGrey[600],
+    default: blueGrey[900],
   },
-}
+};

@@ -1,54 +1,59 @@
-import { Typography, useTheme } from '@mui/material'
-import Button from '@mui/material/Button'
-import { InputField, SVGLogoIcon } from '../../ui'
-import * as S from './footer-styles'
+import { FC } from "react";
+import Button from "@mui/material/Button";
+import Typography from "@mui/material/Typography";
+import { OutlinedInput } from "@mui/material";
+import { LogoTipo } from "@/presenter/components/ui";
+import * as S from "./styles";
 
-type FooterBarProps = { footerList: string[] }
+const footerList = [
+  "Quem somos",
+  "Política de privacidade",
+  "Programa de lealdade",
+  "Nossas lojas",
+  "Quero ser um franqueado",
+  "Anuncie aqui",
+];
 
-export const FooterContent = ({ footerList }: FooterBarProps) => {
-  const theme = useTheme()
+export const FooterContent: FC = () => (
+  <S.FooterContainer>
+    <S.FooterContent>
+      <div style={{ flex: 1 }}>
+        <LogoTipo />
+      </div>
 
-  return (
-    <S.FooterBody>
-      <S.FooterContent>
-        <div style={{ flex: 1 }}>
-          <SVGLogoIcon />
-        </div>
+      <S.FooterList>
+        <ul>
+          {footerList.map((item, index) => (
+            <li key={index}>{item}</li>
+          ))}
+        </ul>
+      </S.FooterList>
+    </S.FooterContent>
 
-        <S.FooterList sx={{ flex: 1 }}>
-          <ul>
-            {footerList.map((item, index) => (
-              <li key={index}>{item}</li>
-            ))}
-          </ul>
-        </S.FooterList>
-      </S.FooterContent>
+    <S.FooterForm>
+      <Typography
+        component="h4"
+        variant="h3"
+        sx={{ color: (theme) => theme.palette.primary.light }}
+      >
+        Fale Conosco
+      </Typography>
 
-      <S.FooterForm>
-        <Typography
-          component="h4"
-          variant="h3"
-          sx={{ color: theme.palette.primary.dark }}
+      <form>
+        <OutlinedInput size="small" placeholder="Digite seu nome" />
+        <OutlinedInput size="small" placeholder="Digite sua mensagem" />
+
+        <Button
+          variant="primary"
+          sx={{
+            height: (theme) => theme.spacing(11),
+            textTransform: "uppercase",
+            letterSpacing: 1.2,
+          }}
         >
-          Fale Conosco
-        </Typography>
-
-        <form>
-          <InputField label="Nome" placeholder="Informe seu nome" />
-          <InputField label="Mensagem" placeholder="Informe sua mensagem" />
-
-          <Button
-            variant="primary"
-            sx={{
-              height: theme.spacing(11),
-              textTransform: 'uppercase',
-              letterSpacing: 1.2,
-            }}
-          >
-            Enviar mensagem
-          </Button>
-        </form>
-      </S.FooterForm>
-    </S.FooterBody>
-  )
-}
+          Enviar mensagem
+        </Button>
+      </form>
+    </S.FooterForm>
+  </S.FooterContainer>
+);

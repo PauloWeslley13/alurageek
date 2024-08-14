@@ -1,16 +1,16 @@
-import { useTheme } from '@mui/material'
-import Button from '@mui/material/Button'
-import { Alert, InputField } from '@/presenter/components/ui'
-import { useSignUp } from './useSignUp'
+import { FC } from "react";
+import Button from "@mui/material/Button";
+import { Alert, InputField } from "@/presenter/components/ui";
+import { useSignUp } from "./hook";
 
-export const SignUp = () => {
-  const { register, handleSubmit, signUp, errors, alertSignUp } = useSignUp()
-  const theme = useTheme()
+export const SignUp: FC = () => {
+  const { errors, register, handleSubmit, handlerSignUp, isValidInputs } =
+    useSignUp();
 
   return (
-    <form onSubmit={handleSubmit(signUp)} autoComplete="off">
+    <form onSubmit={handleSubmit(handlerSignUp)} autoComplete="off">
       <InputField
-        {...register('username')}
+        {...register("username")}
         type="text"
         label="Username"
         placeholder="Informe o usuário"
@@ -18,7 +18,7 @@ export const SignUp = () => {
         helperText={errors.username?.message}
       />
       <InputField
-        {...register('email')}
+        {...register("email")}
         type="text"
         label="Email"
         placeholder="Informe o usuário"
@@ -26,7 +26,7 @@ export const SignUp = () => {
         helperText={errors.email?.message}
       />
       <InputField
-        {...register('password')}
+        {...register("password")}
         type="password"
         label="Senha"
         placeholder="Informe a senha"
@@ -34,36 +34,28 @@ export const SignUp = () => {
         helperText={errors.password?.message}
       />
       <InputField
-        {...register('photoUrl')}
+        {...register("photoUrl")}
         type="text"
         label="Foto"
         placeholder="Informe a url da foto"
-        error={!!errors.password?.message}
-        helperText={errors.password?.message}
+        error={!!errors.photoUrl?.message}
+        helperText={errors.photoUrl?.message}
       />
 
-      <Button
-        variant="primary"
-        type="submit"
-        onClick={alertSignUp}
-        sx={{
-          width: '100%',
-          height: theme.spacing(12),
-          marginTop: theme.spacing(2),
-          textTransform: 'uppercase',
-          letterSpacing: 1.2,
-        }}
-      >
+      <Button variant="primary" type="submit">
         Cadastrar
       </Button>
 
-      <Alert
-        errors={{
-          email: errors.email?.message,
-          password: errors.password?.message,
-          username: errors.username?.message,
-        }}
-      />
+      {isValidInputs() && (
+        <Alert
+          message="Campos preenchido incorretamente"
+          sx={{
+            width: "100%",
+            display: "flex",
+            justifyContent: "center",
+          }}
+        />
+      )}
     </form>
-  )
-}
+  );
+};
