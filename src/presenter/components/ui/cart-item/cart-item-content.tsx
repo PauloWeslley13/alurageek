@@ -1,13 +1,13 @@
-import { ComponentProps, FC, ReactNode } from "react";
-import { StyledCartItemContent } from "./styles";
+import { ComponentProps, FC, ReactNode } from 'react'
+import { StyledCartItemContent } from './styles'
 
 type CartItemContentProps = ComponentProps<typeof StyledCartItemContent> & {
-  imageURL: string;
-  children?: ReactNode;
-};
+  imageURL: string
+  children?: ReactNode
+}
 
 const CartItemContent: FC<CartItemContentProps> = ({
-  imageURL = "",
+  imageURL = '',
   children,
   ...props
 }) => (
@@ -18,6 +18,6 @@ const CartItemContent: FC<CartItemContentProps> = ({
 
     {children && children}
   </StyledCartItemContent>
-);
+)
 
-export default CartItemContent;
+export default CartItemContent

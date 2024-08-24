@@ -1,19 +1,19 @@
-import { FC } from "react";
-import Stack from "@mui/material/Stack";
-import Button from "@mui/material/Button";
-import Container from "@mui/material/Container";
-import Typography from "@mui/material/Typography";
-import KeyboardArrowLeftIcon from "@mui/icons-material/KeyboardArrowLeft";
-import { useFormatted } from "@/presenter/hooks/useFormatted";
-import { useCart } from "./hook/useCart";
-import { ShopCartItem } from "./shop-cart-item";
-import * as S from "./styles";
-import { CartSubTotal } from "@/presenter/components/ui";
+import { FC } from 'react'
+import Stack from '@mui/material/Stack'
+import Button from '@mui/material/Button'
+import Container from '@mui/material/Container'
+import Typography from '@mui/material/Typography'
+import KeyboardArrowLeftIcon from '@mui/icons-material/KeyboardArrowLeft'
+import { useFormatted } from '@/presenter/hooks/useFormatted'
+import { useCart } from './hook/useCart'
+import { ShopCartItem } from './shop-cart-item'
+import * as S from './styles'
+import { CartSubTotal } from '@/presenter/components/ui'
 
 const Cart: FC = () => {
   const { data, calcTotal, navigate, handleCheckout, handleSavedCart } =
-    useCart();
-  const { formatted } = useFormatted();
+    useCart()
+  const { formatted } = useFormatted()
 
   return (
     <Container maxWidth="xl">
@@ -28,7 +28,7 @@ const Cart: FC = () => {
               variant="secondary"
               startIcon={<KeyboardArrowLeftIcon />}
               onClick={() => navigate(-1)}
-              sx={{ "&.MuiButton-secondary ": { padding: "3px 6px" } }}
+              sx={{ '&.MuiButton-secondary ': { padding: '3px 6px' } }}
             >
               Voltar
             </Button>
@@ -49,8 +49,8 @@ const Cart: FC = () => {
 
             <Stack
               sx={{
-                flexDirection: "column",
-                alignItems: "center",
+                flexDirection: 'column',
+                alignItems: 'center',
                 spacing: 2,
                 marginTop: 6,
               }}
@@ -74,7 +74,7 @@ const Cart: FC = () => {
                     variant="h5"
                     textTransform="capitalize"
                   >
-                    {formatted.priceMask(String(props.price))}
+                    {formatted.priceMask(props.price)}
                   </Typography>
                 </Stack>
               ))}
@@ -90,7 +90,7 @@ const Cart: FC = () => {
               Total
             </Typography>
             <Typography component="span" variant="subtitle1">
-              {formatted.priceMask(String(calcTotal))}
+              {formatted.priceMask(calcTotal)}
             </Typography>
           </CartSubTotal>
 
@@ -100,7 +100,7 @@ const Cart: FC = () => {
         </S.CartItemInfo>
       </S.CartWrapper>
     </Container>
-  );
-};
+  )
+}
 
-export default Cart;
+export default Cart

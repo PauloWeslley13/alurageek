@@ -1,12 +1,12 @@
-import { ToastContainer } from "react-toastify";
-import { RootRoutes } from "@/main/routes";
-import { ThemeCustomization } from "@/presenter/theme";
-import { useApp } from "@/main/hook/useApp";
-import { ScrollTop } from "@/main/config/scroll-top";
-import "react-toastify/dist/ReactToastify.css";
+import { ToastContainer } from 'react-toastify'
+import { RootRoutes } from '@/main/routes'
+import { ThemeCustomization } from '@/presenter/theme'
+import { useApp } from '@/main/hook/useApp'
+import { ScrollTop } from '@/main/config/scroll-top'
+import 'react-toastify/dist/ReactToastify.css'
 
 export function App() {
-  const { loadThemeToastify } = useApp();
+  const { loadThemeToastify } = useApp()
 
   return (
     <ThemeCustomization>
@@ -27,5 +27,5 @@ export function App() {
         theme={loadThemeToastify}
       />
     </ThemeCustomization>
-  );
+  )
 }
