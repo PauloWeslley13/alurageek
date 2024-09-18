@@ -1,7 +1,7 @@
-import { ActionCreatorWithPayload, createAction } from "@reduxjs/toolkit";
-import { IAddAccount } from "@/domain/contracts";
+import { ActionCreatorWithPayload, createAction } from '@reduxjs/toolkit'
+import { IAddAccount } from '@/data/usecases'
 
 export const loadAddAccount: ActionCreatorWithPayload<
   IAddAccount.Params,
   string
-> = createAction<IAddAccount.Params>("addAccount/loadAddAccount");
+> = createAction<IAddAccount.Params>('addAccount/loadAddAccount')

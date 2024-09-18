@@ -1,13 +1,14 @@
-import { RemoteUserLogged } from "@/database/user";
-import { IUserLogged } from "@/domain/contracts";
+import { IUserLogged } from '@/data/usecases'
+import { RemoteUserLogged } from '@/domain/user'
+import { COLLECTION } from '@/infra/services/firebase'
 import {
-  makeRemoteDatabase,
   makeRemoteDatabaseAuthToken,
-} from "@/main/factories/data";
+  makeRemoteFirebaseFindById,
+} from '@/main/factories/data'
 
 export const makeRemoteUserLogged = (): IUserLogged => {
   return new RemoteUserLogged({
-    database: makeRemoteDatabase(),
+    firestore: makeRemoteFirebaseFindById<IUserLogged.Model>(COLLECTION.users),
     authToken: makeRemoteDatabaseAuthToken(),
-  });
-};
+  })
+}

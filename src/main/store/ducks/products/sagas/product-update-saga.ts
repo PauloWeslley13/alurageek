@@ -1,43 +1,55 @@
-import { call, delay, put, takeLatest } from "redux-saga/effects";
-import { PayloadAction } from "@reduxjs/toolkit";
+import { call, delay, put, takeLatest } from 'redux-saga/effects'
+import { PayloadAction } from '@reduxjs/toolkit'
 import {
   isPendingProduct,
   loadProductUpdate,
   onErrorProduct,
+  productService,
   updateProduct,
-} from "@/main/store/ducks/products";
-import { makeRemoteProductUpdate } from "@/main/factories/usecases";
-import { ProductModel } from "@/domain/models";
-import { toasts } from "@/presenter/components/ui";
-import { IProductUpdate } from "@/domain/contracts";
-
-async function makeUpdateProduct(
-  params: IProductUpdate.Params,
-): Promise<ProductModel> {
-  const product = makeRemoteProductUpdate();
-  const response = await product.updatedProduct(params);
-  console.log("Res", response);
-  return response;
-}
+} from '@/main/store/ducks/products'
+import { toasts } from '@/presenter/components/ui'
+import { IProductUpdate } from '@/data/usecases'
 
 function* updateProductSaga({ payload }: PayloadAction<IProductUpdate.Params>) {
-  console.log("payload", payload);
-  yield delay(1000);
-  yield put(isPendingProduct(true));
+  yield delay(1000)
+  yield put(isPendingProduct(true))
 
   try {
-    const product: ProductModel = yield call(makeUpdateProduct, payload);
-    yield put(updateProduct({ product, isLoading: false, error: null }));
+    const { data, error }: IProductUpdate.Model = yield call(
+      productService.put,
+      payload,
+    )
+
+    if (error) {
+      yield put(onErrorProduct({ isLoading: true, error: error.message }))
+      toasts.error({ title: error.message })
+      return
+    }
+
+    if (!data) {
+      yield put(
+        onErrorProduct({
+          isLoading: true,
+          error: 'Error ao atualizar produto',
+        }),
+      )
+      toasts.error({ title: 'Error ao atualizar produto' })
+      return
+    }
+
+    yield put(updateProduct({ product: data }))
+    toasts.success({ title: 'Produto atualizado!' })
   } catch (error: unknown) {
     if (error instanceof TypeError) {
-      yield put(onErrorProduct({ isLoading: true, error: error.message }));
-      return toasts.error({ title: error.message });
+      yield put(onErrorProduct({ isLoading: true, error: error.message }))
+      toasts.error({ title: error.message })
+      return
     }
   } finally {
-    yield put(isPendingProduct(false));
+    yield put(isPendingProduct(false))
   }
 }
 
 export function* updatedProductSaga() {
-  yield takeLatest(loadProductUpdate, updateProductSaga);
+  yield takeLatest(loadProductUpdate, updateProductSaga)
 }

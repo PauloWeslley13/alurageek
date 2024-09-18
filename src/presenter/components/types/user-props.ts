@@ -1,3 +1,3 @@
-import { AccountModel } from "@/domain/models";
+import { AccountModel } from '@/data/models'
 
-export type UserProps = AccountModel;
+export type UserProps = AccountModel

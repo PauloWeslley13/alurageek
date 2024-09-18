@@ -1,31 +1,31 @@
-import { Auth } from "firebase/auth";
-import { FirebaseStorage } from "firebase/storage";
+import { Auth } from 'firebase/auth'
+import { FirebaseStorage } from 'firebase/storage'
 import {
   CollectionReference,
   DocumentData,
   Firestore,
-} from "firebase/firestore";
-import { FirebaseApp } from "firebase/app";
-import { COLLECTIONS } from "@/infra/services/firebase/collections";
+} from 'firebase/firestore'
+import { FirebaseApp } from 'firebase/app'
+import { CollectionsType } from '@/infra/services/firebase/collections'
 
 export namespace IFirebase {
   export type Params = {
-    id: string;
-    path: COLLECTIONS;
-    collections: COLLECTIONS;
-  };
+    id: string
+    path: CollectionsType
+    subCollection: CollectionsType
+  }
 
-  export type CollectionType = CollectionReference<DocumentData, DocumentData>;
+  export type CollectionParams = CollectionReference<DocumentData, DocumentData>
 }
 
 export interface IFirebase {
-  auth(): Auth;
-  getDB(): Firestore;
-  storage(): FirebaseStorage;
-  collection(params: COLLECTIONS): IFirebase.CollectionType;
-  subCollection(params: IFirebase.Params): IFirebase.CollectionType;
+  auth(): Auth
+  getDB(): Firestore
+  storage(): FirebaseStorage
+  collection(params: CollectionsType): IFirebase.CollectionParams
+  subCollection(params: IFirebase.Params): IFirebase.CollectionParams
 }
 
 export interface IFirebaseConfig {
-  initializeApp(): FirebaseApp;
+  initializeApp(): FirebaseApp
 }

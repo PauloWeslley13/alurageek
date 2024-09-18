@@ -1,22 +1,21 @@
-import { ref, uploadBytesResumable } from "firebase/storage";
-import { IFirebase, IUploadFile } from "@/infra/services/firebase";
+import { ref, uploadBytesResumable } from 'firebase/storage'
+import { IFirebase, IUploadFile } from '@/infra/services/firebase'
 
 interface RemoteFirebaseUploadDependencies {
-  database: IFirebase;
+  database: IFirebase
 }
 
 export class RemoteFirebaseUpload implements IUploadFile {
-  private database: IFirebase;
+  private database: IFirebase
 
   constructor(protected dependencies: RemoteFirebaseUploadDependencies) {
-    this.database = dependencies.database;
+    this.database = dependencies.database
   }
 
-  uploadFile({ file }: IUploadFile.Params): IUploadFile.Model {
-    const fileURLRef = `product/${file.name}`;
-    const metadata = { contentType: "image/jpeg" };
-    const storageRef = ref(this.database.storage(), fileURLRef);
+  uploadFile({ file, fileURL }: IUploadFile.Params): IUploadFile.Model {
+    const metadata = { contentType: 'image/jpeg' }
+    const storageRef = ref(this.database.storage(), fileURL)
 
-    return uploadBytesResumable(storageRef, file, metadata);
+    return uploadBytesResumable(storageRef, file, metadata)
   }
 }

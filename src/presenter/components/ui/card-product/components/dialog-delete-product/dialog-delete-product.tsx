@@ -1,14 +1,14 @@
-import { alpha, darken } from "@mui/material/styles";
-import Button from "@mui/material/Button";
-import DeleteIcon from "@mui/icons-material/Delete";
-import IconButton from "@mui/material/IconButton";
-import { ProductModel } from "@/domain/models";
-import { Dialog } from "@/presenter/components/ui";
-import { useDialogProduct } from "./hook";
+import { alpha, darken } from '@mui/material/styles'
+import Button from '@mui/material/Button'
+import DeleteIcon from '@mui/icons-material/Delete'
+import IconButton from '@mui/material/IconButton'
+import { ProductModel } from '@/data/models'
+import { Dialog } from '@/presenter/components/ui'
+import { useDialogProduct } from './hook'
 
 type DialogDeleteProductProps = {
-  product: ProductModel;
-};
+  product: ProductModel
+}
 
 function DialogDeleteProduct({ product }: DialogDeleteProductProps) {
   const {
@@ -16,7 +16,7 @@ function DialogDeleteProduct({ product }: DialogDeleteProductProps) {
     handleOpenDialog,
     handleCloseDialog,
     isDialogProductDeleteOpen,
-  } = useDialogProduct(product);
+  } = useDialogProduct(product)
 
   return (
     <>
@@ -24,7 +24,7 @@ function DialogDeleteProduct({ product }: DialogDeleteProductProps) {
         onClick={handleOpenDialog}
         sx={{
           color: (theme) => theme.palette.primary.main,
-          ":hover": {
+          ':hover': {
             color: (theme) => darken(theme.palette.primary.dark, 0.9),
             background: (theme) =>
               alpha(theme.palette.primary.contrastText, 0.3),
@@ -68,7 +68,7 @@ function DialogDeleteProduct({ product }: DialogDeleteProductProps) {
         </Dialog.Actions>
       </Dialog.Root>
     </>
-  );
+  )
 }
 
-export { DialogDeleteProduct };
+export { DialogDeleteProduct }

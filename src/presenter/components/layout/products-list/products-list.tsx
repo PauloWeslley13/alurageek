@@ -1,27 +1,25 @@
-import { FC, ReactNode } from "react";
-import { Container, Typography } from "@mui/material";
-import { Loader } from "@/presenter/components/ui";
-import { ProductModel } from "@/domain/models";
-import ProductCarousel from "./product-carousel";
-import * as S from "./styles";
+import { FC, ReactNode } from 'react'
+import { Container, Typography } from '@mui/material'
+import { Loader } from '@/presenter/components/ui'
+import { ProductModel } from '@/data/models'
+import ProductCarousel from './product-carousel'
+import * as S from './styles'
 
 type ProductsListProps = {
-  title: string;
-  products: ProductModel[];
-  isLoading: boolean;
-  children?: ReactNode;
-};
+  title: string
+  products: ProductModel[]
+  isLoading: boolean
+  children?: ReactNode
+}
 
 export const ProductsList: FC<ProductsListProps> = ({
-  title = "",
+  title = '',
   isLoading = false,
   products = [],
   children,
 }) => {
   if (isLoading) {
-    return (
-      <Loader.Content message="Carregando produtos" sx={{ height: 250 }} />
-    );
+    return <Loader.Content message="Carregando produtos" sx={{ height: 250 }} />
   }
 
   return (
@@ -39,7 +37,7 @@ export const ProductsList: FC<ProductsListProps> = ({
           <Typography
             component="h3"
             variant="h2"
-            sx={{ mt: 3, textAlign: "center" }}
+            sx={{ mt: 3, textAlign: 'center' }}
           >
             Produto indisponível
           </Typography>
@@ -50,5 +48,5 @@ export const ProductsList: FC<ProductsListProps> = ({
         )}
       </S.ProductListContainer>
     </Container>
-  );
-};
+  )
+}

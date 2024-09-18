@@ -1,56 +1,73 @@
-import { call, delay, put, select, takeLatest } from "redux-saga/effects";
-import { PayloadAction } from "@reduxjs/toolkit";
+import { call, delay, put, select, takeLatest } from 'redux-saga/effects'
+import { PayloadAction } from '@reduxjs/toolkit'
 import {
+  categoryServices,
   createCategory,
   isPendingCategory,
   loadCreateCategory,
   onErrorCategory,
-} from "@/main/store/ducks/category";
-import { makeRemoteCategoryCreate } from "@/main/factories/usecases";
-import { CategoryModel } from "@/domain/models";
-import { toasts } from "@/presenter/components/ui";
-import { RootState } from "@/main/store/types/types";
-import { ICategoryCreate } from "@/domain/contracts";
+} from '@/main/store/ducks/category'
+import { toasts } from '@/presenter/components/ui'
+import { RootState } from '@/main/store/types/types'
+import { ICategoryCreate } from '@/data/usecases'
+import { openSnackbar } from '@/main/store/ducks/snackbar'
 
-async function makeAddCategory(
-  params: ICategoryCreate.Params,
-): Promise<CategoryModel> {
-  const resp = makeRemoteCategoryCreate();
-  const data = await resp.createCategory(params);
-  return data;
-}
-
-function* createdCategory({ payload }: PayloadAction<ICategoryCreate.Params>) {
-  yield delay(1000);
+function* createdCategorySaga({
+  payload,
+}: PayloadAction<ICategoryCreate.Params>) {
+  yield put(isPendingCategory(true))
   const {
     categories: { categories },
-  }: RootState = yield select();
-  yield put(isPendingCategory(true));
+  }: RootState = yield select()
 
   try {
+    yield delay(1000)
     const hasExistsCategory =
       categories.length > 0 &&
-      categories.some((prod) => prod.name === payload.body.name);
+      categories.some((prod) => prod.name === payload.name)
 
     if (hasExistsCategory) {
       yield put(
-        onErrorCategory({ isLoading: false, error: "Categoria já cadastrada" }),
-      );
-      return toasts.error({ title: "Categoria já cadastrada" });
+        onErrorCategory({ isLoading: false, error: 'Categoria já cadastrada' }),
+      )
+      toasts.error({ title: 'Categoria já cadastrada' })
+      return
     }
 
-    const category: CategoryModel = yield call(makeAddCategory, payload);
-    yield put(createCategory({ category, isLoading: false, error: null }));
+    const { data, error }: ICategoryCreate.Model = yield call(
+      categoryServices.post,
+      payload,
+    )
+
+    if (error) {
+      yield put(onErrorCategory({ isLoading: false, error: error.message }))
+      toasts.error({ title: error.message })
+      return
+    }
+
+    if (!data) {
+      yield put(
+        onErrorCategory({
+          isLoading: false,
+          error: 'Erro ao cadastrar categoria',
+        }),
+      )
+      toasts.error({ title: 'Erro ao cadastrar categoria' })
+      return
+    }
+
+    yield put(openSnackbar(true))
+    yield put(createCategory({ category: data }))
   } catch (error: unknown) {
     if (error instanceof TypeError) {
-      yield put(onErrorCategory({ isLoading: false, error: error.message }));
-      return toasts.error({ title: error.message });
+      yield put(onErrorCategory({ isLoading: false, error: error.message }))
+      return toasts.error({ title: error.message })
     }
   } finally {
-    yield put(isPendingCategory(false));
+    yield put(isPendingCategory(false))
   }
 }
 
 export function* addCategorySaga() {
-  yield takeLatest(loadCreateCategory, createdCategory);
+  yield takeLatest(loadCreateCategory, createdCategorySaga)
 }

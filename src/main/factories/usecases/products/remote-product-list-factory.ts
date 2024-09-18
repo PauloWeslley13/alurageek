@@ -1,7 +1,7 @@
-import { RemoteProductList } from "@/database/product";
-import { IProductList } from "@/domain/contracts";
-import { makeRemoteDatabase } from "@/main/factories/data";
+import { RemoteProductList } from '@/domain/product'
+import { IProductList } from '@/data/usecases'
+import { makeRemoteDatabase } from '@/main/factories/data'
 
 export const makeRemoteProductList = (): IProductList => {
-  return new RemoteProductList({ database: makeRemoteDatabase() });
-};
+  return new RemoteProductList({ database: makeRemoteDatabase() })
+}

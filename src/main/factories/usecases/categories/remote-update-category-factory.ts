@@ -1,16 +1,11 @@
-import { RemoteCategoryUpdate } from "@/database/category";
-import { ICategoryUpdate } from "@/domain/contracts";
-import { COLLECTIONS } from "@/infra/services/firebase";
-import {
-  makeRemoteDatabase,
-  makeRemoteFirebaseUpdate,
-} from "@/main/factories/data";
+import { RemoteCategoryUpdate } from '@/domain/category'
+import { ICategoryUpdate } from '@/data/usecases'
+import { COLLECTION } from '@/infra/services/firebase'
+import { makeRemoteDatabase } from '@/main/factories/data'
 
 export const makeRemoteCategoryUpdated = (): ICategoryUpdate => {
-  const firestore = makeRemoteFirebaseUpdate<
-    ICategoryUpdate.Params,
-    ICategoryUpdate.Model
-  >(makeRemoteDatabase(), COLLECTIONS.CATEGORIES);
-
-  return new RemoteCategoryUpdate({ firestore });
-};
+  return new RemoteCategoryUpdate({
+    database: makeRemoteDatabase(),
+    collection: COLLECTION.categories,
+  })
+}

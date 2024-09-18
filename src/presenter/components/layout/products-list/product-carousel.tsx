@@ -1,19 +1,19 @@
-import { FC, memo } from "react";
-import { Stack } from "@mui/material";
+import { FC, memo } from 'react'
+import { Stack } from '@mui/material'
 import {
   CardProduct,
   Slide,
   SliderCarousel,
   SliderProps,
-} from "@/presenter/components/ui";
-import { ProductModel } from "@/domain/models";
+} from '@/presenter/components/ui'
+import { ProductModel } from '@/data/models'
 
 interface ProductCarouselProps {
-  product: ProductModel[];
+  product: ProductModel[]
 }
 
 const ProductCarousel: FC<ProductCarouselProps> = ({ product }) => {
-  const loadProd = [...product, ...product, ...product, ...product, ...product];
+  const loadProd = [...product, ...product, ...product, ...product, ...product]
 
   const settings: SliderProps = {
     spaceBetween: 10,
@@ -47,20 +47,20 @@ const ProductCarousel: FC<ProductCarouselProps> = ({ product }) => {
         slidesPerGroup: product.length < 3 ? product.length : 3,
       },
     },
-  };
+  }
 
   if (product.length === 1) {
     return (
       <Stack
         sx={{
-          flexDirection: "row",
-          alignItems: "center",
-          justifyContent: "center",
+          flexDirection: 'row',
+          alignItems: 'center',
+          justifyContent: 'center',
         }}
       >
         <CardProduct card={product[0]} />
       </Stack>
-    );
+    )
   }
 
   return (
@@ -71,7 +71,7 @@ const ProductCarousel: FC<ProductCarouselProps> = ({ product }) => {
         </Slide>
       ))}
     </SliderCarousel>
-  );
-};
+  )
+}
 
-export default memo(ProductCarousel);
+export default memo(ProductCarousel)

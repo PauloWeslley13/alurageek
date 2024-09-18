@@ -1,51 +1,70 @@
-import { call, delay, put, takeLatest } from "redux-saga/effects";
-import { PayloadAction } from "@reduxjs/toolkit";
-import { loadAddAccount } from "@/main/store/ducks/add-account";
-import { authFailure, authPending, authSuccess } from "@/main/store/ducks/auth";
-import { makeRemoteAddAccount } from "@/main/factories/usecases";
-import { FirebaseErrors } from "@/database/errors";
-import { AccountModel } from "@/domain/models";
-import { toasts } from "@/presenter/components/ui";
-import { IAddAccount } from "@/domain/contracts";
+import { call, delay, put, takeLatest } from 'redux-saga/effects'
+import { PayloadAction } from '@reduxjs/toolkit'
+import { FirebaseError } from 'firebase/app'
+import {
+  addAccountService,
+  loadAddAccount,
+} from '@/main/store/ducks/add-account'
+import { authFailure, authPending, authSuccess } from '@/main/store/ducks/auth'
+import { toasts } from '@/presenter/components/ui'
+import { IAddAccount, IUserCreate } from '@/data/usecases'
+import { makeRemoteErrorMessage } from '@/main/factories/error'
 
-async function addUser(params: IAddAccount.Params): Promise<IAddAccount.Model> {
-  const user = makeRemoteAddAccount();
-  const response = await user.register(params);
-  return response;
-}
+function* createAccountSaga({ payload }: PayloadAction<IAddAccount.Params>) {
+  yield put(authPending(true))
 
-function hasValidErroAddAccount(auth: IAddAccount.Model) {
-  const credentialError = auth instanceof FirebaseErrors.InvalidCredentialError;
-  const requestError = auth instanceof FirebaseErrors.TooManyRequestsError;
-  const unexpectedError = auth instanceof FirebaseErrors.UnexpectedError;
-
-  return credentialError || requestError || unexpectedError;
-}
-
-function* addAccount({ payload }: PayloadAction<IAddAccount.Params>) {
-  yield put(authPending(true));
   try {
-    yield delay(1000);
-    const auth: IAddAccount.Model = yield call(addUser, payload);
-    const hasError = hasValidErroAddAccount(auth);
-    const user = auth as AccountModel;
+    yield delay(1000)
+    const credential: IAddAccount.Model = yield call(
+      addAccountService.addAccount,
+      payload,
+    )
 
-    if (hasError) {
-      yield put(authFailure({ error: auth.message, isLoading: true }));
-      return toasts.error({ title: auth.message });
-    } else {
-      yield put(authSuccess({ user, error: null }));
-      return toasts.success({ title: "Usuário autenticado" });
+    const user: IUserCreate.Model = yield call(addAccountService.createUser, {
+      credential: credential.data,
+      username: payload.username,
+      photoUrl: payload.photoUrl,
+    })
+
+    const hasErrorAccount = makeRemoteErrorMessage(credential.error?.code)
+    const hasErrorUser = makeRemoteErrorMessage(
+      user.error instanceof FirebaseError ? user.error.code : undefined,
+    )
+
+    if (hasErrorAccount) {
+      yield put(
+        authFailure({ error: hasErrorAccount.message, isLoading: true }),
+      )
+      toasts.error({ title: hasErrorAccount.message })
+      return
     }
+
+    if (hasErrorUser) {
+      yield put(authFailure({ error: hasErrorUser.message, isLoading: true }))
+      toasts.error({ title: hasErrorUser.message })
+      return
+    }
+
+    if (!user.data) {
+      yield put(
+        authFailure({ error: 'Error ao cadastrar usuário', isLoading: true }),
+      )
+      toasts.error({ title: 'Error ao cadastrar usuário' })
+      return
+    }
+
+    yield put(authSuccess({ user: user.data, error: null }))
+    toasts.success({ title: 'Usuário autenticado' })
   } catch (error: unknown) {
     if (error instanceof TypeError) {
-      return toasts.error({ title: error.message });
+      yield put(authFailure({ error: error.message, isLoading: true }))
+      toasts.error({ title: error.message })
     }
   } finally {
-    yield put(authPending(false));
+    yield put(authPending(false))
   }
 }
 
 export function* addAccountSaga() {
-  yield takeLatest(loadAddAccount, addAccount);
+  yield takeLatest(loadAddAccount, createAccountSaga)
 }

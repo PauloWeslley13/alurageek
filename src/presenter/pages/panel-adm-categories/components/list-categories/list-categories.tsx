@@ -1,27 +1,27 @@
-import Stack from "@mui/material/Stack";
-import Typography from "@mui/material/Typography";
-import Skeleton from "@mui/material/Skeleton";
-import Table from "@mui/material/Table";
-import TableBody from "@mui/material/TableBody";
-import TableContainer from "@mui/material/TableContainer";
-import TableHead from "@mui/material/TableHead";
-import TableRow from "@mui/material/TableRow";
-import TableCell from "@mui/material/TableCell";
-import Paper from "@mui/material/Paper";
-import { useCategoryList } from "@/presenter/hooks/useCategoryList";
-import { ListCategoryItem } from "./list-category-item";
+import Stack from '@mui/material/Stack'
+import Typography from '@mui/material/Typography'
+import Skeleton from '@mui/material/Skeleton'
+import Table from '@mui/material/Table'
+import TableBody from '@mui/material/TableBody'
+import TableContainer from '@mui/material/TableContainer'
+import TableHead from '@mui/material/TableHead'
+import TableRow from '@mui/material/TableRow'
+import TableCell from '@mui/material/TableCell'
+import Paper from '@mui/material/Paper'
+import { useCategoryList } from '@/presenter/hooks/useCategoryList'
+import { ListCategoryItem } from './list-category-item'
 
 function ListCategories() {
-  const { categories, isLoading } = useCategoryList();
+  const { categories, isLoading } = useCategoryList()
 
   if (isLoading) {
     return (
-      <Stack sx={{ width: "100%", justifyContent: "center", mt: 5 }}>
+      <Stack sx={{ width: '100%', justifyContent: 'center', mt: 5 }}>
         <Skeleton />
         <Skeleton animation="wave" />
         <Skeleton animation={false} />
       </Stack>
-    );
+    )
   }
 
   return (
@@ -29,7 +29,7 @@ function ListCategories() {
       component={Paper}
       elevation={0}
       sx={{
-        mt: 5,
+        marginTop: 5,
         bgcolor: (theme) => theme.palette.background.default,
         borderRadius: (theme) => theme.spacing(2),
       }}
@@ -52,7 +52,7 @@ function ListCategories() {
             <TableRow
               key={category.id}
               sx={{
-                "&:last-child td, &:last-child th": { border: 0 },
+                '&:last-child td, &:last-child th': { border: 0 },
               }}
             >
               <TableCell
@@ -67,7 +67,7 @@ function ListCategories() {
         </TableBody>
       </Table>
     </TableContainer>
-  );
+  )
 }
 
-export { ListCategories };
+export { ListCategories }

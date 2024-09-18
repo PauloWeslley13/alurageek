@@ -1,3 +1,3 @@
 export interface IFirebaseAuthToken {
-  getFirebaseAuthToken(): Promise<string>;
+  getFirebaseAuthToken(): Promise<string>
 }

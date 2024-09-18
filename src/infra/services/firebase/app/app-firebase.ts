@@ -1,4 +1,4 @@
-import RemoteFirebaseApp from "./usecases/remote-firebase-app";
+import RemoteFirebaseApp from './usecases/remote-firebase-app'
 
 // Initialize Firebase
 export const initApp = new RemoteFirebaseApp({
@@ -9,4 +9,4 @@ export const initApp = new RemoteFirebaseApp({
   messagingSenderId: import.meta.env.VITE_MESSAGING_SENDER_ID,
   appId: import.meta.env.VITE_APP_ID,
   measurementId: import.meta.env.VITE_MEASUREMENT_ID,
-});
+})

@@ -1,13 +1,14 @@
-import { UploadTask } from "firebase/storage";
+import { UploadTask } from 'firebase/storage'
 
 export namespace IUploadFile {
   export type Params = {
-    file: File;
-  };
+    file: File
+    fileURL: string
+  }
 
-  export type Model = UploadTask;
+  export type Model = UploadTask
 }
 
 export interface IUploadFile {
-  uploadFile(params: IUploadFile.Params): IUploadFile.Model;
+  uploadFile(params: IUploadFile.Params): IUploadFile.Model
 }

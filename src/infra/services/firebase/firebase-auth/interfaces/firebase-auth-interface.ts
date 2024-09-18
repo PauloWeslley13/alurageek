@@ -1,13 +1,13 @@
-import { FirebaseError } from "firebase/app";
+import { FirebaseError } from 'firebase/app'
 
 export namespace IFirebaseAuth {
   export type Params = {
-    email: string;
-    password: string;
-  };
+    email: string
+    password: string
+  }
 
   export type Model<T> = {
-    userCredential: T | null;
-    error: FirebaseError | null;
-  };
+    userCredential: T | null
+    error: FirebaseError | null
+  }
 }

@@ -1,4 +1,5 @@
-export * from "./sagas";
-export * from "./types";
-export * from "./reducers";
-export * from "./actions/category.actions";
+export * from './sagas'
+export type * from './types/category-reducer-type'
+export * from './reducers/category.reducer'
+export * from './actions/category.actions'
+export * from './services/categories.services'

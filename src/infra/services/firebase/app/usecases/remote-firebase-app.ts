@@ -1,9 +1,9 @@
-import { FirebaseApp, initializeApp } from "firebase/app";
-import { IFirebaseApp } from "@/infra/services/firebase";
+import { FirebaseApp, initializeApp } from 'firebase/app'
+import { IFirebaseApp } from '@/infra/services/firebase'
 
 export default class RemoteFirebaseApp implements IFirebaseApp {
   constructor(private params: IFirebaseApp.Params) {
-    this.initializeApp();
+    this.initializeApp()
   }
 
   initializeApp(): FirebaseApp {
@@ -15,7 +15,7 @@ export default class RemoteFirebaseApp implements IFirebaseApp {
       messagingSenderId: this.params.messagingSenderId,
       appId: this.params.appId,
       measurementId: this.params.measurementId,
-    });
-    return app;
+    })
+    return app
   }
 }

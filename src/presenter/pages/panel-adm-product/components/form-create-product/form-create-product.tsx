@@ -1,11 +1,9 @@
-import { Button, MenuItem, TextField } from "@mui/material";
-import { Controller } from "react-hook-form";
-import { InputField } from "@/presenter/components/ui";
-import { useCreateProduct } from "./hook";
-import { useCategoryList } from "@/presenter/hooks/useCategoryList";
+import { Button, MenuItem, TextField } from '@mui/material'
+import { Controller } from 'react-hook-form'
+import { InputField } from '@/presenter/components/ui'
+import { useCreateProduct } from './hook'
 
 export const FormCreateProduct = () => {
-  const { categories } = useCategoryList();
   const {
     errors,
     control,
@@ -13,12 +11,13 @@ export const FormCreateProduct = () => {
     handleSubmit,
     handlerCreatedProduct,
     handleFormattedPrice,
-  } = useCreateProduct();
+    categories,
+  } = useCreateProduct()
 
   return (
     <form onSubmit={handleSubmit(handlerCreatedProduct)}>
       <InputField
-        {...register("name")}
+        {...register('name')}
         type="text"
         label="Nome"
         placeholder="Informe a nome do produto"
@@ -26,7 +25,7 @@ export const FormCreateProduct = () => {
         helperText={errors.name?.message}
       />
       <InputField
-        {...register("price")}
+        {...register('price')}
         type="text"
         label="Preço"
         onBlur={(e) => handleFormattedPrice(e)}
@@ -35,7 +34,7 @@ export const FormCreateProduct = () => {
         helperText={errors.price?.message}
       />
       <InputField
-        {...register("description")}
+        {...register('description')}
         id="description"
         type="text"
         label="Descrição"
@@ -72,5 +71,5 @@ export const FormCreateProduct = () => {
         Cadastrar
       </Button>
     </form>
-  );
-};
+  )
+}

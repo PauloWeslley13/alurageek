@@ -1,58 +1,73 @@
-import { call, delay, put, takeLatest } from "redux-saga/effects";
-import { PayloadAction } from "@reduxjs/toolkit";
-import { makeRemoteAuthentication } from "@/main/factories/usecases";
-import { FirebaseErrors } from "@/database/errors";
-import { AccountModel } from "@/domain/models";
-import { toasts } from "@/presenter/components/ui";
-import { IAuthentication } from "@/domain/contracts";
-import { IFirebaseAuth } from "@/infra/services/firebase";
+import { call, delay, put, takeLatest } from 'redux-saga/effects'
+import { PayloadAction } from '@reduxjs/toolkit'
+import { toasts } from '@/presenter/components/ui'
+import { IAuthentication } from '@/data/usecases'
+import { IFirebaseAuth } from '@/infra/services/firebase'
 import {
   authFailure,
   authPending,
+  authService,
   authSuccess,
   loadAuth,
-} from "@/main/store/ducks/auth";
+  logout,
+  logOut,
+} from '@/main/store/ducks/auth'
+import { makeRemoteErrorMessage } from '@/main/factories/error'
+import {
+  removeCurrentUserAdapter,
+  setCurrentUserAdapter,
+} from '@/main/adapters'
 
-async function handlerAuth(
-  params: IFirebaseAuth.Params,
-): Promise<IAuthentication.Model> {
-  const login = makeRemoteAuthentication();
-  const response = await login.authentication(params);
-  return response;
-}
+function* authenticationSaga({ payload }: PayloadAction<IFirebaseAuth.Params>) {
+  yield put(authPending(true))
 
-function hasValidErroAuth(auth: IAuthentication.Model) {
-  const credentialError = auth instanceof FirebaseErrors.InvalidCredentialError;
-  const requestError = auth instanceof FirebaseErrors.TooManyRequestsError;
-  const unexpectedError = auth instanceof FirebaseErrors.UnexpectedError;
-
-  return credentialError || requestError || unexpectedError;
-}
-
-function* authentication({ payload }: PayloadAction<IFirebaseAuth.Params>) {
-  yield put(authPending(true));
   try {
-    yield delay(1000);
-    const auth: IAuthentication.Model = yield call(handlerAuth, payload);
-    const hasError = hasValidErroAuth(auth);
-    const user = auth as AccountModel;
+    yield delay(1000)
+    const { data, error }: IAuthentication.Model = yield call(
+      authService.signIn,
+      payload,
+    )
+    const hasError = makeRemoteErrorMessage(error?.code)
 
     if (hasError) {
-      yield put(authFailure({ error: auth.message, isLoading: true }));
-      return toasts.error({ title: auth.message });
-    } else {
-      yield put(authSuccess({ user, error: null }));
-      return toasts.success({ title: "Usuário autenticado" });
+      yield put(authFailure({ error: hasError.message, isLoading: true }))
+      toasts.error({ title: hasError.message })
+      return
     }
+
+    yield put(authSuccess({ user: data }))
+    setCurrentUserAdapter(data)
+    toasts.success({ title: 'Usuário autenticado' })
   } catch (error: unknown) {
     if (error instanceof TypeError) {
-      return toasts.error({ title: error.message });
+      toasts.error({ title: error.message })
+      return
     }
   } finally {
-    yield put(authPending(false));
+    yield put(authPending(false))
+  }
+}
+
+function* logOutSaga() {
+  yield put(authPending(true))
+
+  try {
+    yield delay(1000)
+    yield call(authService.logOut)
+
+    yield put(logout())
+    removeCurrentUserAdapter()
+  } catch (error: unknown) {
+    if (error instanceof TypeError) {
+      toasts.error({ title: error.message })
+      return
+    }
+  } finally {
+    yield put(authPending(false))
   }
 }
 
 export function* authSaga() {
-  yield takeLatest(loadAuth, authentication);
+  yield takeLatest(loadAuth, authenticationSaga)
+  yield takeLatest(logOut, logOutSaga)
 }

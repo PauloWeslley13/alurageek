@@ -1,21 +1,21 @@
-import { useMemo } from "react";
-import { CategoryModel } from "@/domain/models";
-import { useAppSelector } from "@/main/store/hook/useRedux";
+import { useMemo } from 'react'
+import { CategoryModel } from '@/data/models'
+import { useAppSelector } from '@/main/store/hook/useRedux'
 
 type UseCategoryListItemProps = {
-  category: CategoryModel;
-};
+  category: CategoryModel
+}
 
 export function useCategoryListItem({ category }: UseCategoryListItemProps) {
-  const { categories } = useAppSelector((state) => state.categories);
+  const { categories } = useAppSelector((state) => state.categories)
 
   const { hasCategoryItem } = useMemo(() => {
     const hasCategoryItem =
       categories.length > 0 &&
-      categories.some((props) => props.id === category.id);
+      categories.some((props) => props.id === category.id)
 
-    return { hasCategoryItem };
-  }, [categories, category.id]);
+    return { hasCategoryItem }
+  }, [categories, category.id])
 
-  return { hasCategoryItem };
+  return { hasCategoryItem }
 }

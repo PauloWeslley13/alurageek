@@ -1,22 +1,22 @@
-import { alpha, darken } from "@mui/material";
-import IconButton from "@mui/material/IconButton";
-import BorderColorIcon from "@mui/icons-material/BorderColor";
-import CloseIcon from "@mui/icons-material/Close";
-import { Dialog } from "@/presenter/components/ui";
-import { ProductModel } from "@/domain/models";
-import { useDialogEditProduct } from "./hook";
-import { FormEditProduct } from "./form-edit-product";
+import { alpha, darken } from '@mui/material'
+import IconButton from '@mui/material/IconButton'
+import BorderColorIcon from '@mui/icons-material/BorderColor'
+import CloseIcon from '@mui/icons-material/Close'
+import { Dialog } from '@/presenter/components/ui'
+import { ProductModel } from '@/data/models'
+import { useDialogEditProduct } from './hook'
+import { FormEditProduct } from './form-edit-product'
 
 type DialogEditProductProps = {
-  product: ProductModel;
-};
+  product: ProductModel
+}
 
 export function DialogEditProduct({ product }: DialogEditProductProps) {
   const {
     isDialogProductUpdateOpen,
     handleOpenDialogProductUpdate,
     handleCloseDialogProductUpdate,
-  } = useDialogEditProduct();
+  } = useDialogEditProduct()
 
   return (
     <>
@@ -24,10 +24,10 @@ export function DialogEditProduct({ product }: DialogEditProductProps) {
         onClick={handleOpenDialogProductUpdate}
         sx={{
           color: (theme) => theme.palette.primary.main,
-          ":hover": {
+          ':hover': {
             color: (theme) => darken(theme.palette.primary.dark, 0.9),
             background: (theme) => {
-              return alpha(theme.palette.primary.contrastText, 0.3);
+              return alpha(theme.palette.primary.contrastText, 0.3)
             },
           },
         }}
@@ -50,9 +50,9 @@ export function DialogEditProduct({ product }: DialogEditProductProps) {
         <Dialog.Content
           sx={{
             width: 500,
-            "& > form": {
-              display: "flex",
-              flexDirection: "column",
+            '& > form': {
+              display: 'flex',
+              flexDirection: 'column',
               gap: (theme) => theme.spacing(2),
             },
           }}
@@ -64,5 +64,5 @@ export function DialogEditProduct({ product }: DialogEditProductProps) {
         </Dialog.Content>
       </Dialog.Root>
     </>
-  );
+  )
 }

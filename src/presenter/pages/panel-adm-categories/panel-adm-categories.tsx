@@ -1,4 +1,4 @@
-import { FormCreateCategory, ListCategories } from "./components";
+import { FormCreateCategory, ListCategories } from './components'
 
 function PanelAdmCategory() {
   return (
@@ -7,7 +7,7 @@ function PanelAdmCategory() {
 
       <ListCategories />
     </div>
-  );
+  )
 }
 
-export default PanelAdmCategory;
+export default PanelAdmCategory

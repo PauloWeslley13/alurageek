@@ -1,9 +1,9 @@
-import { Format } from "@/domain/format";
+import { Format } from '@/validation/format'
 
-const makeFormat = (): Format => new Format();
+const makeFormat = (): Format => new Format()
 
 export function useFormatted() {
-  const formatted = makeFormat();
+  const formatted = makeFormat()
 
-  return { formatted };
+  return { formatted }
 }

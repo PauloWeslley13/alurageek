@@ -1,24 +1,24 @@
-import { Button } from "@mui/material";
+import { Button } from '@mui/material'
 // import InputLabel from '@mui/material/InputLabel'
 // import MenuItem from '@mui/material/MenuItem'
 // import FormControl from '@mui/material/FormControl'
 // import Select from '@mui/material/Select'
-import { Controller } from "react-hook-form";
-import { ProductModel } from "@/domain/models";
-import { InputField, Select } from "@/presenter/components/ui";
-import { useFormEditProduct } from "./hook";
-import { useCategoryList } from "@/presenter/hooks/useCategoryList";
+import { Controller } from 'react-hook-form'
+import { ProductModel } from '@/data/models'
+import { InputField, Select } from '@/presenter/components/ui'
+import { useFormEditProduct } from './hook'
+import { useCategoryList } from '@/presenter/hooks/useCategoryList'
 
 type FormEditProductProps = {
-  product: ProductModel;
-  onCloseDialog: () => void;
-};
+  product: ProductModel
+  onCloseDialog: () => void
+}
 
 export function FormEditProduct({
   product,
   onCloseDialog,
 }: FormEditProductProps) {
-  const { categories } = useCategoryList();
+  const { categories } = useCategoryList()
   const {
     errors,
     control,
@@ -26,18 +26,22 @@ export function FormEditProduct({
     handleSubmit,
     handleUpdatedProduct,
     handleFormattedPrice,
-  } = useFormEditProduct({ product });
+  } = useFormEditProduct({ product })
 
   return (
-    <form onSubmit={handleSubmit(handleUpdatedProduct)}>
+    <form
+      onSubmit={handleSubmit((data) =>
+        handleUpdatedProduct(data, onCloseDialog),
+      )}
+    >
       <InputField
-        {...register("imageUrl")}
+        {...register('imageUrl')}
         type="text"
         label="ImageUrl"
         placeholder="Informe a categoria"
       />
       <InputField
-        {...register("name")}
+        {...register('name')}
         type="text"
         label="Nome do produto"
         placeholder="Informe o nome do produto"
@@ -45,7 +49,7 @@ export function FormEditProduct({
         helperText={errors.name?.message}
       />
       <InputField
-        {...register("price")}
+        {...register('price')}
         type="text"
         label="Preço do produto"
         onBlur={(e) => handleFormattedPrice(e)}
@@ -54,7 +58,7 @@ export function FormEditProduct({
         helperText={errors.price?.message}
       />
       <InputField
-        {...register("description")}
+        {...register('description')}
         type="text"
         label="Descrição do produto"
         placeholder="Informe a descrição do produto"
@@ -75,16 +79,15 @@ export function FormEditProduct({
               error={!!errors.categoryId?.message}
               helperText={errors.categoryId?.message}
             />
-          );
+          )
         }}
       />
 
       <Button
         type="submit"
         variant="primary"
-        onClick={onCloseDialog}
         sx={{
-          alignSelf: "center",
+          alignSelf: 'center',
           width: (theme) => theme.spacing(40),
           height: (theme) => theme.spacing(12),
         }}
@@ -92,5 +95,5 @@ export function FormEditProduct({
         Atualizar
       </Button>
     </form>
-  );
+  )
 }

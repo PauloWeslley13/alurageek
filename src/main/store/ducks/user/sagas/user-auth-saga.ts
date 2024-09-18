@@ -1,31 +1,32 @@
-import { call, put, takeLatest } from "redux-saga/effects";
-import { PayloadAction } from "@reduxjs/toolkit";
-import { loadUser } from "@/main/store/ducks/user";
-import { authSuccess } from "@/main/store/ducks/auth";
-import { makeRemoteUserLogged } from "@/main/factories/usecases";
-import { AccountModel } from "@/domain/models";
-import { toasts } from "@/presenter/components/ui";
-import { IUserLogged } from "@/domain/contracts";
+import { call, delay, put, takeLatest } from 'redux-saga/effects'
+import { PayloadAction } from '@reduxjs/toolkit'
+import { loadUser, userServices } from '@/main/store/ducks/user'
+import { authPending, authSuccess } from '@/main/store/ducks/auth'
+import { AccountModel } from '@/data/models'
+import { toasts } from '@/presenter/components/ui'
+import { IUserLogged } from '@/data/usecases'
 
-async function loadUserAuth({
-  userId,
-}: IUserLogged.Params): Promise<AccountModel> {
-  const user = makeRemoteUserLogged();
-  const response = await user.getUserLogged({ userId });
-  return { ...response };
-}
+function* userAuthenticatedSaga({
+  payload,
+}: PayloadAction<IUserLogged.Params>) {
+  yield put(authPending(true))
 
-function* getUserAuth({ payload }: PayloadAction<IUserLogged.Params>) {
   try {
-    const user: AccountModel = yield call(loadUserAuth, payload);
-    yield put(authSuccess({ user, error: null }));
+    yield delay(100)
+    const user: AccountModel = yield call(
+      userServices.userAuthenticated,
+      payload,
+    )
+    yield put(authSuccess({ user }))
   } catch (error: unknown) {
     if (error instanceof TypeError) {
-      return toasts.error({ title: error.message });
+      toasts.error({ title: error.message })
     }
+  } finally {
+    yield put(authPending(false))
   }
 }
 
 export function* userAuthSaga() {
-  yield takeLatest(loadUser, getUserAuth);
+  yield takeLatest(loadUser, userAuthenticatedSaga)
 }

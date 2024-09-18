@@ -1,21 +1,18 @@
-import { useNavigate } from "react-router-dom";
-import { useAppDispatch } from "@/main/store/hook/useRedux";
-import { logout } from "@/main/store/ducks/auth";
-import { makeRemoteDatabaseAuthSignOut } from "@/main/factories/data";
+import { useNavigate } from 'react-router-dom'
+import { useAppDispatch } from '@/main/store/hook/useRedux'
+import { logOut } from '@/main/store/ducks/auth'
 
 export function useMenuProfile() {
-  const dispatch = useAppDispatch();
-  const navigate = useNavigate();
+  const dispatch = useAppDispatch()
+  const navigate = useNavigate()
 
   function handlerNavPainel() {
-    navigate("/panel-adm");
+    navigate('/panel-adm')
   }
 
-  async function handlerLogout() {
-    const auth = makeRemoteDatabaseAuthSignOut();
-    await auth.signOut();
-    dispatch(logout());
+  function handlerLogout() {
+    dispatch(logOut())
   }
 
-  return { handlerNavPainel, handlerLogout };
+  return { handlerNavPainel, handlerLogout }
 }

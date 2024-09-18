@@ -1,3 +1,3 @@
 export interface IFirebaseSignOut {
-  signOut(): Promise<void>;
+  signOut(): Promise<void>
 }
