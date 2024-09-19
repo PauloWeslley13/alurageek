@@ -1,16 +1,15 @@
-import { FC } from "react";
-import Button from "@mui/material/Button";
-import { Alert, InputField } from "@/presenter/components/ui";
-import { useSignUp } from "./hook";
+import Button from '@mui/material/Button'
+import { Alert, InputField } from '@/presenter/components/ui'
+import { useSignUp } from './hook'
 
-export const SignUp: FC = () => {
+export function SignUp() {
   const { errors, register, handleSubmit, handlerSignUp, isValidInputs } =
-    useSignUp();
+    useSignUp()
 
   return (
     <form onSubmit={handleSubmit(handlerSignUp)} autoComplete="off">
       <InputField
-        {...register("username")}
+        {...register('username')}
         type="text"
         label="Username"
         placeholder="Informe o usuário"
@@ -18,7 +17,7 @@ export const SignUp: FC = () => {
         helperText={errors.username?.message}
       />
       <InputField
-        {...register("email")}
+        {...register('email')}
         type="text"
         label="Email"
         placeholder="Informe o usuário"
@@ -26,7 +25,7 @@ export const SignUp: FC = () => {
         helperText={errors.email?.message}
       />
       <InputField
-        {...register("password")}
+        {...register('password')}
         type="password"
         label="Senha"
         placeholder="Informe a senha"
@@ -34,7 +33,7 @@ export const SignUp: FC = () => {
         helperText={errors.password?.message}
       />
       <InputField
-        {...register("photoUrl")}
+        {...register('photoUrl')}
         type="text"
         label="Foto"
         placeholder="Informe a url da foto"
@@ -50,12 +49,12 @@ export const SignUp: FC = () => {
         <Alert
           message="Campos preenchido incorretamente"
           sx={{
-            width: "100%",
-            display: "flex",
-            justifyContent: "center",
+            width: '100%',
+            display: 'flex',
+            justifyContent: 'center',
           }}
         />
       )}
     </form>
-  );
-};
+  )
+}

@@ -1,2 +1,1 @@
-export * from "./useCartSideBar";
-export * from "./useCartItemSidebar";
+export * from './useCartSideBar'

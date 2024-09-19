@@ -3,8 +3,6 @@ import Typography from '@mui/material/Typography'
 import CircularProgress from '@mui/material/CircularProgress'
 import Paper from '@mui/material/Paper'
 import Stack from '@mui/material/Stack'
-import { useFormatted } from '@/presenter/hooks/useFormatted'
-import { useAppSelector } from '@/main/store/hook/useRedux'
 import { ProductModel } from '@/data/models'
 import { DialogDeleteProduct, DialogEditProduct } from './components'
 import { useCardProduct } from './hook/useCardProduct'
@@ -16,10 +14,8 @@ type CardProductProps = {
 
 export function CardProduct({ card }: CardProductProps) {
   const { id, name, price, imageUrl } = card
-  const { isLoading } = useAppSelector((state) => state.products)
-  const { user } = useAppSelector((state) => state.authentication)
-  const { handlerNavProductDetail } = useCardProduct()
-  const { formatted } = useFormatted()
+  const { user, isLoading, priceMask, handlerNavProductDetail } =
+    useCardProduct()
 
   if (isLoading) {
     return (
@@ -71,7 +67,7 @@ export function CardProduct({ card }: CardProductProps) {
           variant="subtitle1"
           sx={{ fontFamily: (theme) => theme.typography.font.OPEN_SANS }}
         >
-          {formatted.priceMask(price)}
+          {priceMask(price)}
         </Typography>
 
         <Button

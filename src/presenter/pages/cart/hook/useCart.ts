@@ -1,108 +1,47 @@
-import { useMemo } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { useTheme } from '@mui/material'
-import { ProductsCart } from '@/presenter/components/types'
 import { useAppDispatch, useAppSelector } from '@/main/store/hook/useRedux'
-import {
-  handleQuantity,
-  removeToCart,
-  resetCart,
-} from '@/main/store/ducks/cart'
+import { loadCart, loadSavedCart } from '@/main/store/ducks/cart'
+import { useFormatted } from '@/presenter/hooks/useFormatted'
+import { useProductCart } from '@/presenter/hooks/useProductCart'
+import { useSnackBar } from '@/presenter/hooks/useSnackBar'
 
 export function useCart() {
   const { user } = useAppSelector((state) => state.authentication)
-  const { products } = useAppSelector((state) => state.products)
-  const { cart } = useAppSelector((state) => state.cart)
+  const { totalPrice, loadCartProducts, carts } = useProductCart()
+  const { openSnackBar, handleCloseSnackbar } = useSnackBar()
   const dispatch = useAppDispatch()
   const navigate = useNavigate()
-  const theme = useTheme()
+  const { formatted } = useFormatted()
 
-  const { carts, calcTotal } = useMemo(() => {
-    let totalPrice = 0
-
-    const cartReducer = cart.reduce((items: ProductsCart[], itemCart) => {
-      const item = products.find((item) => item.id === itemCart.id)
-      totalPrice += Number(item?.price) * itemCart.quantity
-
-      if (item) {
-        items.push({
-          id: item.id,
-          quantity: itemCart.quantity,
-        })
-      }
-
-      return items
-    }, [])
-
-    return { carts: cartReducer, calcTotal: totalPrice }
-  }, [cart, products])
-
-  const { data } = useMemo(() => {
-    const data = carts.map((props) => {
-      const [productCart] = products.filter(
-        (product) => product.id === props.id,
-      )
-
-      return {
-        id: props.id,
-        name: productCart.name,
-        description: productCart.description,
-        imageUrl: productCart.imageUrl,
-        price: productCart.price,
-        categoryId: productCart.categoryId,
-        quantity: props.quantity,
-      }
-    })
-
-    return { data }
-  }, [carts, products])
-
-  const decrementQuantity = (id: string, quantity: number) => {
-    if (quantity >= 1) {
-      dispatch(handleQuantity({ id, quantity: -1 }))
+  function handleCheckout() {
+    if (!user) {
+      return
     }
+
+    const userId = user.id
+    const cart = carts
+
+    dispatch(loadCart({ userId, cart, totalPrice }))
   }
 
-  const incrementQuantity = (id: string) => {
-    dispatch(handleQuantity({ id, quantity: +1 }))
-  }
+  function handleSavedCart() {
+    if (!user) {
+      return
+    }
 
-  const handleDeleteItemCart = (id: string) => {
-    dispatch(removeToCart({ id }))
-  }
-
-  const handleCheckout = () => {
-    /*    makeCart.savedUserCart(user.id, {
-      cart: carts,
-      totalPrice: calcTotal,
-    })
-
-    makeCart.removeCart(user.id, {
-      cart: carts,
-      totalPrice: calcTotal,
-    }) */
-
-    dispatch(resetCart())
-  }
-
-  const handleSavedCart = async () => {
-    // makeCart.createCart(user.id, {
-    //   cart: carts,
-    //   totalPrice: calcTotal,
-    // })
+    dispatch(loadSavedCart({ userId: user.id, cart: carts, totalPrice }))
   }
 
   return {
-    theme,
+    formatted,
     user,
-    data,
+    loadCartProducts,
     carts,
-    calcTotal,
-    incrementQuantity,
-    decrementQuantity,
-    handleDeleteItemCart,
     handleCheckout,
     handleSavedCart,
     navigate,
+    totalPrice,
+    openSnackBar,
+    handleCloseSnackbar,
   }
 }

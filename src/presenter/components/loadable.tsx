@@ -1,7 +1,7 @@
-import { ComponentType, FC, ReactNode, Suspense } from "react";
-import { Loader } from "@/presenter/components/ui";
+import { ComponentType, FC, ReactNode, Suspense } from 'react'
+import { Loader } from '@/presenter/components/ui'
 
-type LoadableProps = { children?: ReactNode };
+type LoadableProps = { children?: ReactNode }
 
 export const Loadable = <T extends LoadableProps>(
   Component: ComponentType<T>,
@@ -16,8 +16,8 @@ export const Loadable = <T extends LoadableProps>(
     >
       <Component {...props} />
     </Suspense>
-  );
+  )
 
-  LoadableComponent.displayName = `Loadable(${Component.displayName || Component.name})`;
-  return LoadableComponent;
-};
+  LoadableComponent.displayName = `Loadable(${Component.displayName || Component.name})`
+  return LoadableComponent
+}

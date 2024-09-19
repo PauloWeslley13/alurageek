@@ -1,19 +1,26 @@
-import { FC } from 'react'
 import Stack from '@mui/material/Stack'
 import Button from '@mui/material/Button'
+import Alert from '@mui/material/Alert'
+import Snackbar from '@mui/material/Snackbar'
 import Container from '@mui/material/Container'
 import Typography from '@mui/material/Typography'
 import KeyboardArrowLeftIcon from '@mui/icons-material/KeyboardArrowLeft'
-import { useFormatted } from '@/presenter/hooks/useFormatted'
 import { useCart } from './hook/useCart'
 import { ShopCartItem } from './shop-cart-item'
-import * as S from './styles'
 import { CartSubTotal } from '@/presenter/components/ui'
+import * as S from './styles'
 
-const Cart: FC = () => {
-  const { data, calcTotal, navigate, handleCheckout, handleSavedCart } =
-    useCart()
-  const { formatted } = useFormatted()
+function Cart() {
+  const {
+    loadCartProducts,
+    totalPrice,
+    formatted,
+    navigate,
+    handleCheckout,
+    handleSavedCart,
+    openSnackBar,
+    handleCloseSnackbar,
+  } = useCart()
 
   return (
     <Container maxWidth="xl">
@@ -35,7 +42,7 @@ const Cart: FC = () => {
           </S.CartItemHeaderProduct>
 
           <Stack sx={{ gap: 2 }}>
-            {data.map((props) => (
+            {loadCartProducts.map((props) => (
               <ShopCartItem key={props.id} cartItem={props} />
             ))}
           </Stack>
@@ -55,7 +62,7 @@ const Cart: FC = () => {
                 marginTop: 6,
               }}
             >
-              {data.map((props) => (
+              {loadCartProducts.map((props) => (
                 <Stack
                   key={props.id}
                   flexDirection="row"
@@ -90,7 +97,7 @@ const Cart: FC = () => {
               Total
             </Typography>
             <Typography component="span" variant="subtitle1">
-              {formatted.priceMask(calcTotal)}
+              {formatted.priceMask(totalPrice)}
             </Typography>
           </CartSubTotal>
 
@@ -99,6 +106,23 @@ const Cart: FC = () => {
           </Button>
         </S.CartItemInfo>
       </S.CartWrapper>
+
+      <Snackbar
+        open={!openSnackBar}
+        autoHideDuration={6000}
+        onClose={handleCloseSnackbar}
+        anchorOrigin={{ vertical: 'top', horizontal: 'left' }}
+        message="Carrinho finalizado!"
+      >
+        <Alert
+          onClose={handleCloseSnackbar}
+          severity="success"
+          variant="filled"
+          sx={{ width: '100%' }}
+        >
+          This is a success Alert inside a Snackbar!
+        </Alert>
+      </Snackbar>
     </Container>
   )
 }

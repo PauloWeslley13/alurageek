@@ -1,37 +1,76 @@
+import Stack from '@mui/material/Stack'
+import Chip from '@mui/material/Chip'
 import Button from '@mui/material/Button'
-import ArrowForwardIosRoundedIcon from '@mui/icons-material/ArrowForwardIosRounded'
-import { Header, ProductsList } from '@/presenter/components/layout'
+import Container from '@mui/material/Container'
+import ArrowForwardIcon from '@mui/icons-material/ArrowForward'
+import { ProductsList } from '@/presenter/components/layout'
 import { useHome } from './hook/useHome'
+import { StyledHeading } from './styles'
 
 function Home() {
-  const { searchingProducts, isLoading, navigate } = useHome()
+  const {
+    categories,
+    productsByCategory,
+    menuCategory,
+    productIsLoading,
+    navigate,
+    handleMenuNavigate,
+  } = useHome()
 
   return (
     <>
-      <Header />
+      <StyledHeading>
+        <div>
+          <h3>Fevereiro Promocional</h3>
+          <span>Produtos selecionados com 33% de desconto</span>
 
-      {searchingProducts.map((props) => {
-        return (
-          <ProductsList
-            key={props.id}
-            title={props.name}
-            products={props.products}
-            isLoading={isLoading}
+          <Button
+            variant="primary"
+            sx={{
+              width: (theme) => theme.spacing(40),
+              height: (theme) => theme.spacing(12),
+            }}
           >
-            <Button
-              variant="secondary"
-              endIcon={<ArrowForwardIosRoundedIcon />}
-              onClick={() => navigate('/product-list')}
-              sx={{
-                fontSize: (theme) => theme.typography.font.sm,
-                height: (theme) => theme.spacing(8),
-              }}
-            >
-              Ver todos
-            </Button>
-          </ProductsList>
-        )
-      })}
+            Promoções
+          </Button>
+        </div>
+      </StyledHeading>
+
+      <Container>
+        <Stack direction="row" spacing={2} sx={{ marginTop: 5 }}>
+          {categories.map((category) => {
+            return (
+              <Chip
+                key={category.id}
+                label={category.name}
+                color={category.name === menuCategory ? 'primary' : 'default'}
+                variant={category.name === menuCategory ? 'filled' : 'outlined'}
+                onClick={() => handleMenuNavigate(category.name, category.id)}
+              />
+            )
+          })}
+        </Stack>
+      </Container>
+
+      <ProductsList
+        title=""
+        products={productsByCategory}
+        isLoading={productIsLoading}
+      >
+        {productsByCategory.length !== 0 && (
+          <Button
+            variant="secondary"
+            endIcon={<ArrowForwardIcon />}
+            onClick={() => navigate('/product-list')}
+            sx={{
+              fontSize: (theme) => theme.typography.font.sm,
+              height: (theme) => theme.spacing(8),
+            }}
+          >
+            Ver todos
+          </Button>
+        )}
+      </ProductsList>
     </>
   )
 }

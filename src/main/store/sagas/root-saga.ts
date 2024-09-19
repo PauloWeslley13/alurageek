@@ -5,6 +5,7 @@ import * as Auth from '@/main/store/ducks/auth'
 import * as User from '@/main/store/ducks/user'
 import * as Theme from '@/main/store/ducks/theme'
 import * as AddAccount from '@/main/store/ducks/add-account'
+import * as Cart from '@/main/store/ducks/cart'
 
 export default function* rootSaga() {
   yield all([
@@ -20,5 +21,6 @@ export default function* rootSaga() {
     Product.removeProductSaga(),
     Product.productListSaga(),
     Product.productDetailSaga(),
+    Cart.cartSaga(),
   ])
 }

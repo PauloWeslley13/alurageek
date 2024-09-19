@@ -1,6 +1,7 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 import { Product } from '@/main/store/ducks/products'
 import { ProductModel } from '@/data/models'
+import { RootState } from '@/main/store/types/types'
 
 const INITIAL_STATE_PRODUCT = {
   products: [],
@@ -13,11 +14,7 @@ const productsSlice = createSlice({
   initialState: INITIAL_STATE_PRODUCT,
   reducers: {
     createProduct: (state, { payload }: PayloadAction<Product.Params>) => {
-      return {
-        products: [...state.products, { ...payload.product }],
-        error: null,
-        isLoading: false,
-      }
+      state.products = [...state.products, { ...payload.product }]
     },
     updateProduct: (state, { payload }: PayloadAction<Product.Params>) => {
       const prodIndex = state.products.findIndex(
@@ -25,8 +22,6 @@ const productsSlice = createSlice({
       )
 
       state.products[prodIndex] = payload.product
-      state.error = null
-      state.isLoading = false
     },
     deleteProduct: (
       state,
@@ -60,4 +55,6 @@ export const {
   isPendingProduct,
   onErrorProduct,
 } = productsSlice.actions
+
+export const useSelectorProducts = (state: RootState) => state.products
 export const productsReducer = productsSlice.reducer

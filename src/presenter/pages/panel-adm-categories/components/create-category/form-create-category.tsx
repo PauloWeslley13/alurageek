@@ -51,13 +51,6 @@ export function FormCreateCategory() {
         message="Categoria cadastrada!"
         action={
           <React.Fragment>
-            <Button
-              color="secondary"
-              size="small"
-              onClick={handleCloseSnackbar}
-            >
-              UNDO
-            </Button>
             <IconButton
               size="small"
               aria-label="close"

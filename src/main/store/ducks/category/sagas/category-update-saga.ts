@@ -21,7 +21,7 @@ function* updatedCategory({ payload }: PayloadAction<ICategoryUpdate.Params>) {
     )
 
     if (error) {
-      yield put(onErrorCategory({ isLoading: false, error: error.message }))
+      yield put(onErrorCategory({ isLoading: true, error: error.message }))
       toasts.error({ title: error.message })
       return
     }
@@ -29,7 +29,7 @@ function* updatedCategory({ payload }: PayloadAction<ICategoryUpdate.Params>) {
     if (!data) {
       yield put(
         onErrorCategory({
-          isLoading: false,
+          isLoading: true,
           error: 'Erro ao atualizar categoria',
         }),
       )
@@ -40,7 +40,7 @@ function* updatedCategory({ payload }: PayloadAction<ICategoryUpdate.Params>) {
     yield put(updateCategory({ category: data }))
   } catch (error: unknown) {
     if (error instanceof TypeError) {
-      yield put(onErrorCategory({ isLoading: false, error: error.message }))
+      yield put(onErrorCategory({ isLoading: true, error: error.message }))
       return toasts.error({ title: error.message })
     }
   } finally {

@@ -1,16 +1,15 @@
-import { FC } from "react";
-import Button from "@mui/material/Button";
-import { Alert, InputField } from "@/presenter/components/ui";
-import { useSignIn } from "./hook";
+import Button from '@mui/material/Button'
+import { Alert, InputField } from '@/presenter/components/ui'
+import { useSignIn } from './hook'
 
-export const SignIn: FC = () => {
+export function SignIn() {
   const { errors, register, handleSubmit, handlerSignIn, isValidInputSignIn } =
-    useSignIn();
+    useSignIn()
 
   return (
     <form onSubmit={handleSubmit(handlerSignIn)} autoComplete="off">
       <InputField
-        {...register("email")}
+        {...register('email')}
         type="text"
         label="Email"
         placeholder="Informe o email"
@@ -19,7 +18,7 @@ export const SignIn: FC = () => {
       />
 
       <InputField
-        {...register("password")}
+        {...register('password')}
         type="password"
         label="Senha"
         placeholder="Informe a senha"
@@ -35,12 +34,12 @@ export const SignIn: FC = () => {
         <Alert
           message="Campos preenchido incorretamente"
           sx={{
-            width: "100%",
-            display: "flex",
-            justifyContent: "center",
+            width: '100%',
+            display: 'flex',
+            justifyContent: 'center',
           }}
         />
       )}
     </form>
-  );
-};
+  )
+}

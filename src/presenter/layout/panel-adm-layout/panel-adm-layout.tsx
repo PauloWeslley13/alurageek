@@ -1,17 +1,16 @@
-import { FC } from "react";
-import Tabs from "@mui/material/Tabs";
-import Tab from "@mui/material/Tab";
-import Box from "@mui/material/Box";
-import { Navigate, Outlet, useLocation } from "react-router-dom";
-import { darken } from "@mui/material";
-import { usePanelAdm } from "./hook/usePanelAdm";
+import { Navigate, Outlet, useLocation } from 'react-router-dom'
+import Tabs from '@mui/material/Tabs'
+import Tab from '@mui/material/Tab'
+import Box from '@mui/material/Box'
+import { darken } from '@mui/material'
+import { usePanelAdm } from './hook/usePanelAdm'
 
-const PanelAdmLayout: FC = () => {
-  const { value, handleChangeMenu, a11yTabProps } = usePanelAdm();
-  const { pathname } = useLocation();
+function PanelAdmLayout() {
+  const { value, handleChangeMenu, a11yTabProps } = usePanelAdm()
+  const { pathname } = useLocation()
 
-  if (pathname === "/panel-adm") {
-    return <Navigate to="/panel-adm/products" />;
+  if (pathname === '/panel-adm') {
+    return <Navigate to="/panel-adm/products" />
   }
 
   return (
@@ -20,19 +19,19 @@ const PanelAdmLayout: FC = () => {
         sx={{
           bgcolor: (theme) => darken(theme.palette.background.default, 0.1),
           maxWidth: (theme) => theme.breakpoints.values.lg,
-          margin: "0 auto",
+          margin: '0 auto',
           borderRadius: 2.5,
         }}
       >
         <Tabs centered value={value} onChange={handleChangeMenu}>
           <Tab
             label="Produtos"
-            {...a11yTabProps("products")}
+            {...a11yTabProps('products')}
             sx={{ fontSize: (theme) => theme.typography.pxToRem(20) }}
           />
           <Tab
             label="Categoria"
-            {...a11yTabProps("categories")}
+            {...a11yTabProps('categories')}
             sx={{ fontSize: (theme) => theme.typography.pxToRem(20) }}
           />
         </Tabs>
@@ -41,7 +40,7 @@ const PanelAdmLayout: FC = () => {
       <Box
         sx={{
           maxWidth: (theme) => theme.breakpoints.values.lg,
-          margin: "0 auto",
+          margin: '0 auto',
           px: 10,
           pt: 5,
         }}
@@ -49,7 +48,7 @@ const PanelAdmLayout: FC = () => {
         <Outlet />
       </Box>
     </>
-  );
-};
+  )
+}
 
-export default PanelAdmLayout;
+export default PanelAdmLayout

@@ -1,20 +1,22 @@
-import { FC } from 'react'
 import { IconButton } from '@mui/material'
 import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline'
-import { useCart } from '@/presenter/pages/cart/hook'
 import { CartItem } from '@/presenter/components/ui'
 import { CartProductProps } from '@/presenter/components/types'
 import { useFormatted } from '@/presenter/hooks/useFormatted'
+import { useProductCart } from '@/presenter/hooks/useProductCart'
 
 type CartItemProps = {
   cartItem: CartProductProps
 }
 
-export const ShopCartItem: FC<CartItemProps> = ({ cartItem }) => {
+export function ShopCartItem({ cartItem }: CartItemProps) {
   const { id, quantity, description, name, imageUrl, price } = cartItem
   const { formatted } = useFormatted()
-  const { incrementQuantity, decrementQuantity, handleDeleteItemCart } =
-    useCart()
+  const {
+    handlerIncrementQuantity,
+    handlerDecrementQuantity,
+    handleDeleteItemCart,
+  } = useProductCart()
 
   return (
     <CartItem.Root>
@@ -28,11 +30,15 @@ export const ShopCartItem: FC<CartItemProps> = ({ cartItem }) => {
 
       <CartItem.Actions
         quantity={quantity}
-        incrementQuantity={() => incrementQuantity(id)}
-        decrementQuantity={() => decrementQuantity(id, quantity)}
+        incrementQuantity={() => handlerIncrementQuantity(id)}
+        decrementQuantity={() => handlerDecrementQuantity(id, quantity)}
       />
 
-      <IconButton color="error" onClick={() => handleDeleteItemCart(id)}>
+      <IconButton
+        aria-label="Delete product cart"
+        color="error"
+        onClick={() => handleDeleteItemCart(id)}
+      >
         <DeleteOutlineIcon />
       </IconButton>
     </CartItem.Root>

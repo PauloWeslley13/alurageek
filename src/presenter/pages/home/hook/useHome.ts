@@ -1,38 +1,54 @@
-import { useMemo } from 'react'
-import { useNavigate } from 'react-router-dom'
+import { useEffect, useMemo, useState } from 'react'
+import { useNavigate, useSearchParams } from 'react-router-dom'
 import { useAppSelector } from '@/main/store/hook/useRedux'
 import { useCategoryList } from '@/presenter/hooks/useCategoryList'
+import { useSelectorProducts } from '@/main/store/ducks/products'
 
 export function useHome() {
-  const { products } = useAppSelector((state) => state.products)
+  const [categoryParams, setCategoryParams] = useSearchParams()
+  const [menuCategory, setMenuCategory] = useState('')
+  const { products, isLoading: productIsLoading } =
+    useAppSelector(useSelectorProducts)
   const { categories, isLoading } = useCategoryList()
   const search = useAppSelector((state) => state.search)
   const navigate = useNavigate()
 
-  const searchingProducts = useMemo(() => {
+  useEffect(() => {
+    setMenuCategory('Caneca')
+  }, [])
+
+  const productsByCategory = useMemo(() => {
+    const categoryId = categoryParams.get('categoryId')
     const regexp = new RegExp(search, 'i')
 
-    const productsByCategory = categories.map((category) => {
-      const productByCategory = products.filter(
-        (product) =>
-          product.categoryId === category.id && product.name.match(regexp),
-      )
+    const productByCategory = products.filter(
+      (product) =>
+        product.categoryId === categoryId && product.name.match(regexp),
+    )
 
-      return {
-        ...category,
-        products: productByCategory,
+    return regexp ? productByCategory : []
+  }, [search, products, categoryParams])
+
+  function handleMenuNavigate(value: string, categoryId: string) {
+    setMenuCategory(value)
+    setCategoryParams((state) => {
+      if (categoryId) {
+        state.set('categoryId', categoryId)
+      } else {
+        state.delete('categoryId')
       }
-    })
 
-    return regexp
-      ? productsByCategory.filter((category) => category.products.length > 0)
-      : []
-  }, [search, categories, products])
+      return state
+    })
+  }
 
   return {
-    navigate,
     categories,
     isLoading,
-    searchingProducts,
+    productsByCategory,
+    productIsLoading,
+    menuCategory,
+    navigate,
+    handleMenuNavigate,
   }
 }

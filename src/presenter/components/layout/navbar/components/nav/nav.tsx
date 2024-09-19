@@ -1,19 +1,22 @@
-import { FC } from "react";
-import { Button, Stack, useMediaQuery } from "@mui/material";
-import { CartSideBar } from "@/presenter/components/ui";
+import { Button, Stack } from '@mui/material'
+import { CartSideBar } from '@/presenter/components/ui'
 import {
   MenuMobile,
   MenuProfile,
   MenuTheme,
-} from "@/presenter/components/layout/navbar/components";
-import { useNav } from "./hook";
+} from '@/presenter/components/layout/navbar/components'
+import { useNav } from './hook'
 
-const Nav: FC = () => {
-  const { hasPathOrLogged, hasUserAuthentication, handlerNavAuth } = useNav();
-  const hasMaxScreen = useMediaQuery("(max-width:899px)");
+export function Nav() {
+  const {
+    hasMaxScreen,
+    hasPathOrLogged,
+    hasUserAuthentication,
+    handlerNavAuth,
+  } = useNav()
 
   return (
-    <Stack sx={{ flexDirection: "row", alignItems: "center", gap: 2.2 }}>
+    <Stack sx={{ flexDirection: 'row', alignItems: 'center', gap: 2.2 }}>
       {!hasMaxScreen && (
         <>
           {!hasPathOrLogged && (
@@ -39,7 +42,5 @@ const Nav: FC = () => {
 
       <MenuMobile />
     </Stack>
-  );
-};
-
-export { Nav };
+  )
+}

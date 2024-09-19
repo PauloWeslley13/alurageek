@@ -11,3 +11,13 @@ export type AddToCartProps = {
 }
 
 export type AddCartProps = Pick<CartType, 'userId' | 'cart' | 'totalPrice'>
+
+export type FinishPaymentType = {
+  valueAll: number
+  // formPayment: CardsPaymentProps
+}
+
+export type CartProps = {
+  totalPrice: number
+  // itemsCart: ItemCartProps[]
+}

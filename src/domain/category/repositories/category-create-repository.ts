@@ -42,14 +42,17 @@ export class CategoryCreateRepository implements ICategoryCreateRepository {
   private async createCategory(
     params: Omit<CategoryModel, 'id'>,
   ): Promise<void> {
-    await addDoc(this.database.collection(this.collection), params)
-      .then((data: DocumentReference) => {
-        this.response.data = new Category({ ...params, id: data.id })
-      })
-      .catch((error: unknown) => {
-        if (error instanceof FirebaseError) {
-          this.response.error = error
-        }
-      })
+    try {
+      const data: DocumentReference = await addDoc(
+        this.database.collection(this.collection),
+        params,
+      )
+
+      this.response.data = new Category({ ...params, id: data.id })
+    } catch (error: unknown) {
+      if (error instanceof FirebaseError) {
+        this.response.error = error
+      }
+    }
   }
 }

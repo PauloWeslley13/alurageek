@@ -1,14 +1,14 @@
-import { ComponentProps, FC, ReactNode } from "react";
-import { Box } from "@mui/material";
+import { ComponentProps, ReactNode } from 'react'
+import Box from '@mui/material/Box'
 
-type TabPanelProps = ComponentProps<"div"> & {
-  path: string;
-  value: number;
-  children: ReactNode;
-};
+type TabPanelProps = ComponentProps<'div'> & {
+  path: string
+  value: number
+  children: ReactNode
+}
 
-const TabPanel: FC<TabPanelProps> = ({ children, value, path, ...other }) => {
-  const label = value === 0 ? "products" : "categories";
+export function TabPanel({ children, value, path, ...other }: TabPanelProps) {
+  const label = value === 0 ? 'products' : 'categories'
 
   return (
     <div
@@ -19,10 +19,8 @@ const TabPanel: FC<TabPanelProps> = ({ children, value, path, ...other }) => {
       {...other}
     >
       {label === path && (
-        <Box sx={{ p: 3, height: 770, overflow: "auto" }}>{children}</Box>
+        <Box sx={{ p: 3, height: 770, overflow: 'auto' }}>{children}</Box>
       )}
     </div>
-  );
-};
-
-export { TabPanel };
+  )
+}

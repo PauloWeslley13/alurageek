@@ -1,3 +1,5 @@
 export * from './reducers'
 export * from './actions/cart.actions'
+export * from './saga/cart-saga'
+export * from './services/cart.services'
 export type * from './types/cart-types'

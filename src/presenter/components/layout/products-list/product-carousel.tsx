@@ -1,4 +1,3 @@
-import { FC, memo } from 'react'
 import { Stack } from '@mui/material'
 import {
   CardProduct,
@@ -9,20 +8,18 @@ import {
 import { ProductModel } from '@/data/models'
 
 interface ProductCarouselProps {
-  product: ProductModel[]
+  products: ProductModel[]
 }
 
-const ProductCarousel: FC<ProductCarouselProps> = ({ product }) => {
-  const loadProd = [...product, ...product, ...product, ...product, ...product]
-
+export function ProductCarousel({ products }: ProductCarouselProps) {
   const settings: SliderProps = {
     spaceBetween: 10,
-    slidesPerView: product.length <= 9 ? product.length : 3,
+    slidesPerView: products.length <= 9 ? products.length : 3,
     centeredSlides: true,
     grabCursor: true,
-    draggable: product.length >= 3,
-    loop: product.length >= 3,
-    pagination: product.length >= 3 && {
+    draggable: products.length >= 3,
+    loop: products.length >= 3,
+    pagination: products.length >= 3 && {
       dynamicBullets: true,
     },
     keyboard: {
@@ -39,17 +36,17 @@ const ProductCarousel: FC<ProductCarouselProps> = ({ product }) => {
         slidesPerGroup: 1,
       },
       800: {
-        slidesPerView: product.length < 2 ? product.length : 2,
-        slidesPerGroup: product.length < 2 ? product.length : 2,
+        slidesPerView: products.length < 2 ? products.length : 2,
+        slidesPerGroup: products.length < 2 ? products.length : 2,
       },
       1200: {
-        slidesPerView: product.length < 3 ? product.length : 3,
-        slidesPerGroup: product.length < 3 ? product.length : 3,
+        slidesPerView: products.length < 3 ? products.length : 3,
+        slidesPerGroup: products.length < 3 ? products.length : 3,
       },
     },
   }
 
-  if (product.length === 1) {
+  if (products.length === 1) {
     return (
       <Stack
         sx={{
@@ -58,20 +55,20 @@ const ProductCarousel: FC<ProductCarouselProps> = ({ product }) => {
           justifyContent: 'center',
         }}
       >
-        <CardProduct card={product[0]} />
+        <CardProduct card={products[0]} />
       </Stack>
     )
   }
 
   return (
     <SliderCarousel settings={settings}>
-      {loadProd.map((card, index) => (
-        <Slide key={index}>
-          <CardProduct card={card} />
-        </Slide>
-      ))}
+      {products.map((product) => {
+        return (
+          <Slide key={product.id}>
+            <CardProduct card={product} />
+          </Slide>
+        )
+      })}
     </SliderCarousel>
   )
 }
-
-export default memo(ProductCarousel)

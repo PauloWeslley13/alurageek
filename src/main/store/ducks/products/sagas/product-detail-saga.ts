@@ -1,6 +1,5 @@
-import { call, cancel, delay, put, takeLatest } from 'redux-saga/effects'
+import { call, delay, put, takeLatest } from 'redux-saga/effects'
 import { PayloadAction } from '@reduxjs/toolkit'
-import { Task } from 'redux-saga'
 import {
   loadProductInfo,
   productDetailIsError,
@@ -37,8 +36,5 @@ function* getProductDetailSaga({
 }
 
 export function* productDetailSaga() {
-  const task: Task = yield takeLatest(loadProductInfo, getProductDetailSaga)
-  yield takeLatest(productDetailSuccess, function* () {
-    yield cancel(task)
-  })
+  yield takeLatest(loadProductInfo, getProductDetailSaga)
 }

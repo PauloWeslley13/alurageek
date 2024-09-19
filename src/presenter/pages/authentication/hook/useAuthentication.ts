@@ -3,10 +3,12 @@ import { useNavigate } from 'react-router-dom'
 import { useAppSelector } from '@/main/store/hook/useRedux'
 
 export function useAuthentication() {
+  const { error, isLoading, user } = useAppSelector(
+    (state) => state.authentication,
+  )
   const [signInOrSignUp, setSignInOrSignUp] = useState<'signIn' | 'signUp'>(
     'signIn',
   )
-  const { user } = useAppSelector((state) => state.authentication)
   const navigate = useNavigate()
   const hasLoginOrRegister = signInOrSignUp === 'signIn'
 
@@ -30,6 +32,8 @@ export function useAuthentication() {
     signInOrSignUp,
     hasLoginOrRegister,
     loadAuthInformation,
+    error,
+    isLoading,
     handlerNavHome,
     handlerChangeViewLoginOrRegister,
   }

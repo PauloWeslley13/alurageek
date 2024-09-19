@@ -1,9 +1,9 @@
-import { FC, ReactNode } from 'react'
+import { ReactNode } from 'react'
 import { Container, Typography } from '@mui/material'
 import { Loader } from '@/presenter/components/ui'
 import { ProductModel } from '@/data/models'
-import ProductCarousel from './product-carousel'
-import * as S from './styles'
+import { ProductCarousel } from './product-carousel'
+import { StyledProductListContainer } from './styles'
 
 type ProductsListProps = {
   title: string
@@ -12,19 +12,19 @@ type ProductsListProps = {
   children?: ReactNode
 }
 
-export const ProductsList: FC<ProductsListProps> = ({
+export function ProductsList({
   title = '',
   isLoading = false,
   products = [],
   children,
-}) => {
+}: ProductsListProps) {
   if (isLoading) {
     return <Loader.Content message="Carregando produtos" sx={{ height: 250 }} />
   }
 
   return (
     <Container maxWidth="lg">
-      <S.ProductListContainer>
+      <StyledProductListContainer>
         <div>
           <Typography component="h3" variant="h2">
             {title}
@@ -43,10 +43,8 @@ export const ProductsList: FC<ProductsListProps> = ({
           </Typography>
         )}
 
-        {!isLoading && (
-          <>{products && <ProductCarousel product={products} />}</>
-        )}
-      </S.ProductListContainer>
+        {!isLoading && <ProductCarousel products={products} />}
+      </StyledProductListContainer>
     </Container>
   )
 }

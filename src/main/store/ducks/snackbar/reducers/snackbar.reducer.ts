@@ -11,6 +11,6 @@ const snackbarSlice = createSlice({
   },
 })
 
-export const useSnackBar = (state: RootState) => state.snackbar
+export const useSelectorSnackBar = (state: RootState) => state.snackbar
 export const { openSnackbar } = snackbarSlice.actions
 export const snackbarReducer = snackbarSlice.reducer

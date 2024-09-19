@@ -1,18 +1,17 @@
-import { FC } from "react";
-import Brightness7RoundedIcon from "@mui/icons-material/Brightness7Rounded";
-import Brightness4RoundedIcon from "@mui/icons-material/Brightness4Rounded";
-import { useMenuTheme } from "./hook/useMenuTheme";
-import { Dropdown } from "@/presenter/components/ui";
-import { useAppSelector } from "@/main/store/hook/useRedux";
+import Brightness7RoundedIcon from '@mui/icons-material/Brightness7Rounded'
+import Brightness4RoundedIcon from '@mui/icons-material/Brightness4Rounded'
+import { useMenuTheme } from './hook/useMenuTheme'
+import { Dropdown } from '@/presenter/components/ui'
+import { useAppSelector } from '@/main/store/hook/useRedux'
 
-export const MenuTheme: FC = () => {
-  const { handleChangeTheme, menuTheme } = useMenuTheme();
-  const { theme } = useAppSelector((state) => state.theme);
+export function MenuTheme() {
+  const { handleChangeTheme, menuTheme } = useMenuTheme()
+  const { theme } = useAppSelector((state) => state.theme)
 
   return (
     <Dropdown.Root>
       <Dropdown.Button>
-        {theme === "light" ? (
+        {theme === 'light' ? (
           <Brightness7RoundedIcon />
         ) : (
           <Brightness4RoundedIcon />
@@ -26,5 +25,5 @@ export const MenuTheme: FC = () => {
         ))}
       </Dropdown.List>
     </Dropdown.Root>
-  );
-};
+  )
+}

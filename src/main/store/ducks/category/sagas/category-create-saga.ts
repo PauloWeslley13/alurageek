@@ -28,7 +28,7 @@ function* createdCategorySaga({
 
     if (hasExistsCategory) {
       yield put(
-        onErrorCategory({ isLoading: false, error: 'Categoria já cadastrada' }),
+        onErrorCategory({ isLoading: true, error: 'Categoria já cadastrada' }),
       )
       toasts.error({ title: 'Categoria já cadastrada' })
       return
@@ -40,7 +40,7 @@ function* createdCategorySaga({
     )
 
     if (error) {
-      yield put(onErrorCategory({ isLoading: false, error: error.message }))
+      yield put(onErrorCategory({ isLoading: true, error: error.message }))
       toasts.error({ title: error.message })
       return
     }
@@ -48,7 +48,7 @@ function* createdCategorySaga({
     if (!data) {
       yield put(
         onErrorCategory({
-          isLoading: false,
+          isLoading: true,
           error: 'Erro ao cadastrar categoria',
         }),
       )
@@ -60,7 +60,7 @@ function* createdCategorySaga({
     yield put(createCategory({ category: data }))
   } catch (error: unknown) {
     if (error instanceof TypeError) {
-      yield put(onErrorCategory({ isLoading: false, error: error.message }))
+      yield put(onErrorCategory({ isLoading: true, error: error.message }))
       return toasts.error({ title: error.message })
     }
   } finally {

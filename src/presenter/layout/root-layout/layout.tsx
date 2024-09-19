@@ -1,11 +1,11 @@
-import { FC } from "react";
-import { Navigate, Outlet, useLocation } from "react-router-dom";
-import { Footer, NavBar } from "@/presenter/components/layout";
+import { FC } from 'react'
+import { Navigate, Outlet, useLocation } from 'react-router-dom'
+import { Footer, NavBar } from '@/presenter/components/layout'
 
 export const RootLayout: FC = () => {
-  const { pathname } = useLocation();
+  const { pathname } = useLocation()
 
-  if (pathname === "/") return <Navigate to="/home" />;
+  if (pathname === '/') return <Navigate to="/home" />
 
   return (
     <>
@@ -18,5 +18,5 @@ export const RootLayout: FC = () => {
         <Footer.Bar />
       </Footer.Root>
     </>
-  );
-};
+  )
+}

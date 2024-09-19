@@ -1,21 +1,20 @@
-import { FC } from "react";
-import Container from "@mui/material/Container";
-import { useAppSelector } from "@/main/store/hook/useRedux";
-import { Alert, Loader } from "@/presenter/components/ui";
-import { SignIn, SignUp } from "./components";
-import { useAuthentication } from "./hook";
-import * as S from "./styles";
+import Container from '@mui/material/Container'
+import { Alert, Loader } from '@/presenter/components/ui'
+import { SignIn, SignUp } from './components'
+import { useAuthentication } from './hook'
+import * as S from './styles'
 
-const Authentication: FC = () => {
-  const { error, isLoading } = useAppSelector((state) => state.authentication);
+function Authentication() {
   const {
+    error,
+    isLoading,
     hasLoginOrRegister,
     loadAuthInformation,
     handlerChangeViewLoginOrRegister,
-  } = useAuthentication();
+  } = useAuthentication()
 
   if (isLoading) {
-    return <Loader.Content message="Processando" sx={{ height: 450 }} />;
+    return <Loader.Content message="Processando" sx={{ height: 450 }} />
   }
 
   return (
@@ -40,15 +39,15 @@ const Authentication: FC = () => {
             message={error}
             sx={{
               mt: 5,
-              width: "100%",
-              display: "flex",
-              justifyContent: "center",
+              width: '100%',
+              display: 'flex',
+              justifyContent: 'center',
             }}
           />
         )}
       </S.Wrapper>
     </Container>
-  );
-};
+  )
+}
 
-export default Authentication;
+export default Authentication

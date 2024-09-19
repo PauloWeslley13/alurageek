@@ -1,6 +1,6 @@
-import { css, styled } from "@mui/material";
+import { css, styled } from '@mui/material'
 
-export const ProductListContainer = styled("div")(
+export const StyledProductListContainer = styled('div')(
   ({ theme }) => css`
     padding: ${theme.spacing(5.5)};
 
@@ -19,4 +19,4 @@ export const ProductListContainer = styled("div")(
       padding-inline: 0px;
     }
   `,
-);
+)
